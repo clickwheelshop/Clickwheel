@@ -1,4 +1,12 @@
-const guides = [
+type GuideVisual = "music" | "rockbox" | "storage";
+
+const guides: {
+  category: string;
+  title: string;
+  description: string;
+  readTime: string;
+  visual: GuideVisual;
+}[] = [
   {
     category: "Getting Started",
     title: "How to Add Music to Your iPod",
@@ -22,7 +30,7 @@ const guides = [
   },
 ];
 
-const visualStyles = {
+const visualStyles: Record<GuideVisual, string> = {
   music: "from-[#d9d0c2] via-[#b9a68f] to-[#6c5a4a]",
   rockbox: "from-[#151515] via-[#33411f] to-[#7fa33f]",
   storage: "from-[#171717] via-[#39414c] to-[#8e99a4]",
@@ -68,6 +76,7 @@ export function GuidesPreview() {
 
                 <div className="absolute left-1/2 top-1/2 h-36 w-24 -translate-x-1/2 -translate-y-1/2 rounded-[18px] bg-gradient-to-br from-neutral-100 to-neutral-400 p-2 shadow-[0_20px_35px_rgba(0,0,0,0.35)]">
                   <div className="h-9 rounded border-[3px] border-black bg-[#f6f1e8]" />
+
                   <div className="mx-auto mt-5 h-12 w-12 rounded-full bg-neutral-900">
                     <div className="relative h-full w-full">
                       <div className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-300" />
@@ -90,7 +99,9 @@ export function GuidesPreview() {
                 </p>
 
                 <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-4">
-                  <span className="text-sm text-neutral-500">{guide.readTime}</span>
+                  <span className="text-sm text-neutral-500">
+                    {guide.readTime}
+                  </span>
 
                   <button
                     aria-label={`Read ${guide.title}`}
