@@ -1,0 +1,36 @@
+:root {
+  /* Brand */
+  --brand-name: "Clickwheel";
+
+  /* Colors */
+  --color-background: #ffffff;
+  --color-surface: #f8f8f8;
+  --color-text: #111111;
+  --color-text-secondary: #666666;
+  --color-border: #e5e5e5;
+
+  /* Accent */
+  --color-accent: #2563eb;
+
+  /* Premium Colors */
+  --color-space-gray: #4b5563;
+  --color-silver: #d1d5db;
+  --color-stainless: #9ca3af;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+  --radius-xl: 40px;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
+  --space-xl: 64px;
+
+  /* Shadows */
+  --shadow-card: 0 10px 30px rgba(0,0,0,.08);
+  --shadow-hover: 0 20px 50px rgba(0,0,0,.12);
+}
