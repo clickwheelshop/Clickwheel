@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 
@@ -10,6 +10,24 @@ type Choice = {
   description: string;
   price: number;
 };
+
+const modelOptions: Choice[] = [
+  {
+    name: "iPod Classic 7th Gen",
+    description: "Late-generation Classic platform for a refined everyday build.",
+    price: 0,
+  },
+  {
+    name: "iPod Classic 6th Gen",
+    description: "A classic aluminium-front platform with a timeless look.",
+    price: 0,
+  },
+  {
+    name: "iPod Classic 5.5 Gen",
+    description: "An earlier Classic platform, popular with collectors.",
+    price: 0,
+  },
+];
 
 const storageOptions: Choice[] = [
   {
@@ -173,9 +191,57 @@ function OptionCard({
   );
 }
 
+function ConfigurationSection({
+  step,
+  title,
+  description,
+  options,
+  selected,
+  onSelect,
+}: {
+  step: string;
+  title: string;
+  description?: string;
+  options: Choice[];
+  selected: Choice;
+  onSelect: (option: Choice) => void;
+}) {
+  return (
+    <section>
+      <div className="mb-6">
+        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
+          Step {step}
+        </p>
+
+        <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">
+          {title}
+        </h2>
+
+        {description && (
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-600">
+            {description}
+          </p>
+        )}
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        {options.map((option) => (
+          <OptionCard
+            key={option.name}
+            option={option}
+            active={selected.name === option.name}
+            onClick={() => onSelect(option)}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function BuildPage() {
   const basePrice = 249;
 
+  const [model, setModel] = useState(modelOptions[0]);
   const [storage, setStorage] = useState(storageOptions[0]);
   const [battery, setBattery] = useState(batteryOptions[0]);
   const [finish, setFinish] = useState(finishOptions[0]);
@@ -191,6 +257,7 @@ export default function BuildPage() {
 
   const totalPrice =
     basePrice +
+    model.price +
     storage.price +
     battery.price +
     finish.price +
@@ -198,9 +265,13 @@ export default function BuildPage() {
     software.price +
     accessoryTotal;
 
-  const requestUrl = `/request-build?storage=${encodeURIComponent(
+  const requestUrl = `/request-build?model=${encodeURIComponent(
+    model.name,
+  )}&storage=${encodeURIComponent(
     storage.name,
-  )}&battery=${encodeURIComponent(battery.name)}&finish=${encodeURIComponent(
+  )}&battery=${encodeURIComponent(
+    battery.name,
+  )}&finish=${encodeURIComponent(
     finish.name,
   )}&backplate=${encodeURIComponent(
     backplate.name,
@@ -240,9 +311,9 @@ export default function BuildPage() {
             </div>
 
             <p className="max-w-xl text-base leading-7 text-neutral-600 md:text-lg">
-              Choose your storage, battery, finish, software and accessories.
-              Every Clickwheel build is professionally restored and prepared
-              for daily use.
+              Choose your Classic platform, storage, battery, finish, software
+              and accessories. Every Clickwheel build is professionally
+              restored and prepared for daily use.
             </p>
           </div>
         </div>
@@ -251,125 +322,59 @@ export default function BuildPage() {
       <section className="px-6 py-14 md:px-12 lg:px-16">
         <div className="mx-auto grid max-w-[1600px] gap-10 xl:grid-cols-[1fr_380px]">
           <div className="space-y-14">
-            <section>
-              <div className="mb-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
-                  Step 1
-                </p>
+            <ConfigurationSection
+              step="1"
+              title="Choose your Classic platform."
+              description="Model availability and compatible parts are confirmed before payment."
+              options={modelOptions}
+              selected={model}
+              onSelect={(option) => setModel(option)}
+            />
 
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">
-                  Choose storage.
-                </h2>
-              </div>
+            <ConfigurationSection
+              step="2"
+              title="Choose storage."
+              options={storageOptions}
+              selected={storage}
+              onSelect={(option) => setStorage(option)}
+            />
 
-              <div className="grid gap-4 md:grid-cols-2">
-                {storageOptions.map((option) => (
-                  <OptionCard
-                    key={option.name}
-                    option={option}
-                    active={storage.name === option.name}
-                    onClick={() => setStorage(option)}
-                  />
-                ))}
-              </div>
-            </section>
+            <ConfigurationSection
+              step="3"
+              title="Choose battery."
+              options={batteryOptions}
+              selected={battery}
+              onSelect={(option) => setBattery(option)}
+            />
 
-            <section>
-              <div className="mb-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
-                  Step 2
-                </p>
+            <ConfigurationSection
+              step="4"
+              title="Choose finish."
+              options={finishOptions}
+              selected={finish}
+              onSelect={(option) => setFinish(option)}
+            />
 
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">
-                  Choose battery.
-                </h2>
-              </div>
+            <ConfigurationSection
+              step="5"
+              title="Choose rear plate."
+              options={backplateOptions}
+              selected={backplate}
+              onSelect={(option) => setBackplate(option)}
+            />
 
-              <div className="grid gap-4 md:grid-cols-2">
-                {batteryOptions.map((option) => (
-                  <OptionCard
-                    key={option.name}
-                    option={option}
-                    active={battery.name === option.name}
-                    onClick={() => setBattery(option)}
-                  />
-                ))}
-              </div>
-            </section>
-
-            <section>
-              <div className="mb-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
-                  Step 3
-                </p>
-
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">
-                  Choose finish.
-                </h2>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                {finishOptions.map((option) => (
-                  <OptionCard
-                    key={option.name}
-                    option={option}
-                    active={finish.name === option.name}
-                    onClick={() => setFinish(option)}
-                  />
-                ))}
-              </div>
-            </section>
+            <ConfigurationSection
+              step="6"
+              title="Choose software."
+              options={softwareOptions}
+              selected={software}
+              onSelect={(option) => setSoftware(option)}
+            />
 
             <section>
               <div className="mb-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
-                  Step 4
-                </p>
-
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">
-                  Choose rear plate.
-                </h2>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                {backplateOptions.map((option) => (
-                  <OptionCard
-                    key={option.name}
-                    option={option}
-                    active={backplate.name === option.name}
-                    onClick={() => setBackplate(option)}
-                  />
-                ))}
-              </div>
-            </section>
-
-            <section>
-              <div className="mb-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
-                  Step 5
-                </p>
-
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">
-                  Choose software.
-                </h2>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                {softwareOptions.map((option) => (
-                  <OptionCard
-                    key={option.name}
-                    option={option}
-                    active={software.name === option.name}
-                    onClick={() => setSoftware(option)}
-                  />
-                ))}
-              </div>
-            </section>
-
-            <section>
-              <div className="mb-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
-                  Step 6
+                  Step 7
                 </p>
 
                 <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">
@@ -422,14 +427,12 @@ export default function BuildPage() {
                 })}
               </div>
 
-              <div className="mt-6">
-                <Link
-                  href="/accessories"
-                  className="text-sm font-semibold text-blue-600 hover:text-blue-800"
-                >
-                  Explore all accessories →
-                </Link>
-              </div>
+              <Link
+                href="/accessories"
+                className="mt-6 inline-flex text-sm font-semibold text-blue-600 hover:text-blue-800"
+              >
+                Explore all accessories →
+              </Link>
             </section>
           </div>
 
@@ -468,18 +471,29 @@ export default function BuildPage() {
 
               <div className="space-y-5 px-7 py-7 text-sm">
                 <div className="flex justify-between gap-5">
+                  <span className="text-neutral-500">Model</span>
+                  <span className="text-right font-semibold">{model.name}</span>
+                </div>
+
+                <div className="flex justify-between gap-5">
                   <span className="text-neutral-500">Storage</span>
-                  <span className="text-right font-semibold">{storage.name}</span>
+                  <span className="text-right font-semibold">
+                    {storage.name}
+                  </span>
                 </div>
 
                 <div className="flex justify-between gap-5">
                   <span className="text-neutral-500">Battery</span>
-                  <span className="text-right font-semibold">{battery.name}</span>
+                  <span className="text-right font-semibold">
+                    {battery.name}
+                  </span>
                 </div>
 
                 <div className="flex justify-between gap-5">
                   <span className="text-neutral-500">Finish</span>
-                  <span className="text-right font-semibold">{finish.name}</span>
+                  <span className="text-right font-semibold">
+                    {finish.name}
+                  </span>
                 </div>
 
                 <div className="flex justify-between gap-5">
@@ -531,11 +545,6 @@ export default function BuildPage() {
                 >
                   Continue with this build →
                 </Link>
-
-                <p className="text-center text-xs leading-5 text-neutral-500">
-                  This is a visual configurator for now. Online checkout will
-                  be connected later.
-                </p>
               </div>
             </div>
           </aside>
