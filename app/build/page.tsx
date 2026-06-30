@@ -14,23 +14,18 @@ type Choice = {
 const storageOptions: Choice[] = [
   {
     name: "256GB",
-    description: "A strong everyday library.",
+    description: "A strong everyday music library.",
     price: 0,
   },
   {
     name: "512GB",
-    description: "More room for lossless music.",
+    description: "More room for lossless music and larger collections.",
     price: 40,
   },
   {
     name: "1TB",
-    description: "Built for serious collections.",
+    description: "Maximum supported Clickwheel storage configuration.",
     price: 95,
-  },
-  {
-    name: "2TB",
-    description: "Maximum storage configuration.",
-    price: 170,
   },
 ];
 
@@ -202,6 +197,20 @@ export default function BuildPage() {
     backplate.price +
     software.price +
     accessoryTotal;
+
+  const requestUrl = `/request-build?storage=${encodeURIComponent(
+    storage.name,
+  )}&battery=${encodeURIComponent(battery.name)}&finish=${encodeURIComponent(
+    finish.name,
+  )}&backplate=${encodeURIComponent(
+    backplate.name,
+  )}&software=${encodeURIComponent(
+    software.name,
+  )}&accessories=${encodeURIComponent(
+    selectedAccessories.length > 0
+      ? selectedAccessories.join(", ")
+      : "None selected",
+  )}&total=${totalPrice}`;
 
   function toggleAccessory(name: string) {
     setSelectedAccessories((current) =>
@@ -516,9 +525,12 @@ export default function BuildPage() {
                   </div>
                 </div>
 
-                <button className="w-full rounded-full bg-black px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-neutral-800">
-                  Save Build →
-                </button>
+                <Link
+                  href={requestUrl}
+                  className="block w-full rounded-full bg-black px-5 py-3.5 text-center text-sm font-semibold text-white transition hover:bg-neutral-800"
+                >
+                  Continue with this build →
+                </Link>
 
                 <p className="text-center text-xs leading-5 text-neutral-500">
                   This is a visual configurator for now. Online checkout will
