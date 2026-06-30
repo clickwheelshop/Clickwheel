@@ -21,7 +21,7 @@ const guides = [
   },
   {
     category: "Storage",
-    title: "Choosing between 256GB, 512GB, 1TB and 2TB",
+    title: "Choosing between 256GB, 512GB and 1TB",
     description:
       "A practical guide to storage size, music libraries, lossless files and everyday use.",
     readTime: "5 min read",
@@ -109,7 +109,7 @@ function GuideVisual({
             </div>
           </div>
           <div className="absolute bottom-7 right-8 rounded-full bg-white/85 px-4 py-2 text-xs font-semibold text-black">
-            2TB
+            1TB
           </div>
         </>
       )}

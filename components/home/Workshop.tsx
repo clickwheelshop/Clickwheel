@@ -9,7 +9,7 @@ const workshopServices = [
   {
     title: "Storage Upgrade",
     description: "Reliable flash storage for a larger music library.",
-    label: "Up to 2TB",
+    label: "Up to 1TB",
   },
   {
     title: "Rear Polishing",

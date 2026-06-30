@@ -25,7 +25,7 @@ const builds = [
   {
     name: "The Signature",
     model: "iPod Classic 7th Gen",
-    specs: ["2TB Flash Storage", "3000mAh Battery", "Custom Engraving"],
+    specs: ["1TB Flash Storage", "3000mAh Battery", "Custom Engraving"],
     price: "From €399",
     tone: "warm",
   },

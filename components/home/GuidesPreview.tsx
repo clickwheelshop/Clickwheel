@@ -21,7 +21,7 @@ const guides = [
     category: "Storage",
     title: "How much iPod storage do you actually need?",
     description:
-      "Compare 256GB, 512GB, 1TB and 2TB for your music collection.",
+      "Compare 256GB, 512GB and 1TB for your music collection.",
     readTime: "5 min read",
     visual: "storage",
   },
@@ -79,7 +79,7 @@ function GuideVisual({
           </div>
 
           <div className="absolute bottom-7 right-8 rounded-full bg-white/85 px-4 py-2 text-xs font-semibold text-black">
-            2TB
+            1TB
           </div>
         </>
       )}

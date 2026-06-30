@@ -8,7 +8,7 @@ const services = [
     title: "Flash Storage Upgrade",
     description:
       "Replace the original hard drive with reliable flash storage for faster performance, quieter use and more space for music.",
-    options: ["128GB", "256GB", "512GB", "1TB", "2TB"],
+    options: ["128GB", "256GB", "512GB", "1TB"],
   },
   {
     number: "02",

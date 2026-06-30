@@ -6,7 +6,7 @@ const benefits = [
   },
   {
     title: "Flash Storage",
-    text: "Fast, reliable storage up to 2TB.",
+    text: "Fast, reliable storage up to 1TB.",
     icon: "▰",
   },
   {

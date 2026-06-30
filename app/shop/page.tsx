@@ -33,7 +33,7 @@ const products = [
   {
     name: "The Signature",
     model: "iPod Classic 7th Gen",
-    storage: "2TB Flash Storage",
+    storage: "1TB Flash Storage",
     battery: "3000mAh Battery",
     finish: "Custom Engraving",
     price: "From €399",
