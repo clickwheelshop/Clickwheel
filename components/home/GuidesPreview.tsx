@@ -1,115 +1,146 @@
-type GuideVisual = "music" | "rockbox" | "storage";
+import Link from "next/link";
 
-const guides: {
-  category: string;
-  title: string;
-  description: string;
-  readTime: string;
-  visual: GuideVisual;
-}[] = [
+const guides = [
   {
     category: "Getting Started",
-    title: "How to Add Music to Your iPod",
-    description: "A simple guide for syncing music on macOS and Windows.",
-    readTime: "8 min read",
+    title: "How to add music to an iPod Classic",
+    description:
+      "A practical introduction to adding music from macOS or Windows.",
+    readTime: "6 min read",
     visual: "music",
   },
   {
-    category: "Rockbox",
-    title: "Install Rockbox",
-    description: "Unlock more formats, themes and control over your music.",
-    readTime: "10 min read",
+    category: "Software",
+    title: "What Rockbox changes on an iPod Classic",
+    description:
+      "Understand formats, themes, dual boot and advanced playback controls.",
+    readTime: "8 min read",
     visual: "rockbox",
   },
   {
-    category: "Upgrades",
-    title: "Flash Storage Guide",
-    description: "Understand storage sizes, speed and reliability.",
-    readTime: "6 min read",
+    category: "Storage",
+    title: "How much iPod storage do you actually need?",
+    description:
+      "Compare 256GB, 512GB, 1TB and 2TB for your music collection.",
+    readTime: "5 min read",
     visual: "storage",
   },
-];
+] as const;
 
-const visualStyles: Record<GuideVisual, string> = {
-  music: "from-[#d9d0c2] via-[#b9a68f] to-[#6c5a4a]",
-  rockbox: "from-[#151515] via-[#33411f] to-[#7fa33f]",
-  storage: "from-[#171717] via-[#39414c] to-[#8e99a4]",
+const visualStyles = {
+  music: "from-[#e8e2d8] via-[#c8beb0] to-[#82766b]",
+  rockbox: "from-[#0f1d27] via-[#24485c] to-[#709b9d]",
+  storage: "from-[#293029] via-[#6c8069] to-[#bbcba6]",
 };
+
+function GuideVisual({
+  visual,
+}: {
+  visual: keyof typeof visualStyles;
+}) {
+  return (
+    <div
+      className={`relative h-52 overflow-hidden rounded-2xl bg-gradient-to-br ${visualStyles[visual]}`}
+    >
+      {visual === "music" && (
+        <div className="absolute left-1/2 top-1/2 h-36 w-24 -translate-x-1/2 -translate-y-1/2 rounded-[20px] border-[5px] border-neutral-800 bg-[#f7f1e7] shadow-xl">
+          <div className="absolute left-3 right-3 top-4 h-12 rounded border-[3px] border-black bg-white" />
+
+          <div className="absolute bottom-4 left-1/2 h-12 w-12 -translate-x-1/2 rounded-full bg-neutral-800">
+            <div className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-200" />
+          </div>
+        </div>
+      )}
+
+      {visual === "rockbox" && (
+        <>
+          <div className="absolute left-8 top-8 h-28 w-40 rounded-xl border border-white/20 bg-black/35 p-4">
+            <p className="text-xs font-semibold text-white">Rockbox</p>
+
+            <div className="mt-3 space-y-2">
+              <div className="h-2 rounded bg-white/70" />
+              <div className="h-2 w-4/5 rounded bg-white/45" />
+              <div className="h-2 w-3/5 rounded bg-white/25" />
+            </div>
+          </div>
+
+          <div className="absolute bottom-7 right-8 h-20 w-20 rounded-full border-[6px] border-white/80" />
+        </>
+      )}
+
+      {visual === "storage" && (
+        <>
+          <div className="absolute left-9 top-10 h-28 w-40 rounded-xl bg-[#1b231d] p-4 shadow-xl">
+            <div className="grid h-full grid-cols-5 gap-2">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <div key={index} className="rounded-sm bg-[#d8ce79]" />
+              ))}
+            </div>
+          </div>
+
+          <div className="absolute bottom-7 right-8 rounded-full bg-white/85 px-4 py-2 text-xs font-semibold text-black">
+            2TB
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
 export function GuidesPreview() {
   return (
-    <section id="guides" className="bg-[#f8f6f2] px-6 py-24 md:px-12 lg:px-16">
+    <section className="bg-[#f8f6f2] px-6 py-20 md:px-12 lg:px-16">
       <div className="mx-auto max-w-[1600px]">
-        <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <div className="max-w-xl">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
+        <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
               Knowledge Hub
             </p>
 
-            <h2 className="text-4xl font-semibold tracking-[-0.05em] md:text-5xl">
-              Keep your classic
-              <br />
-              playing beautifully.
+            <h2 className="mt-4 text-4xl font-semibold tracking-[-0.05em] md:text-5xl">
+              Keep your music moving.
             </h2>
-
-            <p className="mt-5 text-base leading-7 text-neutral-600">
-              Straightforward guides for adding music, installing Rockbox,
-              upgrading your device and solving common issues.
-            </p>
           </div>
 
-          <button className="w-fit rounded-full border border-black/25 px-6 py-3 text-sm font-semibold transition hover:bg-black hover:text-white">
-            View All Guides →
-          </button>
+          <Link
+            href="/guides"
+            className="w-fit text-sm font-semibold text-black transition hover:text-blue-600"
+          >
+            Explore all guides →
+          </Link>
         </div>
 
         <div className="grid gap-5 md:grid-cols-3">
           {guides.map((guide) => (
             <article
               key={guide.title}
-              className="group overflow-hidden rounded-2xl border border-black/10 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(0,0,0,0.10)]"
+              className="group rounded-[28px] border border-black/10 bg-white p-4 transition hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)]"
             >
-              <div
-                className={`relative h-52 bg-gradient-to-br ${visualStyles[guide.visual]}`}
-              >
-                <div className="absolute inset-0 bg-black/15" />
+              <GuideVisual visual={guide.visual} />
 
-                <div className="absolute left-1/2 top-1/2 h-36 w-24 -translate-x-1/2 -translate-y-1/2 rounded-[18px] bg-gradient-to-br from-neutral-100 to-neutral-400 p-2 shadow-[0_20px_35px_rgba(0,0,0,0.35)]">
-                  <div className="h-9 rounded border-[3px] border-black bg-[#f6f1e8]" />
+              <div className="px-2 pb-3 pt-6">
+                <div className="flex items-center justify-between gap-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">
+                    {guide.category}
+                  </p>
 
-                  <div className="mx-auto mt-5 h-12 w-12 rounded-full bg-neutral-900">
-                    <div className="relative h-full w-full">
-                      <div className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-300" />
-                    </div>
-                  </div>
+                  <p className="text-xs text-neutral-500">{guide.readTime}</p>
                 </div>
-              </div>
 
-              <div className="p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">
-                  {guide.category}
-                </p>
-
-                <h3 className="mt-3 text-xl font-semibold tracking-[-0.03em]">
+                <h3 className="mt-4 text-2xl font-semibold tracking-[-0.04em]">
                   {guide.title}
                 </h3>
 
-                <p className="mt-3 min-h-12 text-sm leading-6 text-neutral-600">
+                <p className="mt-4 text-sm leading-6 text-neutral-600">
                   {guide.description}
                 </p>
 
-                <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-4">
-                  <span className="text-sm text-neutral-500">
-                    {guide.readTime}
-                  </span>
-
-                  <button
-                    aria-label={`Read ${guide.title}`}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-black/20 transition group-hover:bg-black group-hover:text-white"
-                  >
-                    →
-                  </button>
-                </div>
+                <Link
+                  href="/guides"
+                  className="mt-6 inline-flex text-sm font-semibold transition group-hover:text-blue-600"
+                >
+                  Read guide →
+                </Link>
               </div>
             </article>
           ))}
