@@ -1,80 +1,99 @@
+import Link from "next/link";
+
 const builds = [
   {
-    title: "The Studio",
-    subtitle: "Based on iPod Classic 7th Generation",
-    specs: ["512GB Flash", "3000mAh Battery", "Matte Black"],
+    name: "The Studio",
+    model: "iPod Classic 7th Gen",
+    specs: ["512GB Flash Storage", "3000mAh Battery", "Matte Black"],
     price: "From €279",
-    tone: "studio",
+    tone: "dark",
   },
   {
-    title: "The Collector",
-    subtitle: "Based on iPod Classic 5.5 Generation",
-    specs: ["1TB Flash", "3000mAh Battery", "Polished Steel"],
+    name: "The Collector",
+    model: "iPod Classic 5.5 Gen",
+    specs: ["1TB Flash Storage", "3000mAh Battery", "Polished Steel"],
     price: "From €329",
-    tone: "collector",
+    tone: "steel",
   },
   {
-    title: "The Heritage",
-    subtitle: "Based on iPod Classic 6th Generation",
-    specs: ["256GB Flash", "2000mAh Battery", "Silver Finish"],
+    name: "The Heritage",
+    model: "iPod Classic 6th Gen",
+    specs: ["256GB Flash Storage", "2000mAh Battery", "Silver"],
     price: "From €249",
-    tone: "heritage",
+    tone: "silver",
   },
   {
-    title: "The Signature",
-    subtitle: "Based on iPod Classic 7th Generation",
-    specs: ["2TB Flash", "3000mAh Battery", "Custom Engraving"],
+    name: "The Signature",
+    model: "iPod Classic 7th Gen",
+    specs: ["2TB Flash Storage", "3000mAh Battery", "Custom Engraving"],
     price: "From €399",
-    tone: "signature",
+    tone: "warm",
   },
 ] as const;
 
-const deviceColors = {
-  studio: "from-neutral-900 via-neutral-700 to-neutral-950",
-  collector: "from-neutral-700 via-neutral-950 to-black",
-  heritage: "from-neutral-100 via-neutral-300 to-neutral-500",
-  signature: "from-[#9a7652] via-[#4f3423] to-[#17110d]",
+const visualStyles = {
+  dark: {
+    background: "from-[#1c1c1c] via-[#484848] to-[#080808]",
+    device: "border-neutral-600 bg-[#121212]",
+    wheel: "bg-neutral-200",
+    screen: "bg-white",
+  },
+  steel: {
+    background: "from-[#e1e1e1] via-[#9d9d9d] to-[#484848]",
+    device: "border-neutral-500 bg-[#f2eee7]",
+    wheel: "bg-neutral-700",
+    screen: "bg-white",
+  },
+  silver: {
+    background: "from-[#f0ece4] via-[#c4beb4] to-[#8f8980]",
+    device: "border-neutral-400 bg-[#f7f1e7]",
+    wheel: "bg-neutral-200",
+    screen: "bg-white",
+  },
+  warm: {
+    background: "from-[#7b4d30] via-[#b7794b] to-[#e5bd8b]",
+    device: "border-[#69432a] bg-[#f1e4d2]",
+    wheel: "bg-[#3b291f]",
+    screen: "bg-white",
+  },
 };
 
-function DevicePreview({
+function BuildVisual({
   tone,
 }: {
-  tone: keyof typeof deviceColors;
+  tone: keyof typeof visualStyles;
 }) {
+  const style = visualStyles[tone];
+
   return (
     <div
-      className={`relative mx-auto flex h-52 w-32 items-center justify-center rounded-[24px] bg-gradient-to-br ${deviceColors[tone]} shadow-[0_20px_35px_rgba(0,0,0,0.25)]`}
+      className={`relative h-72 overflow-hidden rounded-[24px] bg-gradient-to-br ${style.background}`}
     >
-      <div className="absolute left-3 right-3 top-4 h-14 rounded-md border-[3px] border-black bg-[#f6f1e8] p-1.5">
-        <div className="grid h-full grid-cols-2 overflow-hidden rounded-sm text-[5px] font-bold text-black">
-          <div className="space-y-0.5 bg-white p-1">
-            <div className="rounded-sm bg-blue-600 px-0.5 text-white">
+      <div
+        className={`absolute left-1/2 top-1/2 h-52 w-32 -translate-x-1/2 -translate-y-1/2 rounded-[28px] border-[7px] ${style.device} shadow-2xl`}
+      >
+        <div
+          className={`absolute left-4 right-4 top-5 h-22 rounded-lg border-[4px] border-black ${style.screen}`}
+        >
+          <div className="px-3 py-3 text-[8px] font-semibold leading-4 text-black">
+            <p className="rounded bg-blue-600 px-1.5 py-0.5 text-white">
               Music
-            </div>
-            <div>Videos</div>
-            <div>Photos</div>
-            <div>Extras</div>
+            </p>
+            <p className="mt-1">Videos</p>
+            <p>Photos</p>
+            <p>Settings</p>
           </div>
-          <div className="flex items-center justify-center bg-[#ddd2bf] text-center">
-            CLICKWHEEL
-          </div>
+        </div>
+
+        <div
+          className={`absolute bottom-5 left-1/2 h-18 w-18 -translate-x-1/2 rounded-full ${style.wheel}`}
+        >
+          <div className="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-100" />
         </div>
       </div>
 
-      <div className="absolute bottom-5 h-16 w-16 rounded-full bg-[#252525]">
-        <span className="absolute left-1/2 top-2 -translate-x-1/2 text-[5px] font-bold text-white">
-          MENU
-        </span>
-        <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[7px] text-white">
-          ◀◀
-        </span>
-        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[7px] text-white">
-          ▶▶
-        </span>
-        <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[6px] text-white">
-          ▶❚❚
-        </span>
-        <div className="absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-300" />
+      <div className="absolute right-5 top-5 rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-black backdrop-blur">
+        Restored
       </div>
     </div>
   );
@@ -82,63 +101,72 @@ function DevicePreview({
 
 export function FeaturedBuilds() {
   return (
-    <section id="shop" className="bg-[#f8f6f2] px-6 py-24 md:px-12 lg:px-16">
+    <section className="bg-[#f8f6f2] px-6 py-20 md:px-12 lg:px-16">
       <div className="mx-auto max-w-[1600px]">
-        <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <div className="max-w-md">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
+        <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
               Featured Builds
             </p>
 
-            <h2 className="text-4xl font-semibold tracking-[-0.05em] md:text-5xl">
-              Built with care.
-              <br />
-              Chosen by you.
+            <h2 className="mt-4 text-4xl font-semibold tracking-[-0.05em] md:text-5xl">
+              Choose your classic.
             </h2>
-
-            <p className="mt-5 text-base leading-7 text-neutral-600">
-              Every build has its own character. Restored by hand and prepared
-              for years of listening.
-            </p>
           </div>
 
-          <button className="w-fit rounded-full border border-black/25 px-6 py-3 text-sm font-semibold transition hover:bg-black hover:text-white">
-            View All Builds →
-          </button>
+          <Link
+            href="/shop"
+            className="w-fit text-sm font-semibold text-black transition hover:text-blue-600"
+          >
+            Explore collection →
+          </Link>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {builds.map((build) => (
             <article
-              key={build.title}
-              className="group rounded-2xl border border-black/10 bg-white p-5 transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(0,0,0,0.10)]"
+              key={build.name}
+              className="group rounded-[28px] border border-black/10 bg-white p-4 transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(0,0,0,0.09)]"
             >
-              <div className="flex min-h-60 items-center justify-center rounded-xl bg-[#efede8]">
-                <DevicePreview tone={build.tone} />
-              </div>
+              <BuildVisual tone={build.tone} />
 
-              <div className="mt-6">
-                <h3 className="text-xl font-semibold">{build.title}</h3>
+              <div className="px-2 pb-3 pt-6">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">
+                      {build.model}
+                    </p>
 
-                <p className="mt-2 min-h-10 text-sm leading-5 text-neutral-500">
-                  {build.subtitle}
-                </p>
+                    <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">
+                      {build.name}
+                    </h3>
+                  </div>
 
-                <ul className="mt-4 space-y-2 text-sm text-neutral-700">
+                  <p className="whitespace-nowrap text-sm font-semibold">
+                    {build.price}
+                  </p>
+                </div>
+
+                <div className="mt-5 space-y-2 text-sm text-neutral-600">
                   {build.specs.map((spec) => (
-                    <li key={spec}>• {spec}</li>
+                    <p key={spec}>{spec}</p>
                   ))}
-                </ul>
+                </div>
 
-                <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-4">
-                  <span className="font-semibold">{build.price}</span>
-
-                  <button
-                    aria-label={`View ${build.title}`}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-black/20 transition group-hover:bg-black group-hover:text-white"
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <Link
+                    href="/build"
+                    className="rounded-full bg-black px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800"
                   >
-                    →
-                  </button>
+                    Configure yours →
+                  </Link>
+
+                  <Link
+                    href="/shop"
+                    className="rounded-full border border-black/10 px-4 py-2.5 text-sm font-semibold transition hover:border-black"
+                  >
+                    View collection
+                  </Link>
                 </div>
               </div>
             </article>
