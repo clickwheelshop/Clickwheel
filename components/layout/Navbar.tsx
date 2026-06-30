@@ -17,7 +17,7 @@ export function Navbar() {
         <Link href="/#shop">Shop</Link>
         <Link href="/accessories">Accessories</Link>
         <Link href="/services">Services</Link>
-        <Link href="/#guides">Guides</Link>
+        <Link href="/guides">Guides</Link>
         <Link href="/#support">Support</Link>
       </div>
 
