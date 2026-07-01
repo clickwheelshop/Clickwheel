@@ -10,7 +10,7 @@ const guides = [
       "A simple introduction to syncing music from macOS or Windows using Finder, iTunes and compatible alternatives.",
     readTime: "6 min read",
     visual: "music",
-    href: "/guides",
+    href: "/guides/music",
   },
   {
     category: "Software",
@@ -81,6 +81,7 @@ function GuideVisual({
         <>
           <div className="absolute left-1/2 top-1/2 h-36 w-24 -translate-x-1/2 -translate-y-1/2 rounded-[20px] border-[5px] border-neutral-800 bg-[#f7f1e7] shadow-xl">
             <div className="absolute left-3 right-3 top-4 h-12 rounded border-[3px] border-black bg-white" />
+
             <div className="absolute bottom-4 left-1/2 h-12 w-12 -translate-x-1/2 rounded-full bg-neutral-800">
               <div className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-200" />
             </div>
