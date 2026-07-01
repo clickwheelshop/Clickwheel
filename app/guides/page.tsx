@@ -10,6 +10,7 @@ const guides = [
       "A simple introduction to syncing music from macOS or Windows using Finder, iTunes and compatible alternatives.",
     readTime: "6 min read",
     visual: "music",
+    href: "/guides",
   },
   {
     category: "Software",
@@ -18,6 +19,7 @@ const guides = [
       "Learn what Rockbox changes, which music formats it supports and when it makes sense for your build.",
     readTime: "8 min read",
     visual: "rockbox",
+    href: "/guides",
   },
   {
     category: "Storage",
@@ -26,6 +28,7 @@ const guides = [
       "A practical guide to storage size, music libraries, lossless files and everyday use.",
     readTime: "5 min read",
     visual: "storage",
+    href: "/guides/storage",
   },
   {
     category: "Battery",
@@ -34,6 +37,7 @@ const guides = [
       "What affects battery life, how capacity works and when a 3000mAh battery is worth it.",
     readTime: "4 min read",
     visual: "battery",
+    href: "/guides",
   },
   {
     category: "Restoration",
@@ -42,6 +46,7 @@ const guides = [
       "Understand housing depth, backplate compatibility and which parts fit each classic model.",
     readTime: "5 min read",
     visual: "classic",
+    href: "/guides",
   },
   {
     category: "Care",
@@ -50,6 +55,7 @@ const guides = [
       "Simple habits for keeping your screen, click wheel and polished backplate looking better for longer.",
     readTime: "3 min read",
     visual: "care",
+    href: "/guides",
   },
 ] as const;
 
@@ -79,6 +85,7 @@ function GuideVisual({
               <div className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-200" />
             </div>
           </div>
+
           <div className="absolute right-6 top-6 rounded-full bg-white/75 px-3 py-1 text-xs font-semibold">
             Music
           </div>
@@ -89,12 +96,14 @@ function GuideVisual({
         <>
           <div className="absolute left-8 top-8 h-28 w-40 rounded-xl border border-white/20 bg-black/35 p-4 backdrop-blur">
             <p className="text-xs font-semibold text-white">Rockbox</p>
+
             <div className="mt-3 space-y-2">
               <div className="h-2 rounded bg-white/70" />
               <div className="h-2 w-4/5 rounded bg-white/45" />
               <div className="h-2 w-3/5 rounded bg-white/25" />
             </div>
           </div>
+
           <div className="absolute bottom-7 right-8 h-20 w-20 rounded-full border-[6px] border-white/80" />
         </>
       )}
@@ -108,6 +117,7 @@ function GuideVisual({
               ))}
             </div>
           </div>
+
           <div className="absolute bottom-7 right-8 rounded-full bg-white/85 px-4 py-2 text-xs font-semibold text-black">
             1TB
           </div>
@@ -120,6 +130,7 @@ function GuideVisual({
             <div className="absolute -top-3 left-1/2 h-3 w-8 -translate-x-1/2 rounded-t bg-neutral-800" />
             <div className="absolute inset-x-3 bottom-4 top-4 rounded bg-[#dfa63f]" />
           </div>
+
           <div className="absolute bottom-8 right-8 text-4xl font-semibold tracking-[-0.08em] text-black/70">
             3000
           </div>
@@ -129,6 +140,7 @@ function GuideVisual({
       {visual === "classic" && (
         <div className="absolute left-1/2 top-1/2 h-40 w-28 -translate-x-1/2 -translate-y-1/2 rounded-[22px] border-[6px] border-neutral-300 bg-[#f5f1e8] shadow-2xl">
           <div className="absolute left-4 right-4 top-5 h-16 rounded-lg border-[4px] border-black bg-white" />
+
           <div className="absolute bottom-5 left-1/2 h-14 w-14 -translate-x-1/2 rounded-full bg-neutral-800">
             <div className="absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-200" />
           </div>
@@ -208,7 +220,9 @@ export default function GuidesPage() {
                       {guide.category}
                     </p>
 
-                    <p className="text-xs text-neutral-500">{guide.readTime}</p>
+                    <p className="text-xs text-neutral-500">
+                      {guide.readTime}
+                    </p>
                   </div>
 
                   <h3 className="mt-4 text-2xl font-semibold tracking-[-0.04em]">
@@ -219,9 +233,12 @@ export default function GuidesPage() {
                     {guide.description}
                   </p>
 
-                  <button className="mt-6 inline-flex text-sm font-semibold text-black transition group-hover:text-blue-600">
+                  <Link
+                    href={guide.href}
+                    className="mt-6 inline-flex text-sm font-semibold text-black transition group-hover:text-blue-600"
+                  >
                     Read guide →
-                  </button>
+                  </Link>
                 </div>
               </article>
             ))}
