@@ -14,6 +14,7 @@ const workshopLinks = [
 
 const helpLinks = [
   { label: "Guides", href: "/guides" },
+  { label: "Troubleshooting", href: "/guides/troubleshooting" },
   { label: "Support", href: "/support" },
   { label: "Build Yours", href: "/build" },
 ];
