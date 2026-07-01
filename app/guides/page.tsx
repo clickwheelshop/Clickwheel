@@ -40,14 +40,14 @@ const guides = [
     href: "/guides/battery",
   },
   {
-  category: "Restoration",
-  title: "Thin vs thick iPod Classic: what is the difference?",
-  description:
-    "Understand housing depth, backplate compatibility and which parts fit each classic model.",
-  readTime: "5 min read",
-  visual: "classic",
-  href: "/guides/thin-vs-thick",
-},
+    category: "Restoration",
+    title: "Thin vs thick iPod Classic: what is the difference?",
+    description:
+      "Understand housing depth, backplate compatibility and which parts fit each classic model.",
+    readTime: "5 min read",
+    visual: "classic",
+    href: "/guides/thin-vs-thick",
+  },
   {
     category: "Care",
     title: "How to clean and protect a restored iPod",
@@ -55,7 +55,7 @@ const guides = [
       "Simple habits for keeping your screen, click wheel and polished backplate looking better for longer.",
     readTime: "3 min read",
     visual: "care",
-    href: "/guides",
+    href: "/guides/care",
   },
 ] as const;
 
@@ -81,7 +81,6 @@ function GuideVisual({
         <>
           <div className="absolute left-1/2 top-1/2 h-36 w-24 -translate-x-1/2 -translate-y-1/2 rounded-[20px] border-[5px] border-neutral-800 bg-[#f7f1e7] shadow-xl">
             <div className="absolute left-3 right-3 top-4 h-12 rounded border-[3px] border-black bg-white" />
-
             <div className="absolute bottom-4 left-1/2 h-12 w-12 -translate-x-1/2 rounded-full bg-neutral-800">
               <div className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-200" />
             </div>
@@ -202,8 +201,8 @@ export default function GuidesPage() {
             </div>
 
             <p className="max-w-md text-sm leading-6 text-neutral-600">
-              These guides are the foundation for the Clickwheel knowledge hub.
-              Full articles will be added as the workshop grows.
+              Practical guides for setting up, restoring and maintaining your
+              iPod Classic.
             </p>
           </div>
 
