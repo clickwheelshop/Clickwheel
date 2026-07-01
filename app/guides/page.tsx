@@ -37,7 +37,7 @@ const guides = [
       "What affects battery life, how capacity works and when a 3000mAh battery is worth it.",
     readTime: "4 min read",
     visual: "battery",
-    href: "/guides",
+    href: "/guides/battery",
   },
   {
     category: "Restoration",
