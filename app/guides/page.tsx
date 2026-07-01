@@ -57,6 +57,15 @@ const guides = [
     visual: "care",
     href: "/guides/care",
   },
+  {
+    category: "Support",
+    title: "iPod Classic troubleshooting",
+    description:
+      "Quick checks for data cables, sync issues, Mac and Windows compatibility, and Rockbox music libraries.",
+    readTime: "6 min read",
+    visual: "troubleshooting",
+    href: "/guides/troubleshooting",
+  },
 ] as const;
 
 const visualClasses = {
@@ -66,6 +75,7 @@ const visualClasses = {
   battery: "from-[#a67442] via-[#d7b57d] to-[#f4e4c2]",
   classic: "from-[#1f1f1f] via-[#565656] to-[#bdbdbd]",
   care: "from-[#cfb48e] via-[#e7d7b9] to-[#fbf5e8]",
+  troubleshooting: "from-[#2e2d2a] via-[#77716a] to-[#d8d1c6]",
 };
 
 function GuideVisual({
@@ -81,6 +91,7 @@ function GuideVisual({
         <>
           <div className="absolute left-1/2 top-1/2 h-36 w-24 -translate-x-1/2 -translate-y-1/2 rounded-[20px] border-[5px] border-neutral-800 bg-[#f7f1e7] shadow-xl">
             <div className="absolute left-3 right-3 top-4 h-12 rounded border-[3px] border-black bg-white" />
+
             <div className="absolute bottom-4 left-1/2 h-12 w-12 -translate-x-1/2 rounded-full bg-neutral-800">
               <div className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-200" />
             </div>
@@ -153,6 +164,20 @@ function GuideVisual({
           <div className="absolute left-20 top-16 h-16 w-16 rounded-full bg-[#f7f1e7] shadow-inner" />
           <div className="absolute right-9 top-8 h-32 w-12 rotate-[18deg] rounded-full bg-black/70" />
           <div className="absolute right-11 top-7 h-8 w-8 rounded-full bg-white/65" />
+        </>
+      )}
+
+      {visual === "troubleshooting" && (
+        <>
+          <div className="absolute left-8 top-9 rounded-xl border border-white/20 bg-black/25 p-4 text-white">
+            <p className="text-xs font-semibold">Connection check</p>
+            <div className="mt-3 h-2 w-28 rounded bg-white/70" />
+            <div className="mt-2 h-2 w-20 rounded bg-white/35" />
+          </div>
+
+          <div className="absolute bottom-7 right-8 flex h-16 w-16 items-center justify-center rounded-full bg-white/85 text-2xl font-semibold text-black">
+            ?
+          </div>
         </>
       )}
     </div>
