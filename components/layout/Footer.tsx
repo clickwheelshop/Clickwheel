@@ -22,6 +22,10 @@ const englishHelpLinks = [
   { label: "Build Yours", href: "/build" },
 ];
 
+const englishLegalLinks = [
+  { label: "Shipping & Delivery", href: "/shipping" },
+];
+
 const romanianShopLinks = [
   { label: "Colecție", href: "/shop" },
   { label: "Configurează-l", href: "/build" },
@@ -39,6 +43,10 @@ const romanianHelpLinks = [
   { label: "Depanare", href: "/guides/troubleshooting" },
   { label: "Suport", href: "/support" },
   { label: "Configurează-l", href: "/build" },
+];
+
+const romanianLegalLinks = [
+  { label: "Livrare", href: "/shipping" },
 ];
 
 function FooterColumn({
@@ -80,11 +88,12 @@ export function Footer() {
     ? romanianWorkshopLinks
     : englishWorkshopLinks;
   const helpLinks = isRomanian ? romanianHelpLinks : englishHelpLinks;
+  const legalLinks = isRomanian ? romanianLegalLinks : englishLegalLinks;
 
   return (
     <footer className="bg-[#111111] px-6 pb-8 pt-16 text-white md:px-12 lg:px-16">
       <div className="mx-auto max-w-[1600px]">
-        <div className="grid gap-12 border-b border-white/15 pb-14 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
+        <div className="grid gap-12 border-b border-white/15 pb-14 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1fr]">
           <div>
             <Link href={isRomanian ? "/ro" : "/"} className="block w-fit">
               <div className="text-lg font-semibold tracking-[0.35em]">
@@ -127,12 +136,20 @@ export function Footer() {
             links={helpLinks}
             isRomanian={isRomanian}
           />
+
+          <FooterColumn
+            title="Legal"
+            links={legalLinks}
+            isRomanian={isRomanian}
+          />
         </div>
 
         <div className="flex flex-col gap-4 pt-7 text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} Clickwheel.{" "}
-            {isRomanian ? "Toate drepturile rezervate." : "All rights reserved."}
+            {isRomanian
+              ? "Toate drepturile rezervate."
+              : "All rights reserved."}
           </p>
 
           <p>
