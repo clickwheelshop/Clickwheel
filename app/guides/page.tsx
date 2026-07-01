@@ -19,7 +19,7 @@ const guides = [
       "Learn what Rockbox changes, which music formats it supports and when it makes sense for your build.",
     readTime: "8 min read",
     visual: "rockbox",
-    href: "/guides",
+    href: "/guides/rockbox",
   },
   {
     category: "Storage",
