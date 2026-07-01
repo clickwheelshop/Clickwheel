@@ -40,14 +40,14 @@ const guides = [
     href: "/guides/battery",
   },
   {
-    category: "Restoration",
-    title: "Thin vs thick iPod Classic: what is the difference?",
-    description:
-      "Understand housing depth, backplate compatibility and which parts fit each classic model.",
-    readTime: "5 min read",
-    visual: "classic",
-    href: "/guides",
-  },
+  category: "Restoration",
+  title: "Thin vs thick iPod Classic: what is the difference?",
+  description:
+    "Understand housing depth, backplate compatibility and which parts fit each classic model.",
+  readTime: "5 min read",
+  visual: "classic",
+  href: "/guides/thin-vs-thick",
+},
   {
     category: "Care",
     title: "How to clean and protect a restored iPod",
