@@ -14,6 +14,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.clickwheel.shop"),
+  
+  icons: {
+  icon: [
+    {
+      url: "/favicon.ico?v=11",
+      type: "image/x-icon",
+    },
+  ],
+},
 
   title: {
     default: "Clickwheel | Restored & Upgraded iPod Classic",

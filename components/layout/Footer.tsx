@@ -95,15 +95,26 @@ export function Footer() {
       <div className="mx-auto max-w-[1600px]">
         <div className="grid gap-12 border-b border-white/15 pb-14 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1fr]">
           <div>
-            <Link href={isRomanian ? "/ro" : "/"} className="block w-fit">
-              <div className="text-lg font-semibold tracking-[0.35em]">
-                CLICKWHEEL
-              </div>
+            <Link
+  href={isRomanian ? "/ro" : "/"}
+  className="flex w-fit items-center gap-3"
+>
+  <img
+    src="/logo/fn-avatar-steel.svg"
+    alt="Clickwheel logo"
+    className="h-11 w-11 shrink-0 object-contain"
+  />
 
-              <div className="mt-1 text-[10px] tracking-[0.22em] text-white/45">
-                RESTORE. UPGRADE. REDISCOVER.
-              </div>
-            </Link>
+  <div>
+    <div className="text-lg font-semibold tracking-[0.35em]">
+      CLICKWHEEL
+    </div>
+
+    <div className="mt-1 text-[10px] tracking-[0.22em] text-white/45">
+      RESTORE. UPGRADE. REDISCOVER.
+    </div>
+  </div>
+</Link>
 
             <p className="mt-6 max-w-sm text-sm leading-6 text-white/60">
               {isRomanian

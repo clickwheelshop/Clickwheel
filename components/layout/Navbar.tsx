@@ -101,15 +101,23 @@ export function Navbar() {
         <div className="flex items-center justify-between px-6 py-5 md:px-10">
           <Link
             href={isRomanian ? "/ro" : "/"}
-            className="block"
+            className="flex items-center gap-3"
             onClick={closeMenu}
           >
-            <div className="text-lg font-semibold tracking-[0.35em] md:text-xl">
-              CLICKWHEEL
-            </div>
+            <img
+              src="/logo/fn-avatar-steel.svg"
+              alt="Clickwheel logo"
+              className="h-10 w-10 shrink-0 object-contain md:h-11 md:w-11"
+            />
 
-            <div className="text-[10px] tracking-[0.25em] text-neutral-500 md:text-xs">
-              RESTORE. UPGRADE. REDISCOVER.
+            <div>
+              <div className="text-lg font-semibold tracking-[0.35em] md:text-xl">
+                CLICKWHEEL
+              </div>
+
+              <div className="text-[10px] tracking-[0.25em] text-neutral-500 md:text-xs">
+                RESTORE. UPGRADE. REDISCOVER.
+              </div>
             </div>
           </Link>
 
