@@ -81,10 +81,8 @@ export default function RomanianStorageGuidePage() {
             </p>
 
             <p className="mt-6 text-base leading-8 text-neutral-700">
-              Clickwheel oferă trei capacități atent alese: 256GB, 512GB și
-              1TB. Nu oferim configurații de 2TB deoarece fiabilitatea pe
-              termen lung este mai importantă decât o cifră mai mare pe pagina
-              unui produs.
+              Fiecare model Clickwheel începe cu 128GB incluși. Upgrade-urile de
+              stocare sunt disponibile în variante de 256GB, 512GB și 1TB.
             </p>
           </div>
 

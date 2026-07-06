@@ -1,151 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  calculateConfiguratorTotalEurCents,
+  getConfiguratorOptions,
+  getConfiguratorStorageOptions,
+  type ConfiguratorChoice,
+} from "@/data/configurator";
+import { formatEurCents } from "@/lib/money";
 
-type Choice = {
-  name: string;
-  description: string;
-  price: number;
-};
+type Choice = ConfiguratorChoice;
 
-const modelOptions: Choice[] = [
-  {
-    name: "iPod Classic 7th Gen",
-    description: "Late-generation Classic platform for a refined everyday build.",
-    price: 0,
-  },
-  {
-    name: "iPod Classic 6th Gen",
-    description: "A classic aluminium-front platform with a timeless look.",
-    price: 0,
-  },
-  {
-    name: "iPod Classic 5.5 Gen",
-    description: "An earlier Classic platform, popular with collectors.",
-    price: 0,
-  },
-];
-
-const storageOptions: Choice[] = [
-  {
-    name: "256GB",
-    description: "A strong everyday music library.",
-    price: 0,
-  },
-  {
-    name: "512GB",
-    description: "More room for lossless music and larger collections.",
-    price: 40,
-  },
-  {
-    name: "1TB",
-    description: "Maximum supported Clickwheel storage configuration.",
-    price: 95,
-  },
-];
-
-const batteryOptions: Choice[] = [
-  {
-    name: "2000mAh",
-    description: "Balanced everyday battery life.",
-    price: 0,
-  },
-  {
-    name: "3000mAh",
-    description: "Extended battery for long listening sessions.",
-    price: 25,
-  },
-];
-
-const finishOptions: Choice[] = [
-  {
-    name: "Silver",
-    description: "Clean and timeless.",
-    price: 0,
-  },
-  {
-    name: "Matte Black",
-    description: "Minimal and understated.",
-    price: 15,
-  },
-  {
-    name: "Space Grey",
-    description: "A darker modern finish.",
-    price: 20,
-  },
-  {
-    name: "Custom Colour",
-    description: "Selected colour housing configuration.",
-    price: 35,
-  },
-];
-
-const backplateOptions: Choice[] = [
-  {
-    name: "Polished Steel",
-    description: "Classic stainless steel finish.",
-    price: 0,
-  },
-  {
-    name: "Mirror Finish Restoration",
-    description: "Restored stainless steel backplate.",
-    price: 30,
-  },
-  {
-    name: "Custom Engraving",
-    description: "Personalised engraving on the rear plate.",
-    price: 45,
-  },
-];
-
-const softwareOptions: Choice[] = [
-  {
-    name: "Standard iPod OS",
-    description: "Classic Apple interface.",
-    price: 0,
-  },
-  {
-    name: "Rockbox Setup",
-    description: "Advanced playback and format support.",
-    price: 20,
-  },
-];
-
-const accessoryOptions: Choice[] = [
-  {
-    name: "30-pin USB Cable",
-    description: "Charging and music transfer cable.",
-    price: 12,
-  },
-  {
-    name: "Wall Charger",
-    description: "Compact USB charging adapter.",
-    price: 18,
-  },
-  {
-    name: "Protective Sleeve",
-    description: "Soft everyday protection.",
-    price: 22,
-  },
-  {
-    name: "Hard Case",
-    description: "Structured protective case.",
-    price: 29,
-  },
-  {
-    name: "Wired Earphones",
-    description: "Simple wired listening setup.",
-    price: 35,
-  },
-  {
-    name: "Bluetooth Transmitter",
-    description: "Wireless listening accessory.",
-    price: 39,
-  },
-];
+const {
+  models: modelOptions,
+  batteries: batteryOptions,
+  finishes: finishOptions,
+  backplates: backplateOptions,
+  software: softwareOptions,
+  accessories: accessoryOptions,
+} = getConfiguratorOptions("en");
 
 function OptionCard({
   option,
@@ -184,7 +60,11 @@ function OptionCard({
             active ? "text-white" : "text-neutral-700"
           }`}
         >
-          {option.price === 0 ? "Included" : `+€${option.price}`}
+          {option.included
+            ? "Included"
+            : option.priceEurCents === 0
+              ? "Upgrade"
+            : `+${formatEurCents(option.priceEurCents)}`}
         </span>
       </div>
     </button>
@@ -227,9 +107,9 @@ function ConfigurationSection({
       <div className="grid gap-4 md:grid-cols-2">
         {options.map((option) => (
           <OptionCard
-            key={option.name}
+            key={option.id}
             option={option}
-            active={selected.name === option.name}
+            active={selected.id === option.id}
             onClick={() => onSelect(option)}
           />
         ))}
@@ -239,55 +119,63 @@ function ConfigurationSection({
 }
 
 export default function BuildPage() {
-  const basePrice = 249;
-
   const [model, setModel] = useState(modelOptions[0]);
-  const [storage, setStorage] = useState(storageOptions[0]);
+  const [storage, setStorage] = useState(
+    getConfiguratorStorageOptions("en", modelOptions[0].id)[0],
+  );
   const [battery, setBattery] = useState(batteryOptions[0]);
   const [finish, setFinish] = useState(finishOptions[0]);
   const [backplate, setBackplate] = useState(backplateOptions[0]);
   const [software, setSoftware] = useState(softwareOptions[0]);
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([]);
+  const storageOptions = getConfiguratorStorageOptions("en", model.id);
 
-  const accessoryTotal = useMemo(() => {
-    return accessoryOptions
-      .filter((accessory) => selectedAccessories.includes(accessory.name))
-      .reduce((total, accessory) => total + accessory.price, 0);
-  }, [selectedAccessories]);
+  const selectedAccessoryOptions = accessoryOptions.filter((accessory) =>
+    selectedAccessories.includes(accessory.id),
+  );
 
-  const totalPrice =
-    basePrice +
-    model.price +
-    storage.price +
-    battery.price +
-    finish.price +
-    backplate.price +
-    software.price +
-    accessoryTotal;
+  const totalPriceEurCents = calculateConfiguratorTotalEurCents({
+    model,
+    storage,
+    battery,
+    finish,
+    backplate,
+    software,
+    accessories: selectedAccessoryOptions,
+  });
 
   const requestUrl = `/request-build?model=${encodeURIComponent(
-    model.name,
+    model.id,
   )}&storage=${encodeURIComponent(
-    storage.name,
+    storage.id,
   )}&battery=${encodeURIComponent(
-    battery.name,
+    battery.id,
   )}&finish=${encodeURIComponent(
-    finish.name,
+    finish.id,
   )}&backplate=${encodeURIComponent(
-    backplate.name,
+    backplate.id,
   )}&software=${encodeURIComponent(
-    software.name,
+    software.id,
   )}&accessories=${encodeURIComponent(
-    selectedAccessories.length > 0
-      ? selectedAccessories.join(", ")
-      : "None selected",
-  )}&total=${totalPrice}`;
+    selectedAccessories.join(","),
+  )}`;
 
-  function toggleAccessory(name: string) {
+  function toggleAccessory(id: string) {
     setSelectedAccessories((current) =>
-      current.includes(name)
-        ? current.filter((item) => item !== name)
-        : [...current, name],
+      current.includes(id)
+        ? current.filter((item) => item !== id)
+        : [...current, id],
+    );
+  }
+
+  function selectModel(option: Choice) {
+    const nextStorageOptions = getConfiguratorStorageOptions("en", option.id);
+
+    setModel(option);
+    setStorage((current) =>
+      nextStorageOptions.some((storageOption) => storageOption.id === current.id)
+        ? current
+        : nextStorageOptions[0],
     );
   }
 
@@ -328,7 +216,7 @@ export default function BuildPage() {
               description="Model availability and compatible parts are confirmed before payment."
               options={modelOptions}
               selected={model}
-              onSelect={(option) => setModel(option)}
+              onSelect={selectModel}
             />
 
             <ConfigurationSection
@@ -388,13 +276,13 @@ export default function BuildPage() {
 
               <div className="grid gap-4 md:grid-cols-2">
                 {accessoryOptions.map((option) => {
-                  const isSelected = selectedAccessories.includes(option.name);
+                  const isSelected = selectedAccessories.includes(option.id);
 
                   return (
                     <button
                       key={option.name}
                       type="button"
-                      onClick={() => toggleAccessory(option.name)}
+                      onClick={() => toggleAccessory(option.id)}
                       className={`w-full rounded-2xl border p-5 text-left transition ${
                         isSelected
                           ? "border-blue-600 bg-blue-600 text-white"
@@ -419,7 +307,9 @@ export default function BuildPage() {
                         </div>
 
                         <span className="whitespace-nowrap text-sm font-semibold">
-                          {isSelected ? "Added" : `+€${option.price}`}
+                          {isSelected
+                            ? "Added"
+                            : `+${formatEurCents(option.priceEurCents)}`}
                         </span>
                       </div>
                     </button>
@@ -515,9 +405,9 @@ export default function BuildPage() {
                     <p className="mb-3 text-neutral-500">Accessories</p>
 
                     <div className="space-y-2">
-                      {selectedAccessories.map((item) => (
-                        <p key={item} className="font-semibold">
-                          {item}
+                      {selectedAccessoryOptions.map((item) => (
+                        <p key={item.id} className="font-semibold">
+                          {item.name}
                         </p>
                       ))}
                     </div>
@@ -534,7 +424,7 @@ export default function BuildPage() {
                     </div>
 
                     <p className="text-3xl font-semibold tracking-[-0.04em]">
-                      €{totalPrice}
+                      {formatEurCents(totalPriceEurCents)}
                     </p>
                   </div>
                 </div>

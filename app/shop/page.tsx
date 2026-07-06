@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { products, type ProductTone } from "@/data/products";
+import { formatStartingPriceFromEurCents } from "@/lib/money";
 
 const productStyles: Record<
   ProductTone,
@@ -135,16 +136,21 @@ export default function ShopPage() {
                 <div className="px-3 pb-3 pt-7">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">
-                        {product.model}
-                      </p>
-
-                      <h3 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">
+                      <h3 className="text-3xl font-semibold tracking-[-0.04em]">
                         {product.name}
                       </h3>
+
+                      <p className="mt-2 text-xs font-semibold tracking-[0.08em] text-blue-600">
+                        {product.secondaryLine}
+                      </p>
                     </div>
 
-                    <p className="text-lg font-semibold">{product.price}</p>
+                    <p className="text-lg font-semibold">
+                      {formatStartingPriceFromEurCents(
+                        product.priceEurCents,
+                        "en",
+                      )}
+                    </p>
                   </div>
 
                   <p className="mt-5 max-w-xl text-sm leading-6 text-neutral-600">

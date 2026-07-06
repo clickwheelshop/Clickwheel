@@ -1,35 +1,15 @@
 import Link from "next/link";
+import { products } from "@/data/products";
+import { formatStartingPriceFromEurCents } from "@/lib/money";
 
-const builds = [
-  {
-    name: "The Studio",
-    model: "iPod Classic 7th Gen",
-    specs: ["512GB Flash Storage", "3000mAh Battery", "Matte Black"],
-    price: "From €279",
-    tone: "dark",
-  },
-  {
-    name: "The Collector",
-    model: "iPod Classic 5.5 Gen",
-    specs: ["1TB Flash Storage", "3000mAh Battery", "Polished Steel"],
-    price: "From €329",
-    tone: "steel",
-  },
-  {
-    name: "The Heritage",
-    model: "iPod Classic 6th Gen",
-    specs: ["256GB Flash Storage", "2000mAh Battery", "Silver"],
-    price: "From €249",
-    tone: "silver",
-  },
-  {
-    name: "The Signature",
-    model: "iPod Classic 7th Gen",
-    specs: ["1TB Flash Storage", "3000mAh Battery", "Custom Engraving"],
-    price: "From €399",
-    tone: "warm",
-  },
-] as const;
+const builds = products.map((product) => ({
+  slug: product.slug,
+  name: product.name,
+  secondaryLine: product.secondaryLine,
+  specs: [product.storage, product.battery, product.finish],
+  priceEurCents: product.priceEurCents,
+  tone: product.tone,
+}));
 
 const visualStyles = {
   dark: {
@@ -125,7 +105,7 @@ export function FeaturedBuilds() {
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {builds.map((build) => (
             <article
-              key={build.name}
+              key={build.slug}
               className="group rounded-[28px] border border-black/10 bg-white p-4 transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(0,0,0,0.09)]"
             >
               <BuildVisual tone={build.tone} />
@@ -133,17 +113,20 @@ export function FeaturedBuilds() {
               <div className="px-2 pb-3 pt-6">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">
-                      {build.model}
-                    </p>
-
-                    <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">
+                    <h3 className="text-2xl font-semibold tracking-[-0.04em]">
                       {build.name}
                     </h3>
+
+                    <p className="mt-2 text-xs font-semibold tracking-[0.08em] text-blue-600">
+                      {build.secondaryLine}
+                    </p>
                   </div>
 
                   <p className="whitespace-nowrap text-sm font-semibold">
-                    {build.price}
+                    {formatStartingPriceFromEurCents(
+                      build.priceEurCents,
+                      "en",
+                    )}
                   </p>
                 </div>
 

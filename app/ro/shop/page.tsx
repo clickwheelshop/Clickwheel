@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { products, type ProductTone } from "@/data/products";
+import { formatStartingPriceFromEurCents } from "@/lib/money";
 
 const productStyles: Record<
   ProductTone,
@@ -40,40 +41,32 @@ const productStyles: Record<
 
 const romanianCopy = {
   "the-studio": {
-    model: "iPod Classic generația 7",
     description:
       "O configurație echilibrată, cu stocare flash rapidă, baterie extinsă și un finisaj negru mat.",
-    storage: "Stocare Flash 512GB",
+    storage: "Stocare flash 128GB inclusă",
     battery: "Baterie 3000mAh",
     finish: "Negru mat",
-    price: "De la €279",
   },
   "the-collector": {
-    model: "iPod Classic generația 5.5",
     description:
-      "O configurație premium pentru colecționari, cu stocare mare, baterie extinsă și spate din oțel polisat.",
-    storage: "Stocare Flash 1TB",
+      "O configurație pentru colecționari, cu stocare flash, baterie extinsă și spate din oțel polisat.",
+    storage: "Stocare flash 128GB inclusă",
     battery: "Baterie 3000mAh",
     finish: "Oțel polisat",
-    price: "De la €329",
   },
   "the-heritage": {
-    model: "iPod Classic generația 6",
     description:
       "O variantă clasică și echilibrată, construită pentru ascultare zilnică și un aspect curat, argintiu.",
-    storage: "Stocare Flash 256GB",
+    storage: "Stocare flash 128GB inclusă",
     battery: "Baterie 2000mAh",
     finish: "Argintiu",
-    price: "De la €249",
   },
   "the-signature": {
-    model: "iPod Classic generația 7",
     description:
-      "O configurație premium de 1TB pentru colecționari, cadouri și personalizare.",
-    storage: "Stocare Flash 1TB",
+      "O configurație premium pentru colecționari, cadouri și personalizare.",
+    storage: "Stocare flash 128GB inclusă",
     battery: "Baterie 3000mAh",
     finish: "Gravură personalizată",
-    price: "De la €399",
   },
 } as const;
 
@@ -177,16 +170,21 @@ export default function RomanianShopPage() {
                   <div className="px-3 pb-3 pt-7">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">
-                          {copy.model}
-                        </p>
-
-                        <h3 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">
+                        <h3 className="text-3xl font-semibold tracking-[-0.04em]">
                           {product.name}
                         </h3>
+
+                        <p className="mt-2 text-xs font-semibold tracking-[0.08em] text-blue-600">
+                          {product.secondaryLine}
+                        </p>
                       </div>
 
-                      <p className="text-lg font-semibold">{copy.price}</p>
+                      <p className="text-lg font-semibold">
+                        {formatStartingPriceFromEurCents(
+                          product.priceEurCents,
+                          "ro",
+                        )}
+                      </p>
                     </div>
 
                     <p className="mt-5 max-w-xl text-sm leading-6 text-neutral-600">

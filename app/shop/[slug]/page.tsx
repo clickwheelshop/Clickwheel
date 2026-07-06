@@ -2,7 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
-import { products, type ProductTone } from "@/data/products";
+import {
+  clickwheelStorageLabels,
+  products,
+  type ProductTone,
+} from "@/data/products";
+import { formatStartingPriceFromEurCents } from "@/lib/money";
 
 const productStyles: Record<
   ProductTone,
@@ -117,13 +122,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <ProductVisual tone={product.tone} />
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
-              {product.model}
-            </p>
-
-            <h1 className="mt-5 text-5xl font-semibold tracking-[-0.06em] md:text-6xl">
+            <h1 className="text-5xl font-semibold tracking-[-0.06em] md:text-6xl">
               {product.name}
             </h1>
+
+            <p className="mt-3 text-sm font-semibold tracking-[0.08em] text-blue-600">
+              {product.secondaryLine}
+            </p>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-600">
               {product.shortDescription}
@@ -135,7 +140,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </p>
 
               <p className="mt-3 text-4xl font-semibold tracking-[-0.05em]">
-                {product.price}
+                {formatStartingPriceFromEurCents(product.priceEurCents, "en")}
               </p>
 
               <p className="mt-3 text-sm leading-6 text-neutral-600">
@@ -192,11 +197,24 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
             <div className="mt-7 space-y-5 text-sm">
               <div className="flex justify-between gap-5 border-b border-black/10 pb-4">
-                <span className="text-neutral-500">Storage</span>
+                <span className="text-neutral-500">Clickwheel storage</span>
                 <span className="text-right font-semibold">
-                  {product.storage}
+                  {clickwheelStorageLabels["128gb"]} included
                 </span>
               </div>
+
+              {product.availableStorageUpgradeIds.length > 0 && (
+                <div className="flex justify-between gap-5 border-b border-black/10 pb-4">
+                  <span className="text-neutral-500">
+                    Available storage upgrades
+                  </span>
+                  <span className="text-right font-semibold">
+                    {product.availableStorageUpgradeIds
+                      .map((id) => clickwheelStorageLabels[id])
+                      .join(", ")}
+                  </span>
+                </div>
+              )}
 
               <div className="flex justify-between gap-5 border-b border-black/10 pb-4">
                 <span className="text-neutral-500">Battery</span>

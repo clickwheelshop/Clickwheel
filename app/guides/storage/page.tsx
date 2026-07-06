@@ -80,10 +80,8 @@ export default function StorageGuidePage() {
             </p>
 
             <p className="mt-6 text-base leading-8 text-neutral-700">
-              Clickwheel supports three carefully selected capacities:
-              256GB, 512GB and 1TB. We do not offer 2TB configurations because
-              long-term reliability matters more than adding a number to a
-              product page.
+              Every Clickwheel model starts with 128GB included. Storage
+              upgrades are available in 256GB, 512GB and 1TB.
             </p>
           </div>
 

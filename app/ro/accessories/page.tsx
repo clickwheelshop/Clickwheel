@@ -1,5 +1,7 @@
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { accessoryBundlePricesEurCents } from "@/data/accessories";
+import { formatStartingPriceFromEurCents } from "@/lib/money";
 
 const categories = [
   {
@@ -38,7 +40,7 @@ const bundles = [
     description:
       "Tot ce ai nevoie pentru încărcarea, conectarea și protejarea iPod-ului tău.",
     includes: ["Cablu USB 30-pin", "Încărcător de priză", "Husă de protecție"],
-    price: "De la €39",
+    priceEurCents: accessoryBundlePricesEurCents.essentials,
     tone: "light",
   },
   {
@@ -51,7 +53,7 @@ const bundles = [
       "Husă de protecție",
       "Căști cu fir",
     ],
-    price: "De la €69",
+    priceEurCents: accessoryBundlePricesEurCents.dailyCarry,
     tone: "dark",
   },
   {
@@ -64,7 +66,7 @@ const bundles = [
       "Carcasă rigidă",
       "Husă pentru certificat",
     ],
-    price: "De la €119",
+    priceEurCents: accessoryBundlePricesEurCents.collector,
     tone: "warm",
   },
 ] as const;
@@ -251,7 +253,10 @@ export default function RomanianAccessoriesPage() {
                   </h3>
 
                   <span className="whitespace-nowrap text-sm font-semibold">
-                    {bundle.price}
+                    {formatStartingPriceFromEurCents(
+                      bundle.priceEurCents,
+                      "ro",
+                    )}
                   </span>
                 </div>
 

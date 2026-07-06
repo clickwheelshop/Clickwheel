@@ -1,13 +1,37 @@
 export type ProductTone = "dark" | "steel" | "silver" | "warm";
 
+export const clickwheelStorageLabels = {
+  "128gb": "128GB",
+  "256gb": "256GB",
+  "512gb": "512GB",
+  "1tb": "1TB",
+} as const;
+
+export type ClickwheelStorageId = keyof typeof clickwheelStorageLabels;
+export type StorageUpgradeId = Exclude<ClickwheelStorageId, "128gb">;
+
+export const storageUpgradeIds = [
+  "256gb",
+  "512gb",
+  "1tb",
+] as const satisfies readonly StorageUpgradeId[];
+
+export type IpodModelId =
+  | "ipod-video"
+  | "classic-5-5-gen"
+  | "classic-6th-gen"
+  | "classic-7th-gen";
+
 export type ClickwheelProduct = {
   slug: string;
+  modelId: IpodModelId;
   name: string;
-  model: string;
+  secondaryLine: string;
   storage: string;
+  availableStorageUpgradeIds: readonly StorageUpgradeId[];
   battery: string;
   finish: string;
-  price: string;
+  priceEurCents: number;
   tone: ProductTone;
   shortDescription: string;
   overview: string;
@@ -19,27 +43,29 @@ export type ClickwheelProduct = {
 export const products: ClickwheelProduct[] = [
   {
     slug: "the-studio",
-    name: "The Studio",
-    model: "iPod Classic 7th Gen",
-    storage: "512GB Flash Storage",
+    modelId: "ipod-video",
+    name: "iPod Video",
+    secondaryLine: "5th Generation · 2005 · Wolfson DAC",
+    storage: "128GB Flash Storage Included",
+    availableStorageUpgradeIds: storageUpgradeIds,
     battery: "3000mAh Battery",
     finish: "Matte Black",
-    price: "From €279",
+    priceEurCents: 27900,
     tone: "dark",
     shortDescription:
-      "A clean, focused everyday classic with generous storage and extended battery life.",
+      "A clean, focused everyday iPod with flash storage and extended battery life.",
     overview:
-      "The Studio is designed as a modern daily listener. It combines a matte black finish with flash storage and a high-capacity battery for a quiet, reliable music library.",
+      "The iPod Video is designed as a modern daily listener. It combines a matte black finish with flash storage and a high-capacity battery for a quiet, reliable music library.",
     idealFor:
-      "Listeners who want a minimal, durable iPod Classic for daily music, commuting and long listening sessions.",
+      "Listeners who want a minimal, durable iPod for daily music, commuting and long listening sessions.",
     highlights: [
-      "512GB flash storage",
+      "128GB flash storage included",
       "3000mAh extended battery",
       "Matte black housing",
       "Professionally restored internals",
     ],
     includes: [
-      "Restored iPod Classic",
+      "Restored iPod Video",
       "USB 30-pin cable",
       "Build configuration record",
       "Clickwheel warranty information",
@@ -47,27 +73,29 @@ export const products: ClickwheelProduct[] = [
   },
   {
     slug: "the-collector",
-    name: "The Collector",
-    model: "iPod Classic 5.5 Gen",
-    storage: "1TB Flash Storage",
+    modelId: "classic-5-5-gen",
+    name: "iPod Video Enhanced",
+    secondaryLine: "Late 2006 · Wolfson DAC",
+    storage: "128GB Flash Storage Included",
+    availableStorageUpgradeIds: storageUpgradeIds,
     battery: "3000mAh Battery",
     finish: "Polished Steel",
-    price: "From €329",
+    priceEurCents: 32900,
     tone: "steel",
     shortDescription:
-      "A high-capacity configuration for large music collections and classic 5.5 Gen character.",
+      "A restored configuration for large music collections, with extended battery life and a polished steel finish.",
     overview:
-      "The Collector combines the sought-after 5.5 Gen platform with 1TB of flash storage, extended battery life and a polished steel rear finish.",
+      "The iPod Video Enhanced combines flash storage, extended battery life and a polished steel rear finish.",
     idealFor:
       "Collectors and lossless-music listeners who want a large library in a classic iPod form.",
     highlights: [
-      "1TB flash storage",
+      "128GB flash storage included",
       "3000mAh extended battery",
       "Polished steel rear plate",
-      "Classic 5.5 Gen platform",
+      "Professionally restored internals",
     ],
     includes: [
-      "Restored iPod Classic",
+      "Restored iPod Video Enhanced",
       "USB 30-pin cable",
       "Build configuration record",
       "Clickwheel warranty information",
@@ -75,21 +103,23 @@ export const products: ClickwheelProduct[] = [
   },
   {
     slug: "the-heritage",
-    name: "The Heritage",
-    model: "iPod Classic 6th Gen",
-    storage: "256GB Flash Storage",
+    modelId: "classic-6th-gen",
+    name: "iPod Classic",
+    secondaryLine: "6th Generation · 2007–2008 · Cirrus Logic",
+    storage: "128GB Flash Storage Included",
+    availableStorageUpgradeIds: [],
     battery: "2000mAh Battery",
     finish: "Silver",
-    price: "From €249",
+    priceEurCents: 24900,
     tone: "silver",
     shortDescription:
       "A timeless silver classic with a balanced storage and battery configuration.",
     overview:
-      "The Heritage keeps the familiar iPod Classic look while replacing ageing internal storage and battery components with a practical modern setup.",
+      "The 6th-generation iPod Classic keeps the familiar look while replacing ageing internal storage and battery components with a practical modern setup.",
     idealFor:
       "Anyone who wants a straightforward restored iPod Classic with room for a substantial everyday library.",
     highlights: [
-      "256GB flash storage",
+      "128GB flash storage included",
       "2000mAh upgraded battery",
       "Silver housing finish",
       "Balanced everyday configuration",
@@ -103,21 +133,23 @@ export const products: ClickwheelProduct[] = [
   },
   {
     slug: "the-signature",
-    name: "The Signature",
-    model: "iPod Classic 7th Gen",
-    storage: "1TB Flash Storage",
+    modelId: "classic-7th-gen",
+    name: "iPod Classic",
+    secondaryLine: "7th Generation · Late 2009 · Cirrus Logic",
+    storage: "128GB Flash Storage Included",
+    availableStorageUpgradeIds: storageUpgradeIds,
     battery: "3000mAh Battery",
     finish: "Custom Engraving",
-    price: "From €399",
+    priceEurCents: 39900,
     tone: "warm",
     shortDescription:
-      "A premium 1TB build intended for collectors, gifts and personal customisation.",
+      "A premium build intended for collectors, gifts and personal customisation.",
     overview:
-      "The Signature is a premium Clickwheel reference build with maximum supported storage, extended battery life and a personalised rear plate configuration.",
+      "The 7th-generation iPod Classic is a premium Clickwheel reference build with extended battery life and a personalised rear plate configuration.",
     idealFor:
-      "Collectors and music enthusiasts who want a personal, high-capacity iPod Classic built around their library.",
+      "Collectors and music enthusiasts who want a personal iPod Classic built around their library.",
     highlights: [
-      "1TB maximum supported flash storage",
+      "128GB flash storage included",
       "3000mAh extended battery",
       "Custom engraving option",
       "Premium restoration configuration",

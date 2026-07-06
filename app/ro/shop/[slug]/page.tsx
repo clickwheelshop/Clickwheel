@@ -2,7 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
-import { products, type ProductTone } from "@/data/products";
+import {
+  clickwheelStorageLabels,
+  products,
+  type ProductTone,
+} from "@/data/products";
+import { formatStartingPriceFromEurCents } from "@/lib/money";
 
 const productStyles: Record<
   ProductTone,
@@ -41,14 +46,12 @@ const productStyles: Record<
 
 const romanianProductCopy = {
   "the-studio": {
-    model: "iPod Classic generația 7",
     description:
       "O configurație modernă, discretă și echilibrată, creată pentru ascultare zilnică.",
     overview:
-      "The Studio combină aspectul clasic al unui iPod Classic cu stocare flash, baterie extinsă și o configurație atent aleasă pentru utilizare zilnică.",
+      "iPod Video combină aspectul clasic al unui iPod cu stocare flash, baterie extinsă și o configurație atent aleasă pentru utilizare zilnică.",
     idealFor:
-      "cei care vor un iPod Classic modern, curat și pregătit pentru o bibliotecă muzicală serioasă.",
-    storage: "Stocare flash 512GB",
+      "cei care vor un iPod modern, curat și pregătit pentru o bibliotecă muzicală serioasă.",
     battery: "Baterie 3000mAh",
     finish: "Negru mat",
     highlights: [
@@ -57,49 +60,45 @@ const romanianProductCopy = {
       "Finisaj negru mat discret",
     ],
     includes: [
-      "iPod Classic restaurat profesional",
+      "iPod Video restaurat profesional",
       "Stocare flash și baterie nouă",
       "Cablu USB 30-pin",
       "Verificare funcțională înainte de livrare",
     ],
   },
   "the-collector": {
-    model: "iPod Classic generația 5.5",
     description:
-      "O configurație de capacitate mare pentru colecționari și biblioteci muzicale extinse.",
+      "O configurație restaurată pentru colecționari și biblioteci muzicale extinse.",
     overview:
-      "The Collector este construit pentru cei care vor mult spațiu, o platformă Classic apreciată și o configurație orientată spre păstrarea unei colecții muzicale mari pe un singur dispozitiv.",
+      "iPod Video Enhanced combină stocarea flash, bateria extinsă și un finisaj clasic restaurat.",
     idealFor:
-      "colecționari, biblioteci muzicale foarte mari și utilizatori care preferă generația 5.5.",
-    storage: "Stocare flash 1TB",
+      "colecționari și ascultători care vor o bibliotecă muzicală într-un format iPod clasic.",
     battery: "Baterie extinsă",
     finish: "Finisaj clasic restaurat",
     highlights: [
-      "Capacitate mare de 1TB",
-      "Platformă Classic generația 5.5",
+      "Stocare flash 128GB inclusă",
+      "Finisaj clasic restaurat",
       "Configurată pentru biblioteci muzicale extinse",
     ],
     includes: [
-      "iPod Classic restaurat profesional",
-      "Stocare flash de capacitate mare",
+      "iPod Video Enhanced restaurat profesional",
+      "Stocare flash 128GB inclusă",
       "Baterie nouă",
       "Verificare funcțională înainte de livrare",
     ],
   },
   "the-heritage": {
-    model: "iPod Classic generația 6",
     description:
       "O configurație echilibrată care păstrează caracterul unei generații Classic apreciate.",
     overview:
-      "The Heritage este pentru cei care preferă aspectul și senzația unui iPod Classic generația 6, modernizat cu stocare flash și componente atent selectate.",
+      "iPod Classic generația a 6-a păstrează aspectul familiar, modernizat cu stocare flash și componente atent selectate.",
     idealFor:
       "ascultare zilnică, colecționari și cei care vor un Classic cu stil atemporal.",
-    storage: "Stocare flash 256GB",
     battery: "Baterie nouă",
     finish: "Argintiu clasic",
     highlights: [
       "Aspect clasic cu față din aluminiu",
-      "Stocare flash pentru utilizare mai silențioasă",
+      "Stocare flash 128GB inclusă",
       "Configurație echilibrată de zi cu zi",
     ],
     includes: [
@@ -110,24 +109,22 @@ const romanianProductCopy = {
     ],
   },
   "the-signature": {
-    model: "iPod Classic generația 7",
     description:
-      "O configurație premium de 1TB pentru colecționari, cadouri și personalizare.",
+      "O configurație premium pentru colecționari, cadouri și personalizare.",
     overview:
-      "The Signature este o configurație Clickwheel premium, creată pentru cei care vor capacitate mare, opțiuni de personalizare și un Classic pregătit să devină al lor.",
+      "iPod Classic generația a 7-a este o configurație Clickwheel premium, cu opțiuni de personalizare și un finisaj pregătit să devină al tău.",
     idealFor:
-      "colecționari, cadouri speciale și configurații personalizate cu capacitate mare.",
-    storage: "Stocare flash 1TB",
+      "colecționari, cadouri speciale și configurații personalizate.",
     battery: "Baterie 3000mAh",
     finish: "Gravură personalizată",
     highlights: [
-      "Capacitate mare de 1TB",
+      "Stocare flash 128GB inclusă",
       "Baterie extinsă de 3000mAh",
       "Opțiune de gravură personalizată",
     ],
     includes: [
       "iPod Classic restaurat profesional",
-      "Stocare flash de 1TB",
+      "Stocare flash 128GB inclusă",
       "Baterie 3000mAh",
       "Verificare funcțională înainte de livrare",
     ],
@@ -216,13 +213,13 @@ export default async function RomanianProductPage({
           <ProductVisual tone={product.tone} />
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
-              {copy.model}
-            </p>
-
-            <h1 className="mt-5 text-5xl font-semibold tracking-[-0.06em] md:text-6xl">
+            <h1 className="text-5xl font-semibold tracking-[-0.06em] md:text-6xl">
               {product.name}
             </h1>
+
+            <p className="mt-3 text-sm font-semibold tracking-[0.08em] text-blue-600">
+              {product.secondaryLine}
+            </p>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-600">
               {copy.description}
@@ -234,7 +231,7 @@ export default async function RomanianProductPage({
               </p>
 
               <p className="mt-3 text-4xl font-semibold tracking-[-0.05em]">
-                {product.price}
+                {formatStartingPriceFromEurCents(product.priceEurCents, "ro")}
               </p>
 
               <p className="mt-3 text-sm leading-6 text-neutral-600">
@@ -291,9 +288,24 @@ export default async function RomanianProductPage({
 
             <div className="mt-7 space-y-5 text-sm">
               <div className="flex justify-between gap-5 border-b border-black/10 pb-4">
-                <span className="text-neutral-500">Stocare</span>
-                <span className="text-right font-semibold">{copy.storage}</span>
+                <span className="text-neutral-500">Stocare Clickwheel</span>
+                <span className="text-right font-semibold">
+                  {clickwheelStorageLabels["128gb"]} inclusă
+                </span>
               </div>
+
+              {product.availableStorageUpgradeIds.length > 0 && (
+                <div className="flex justify-between gap-5 border-b border-black/10 pb-4">
+                  <span className="text-neutral-500">
+                    Upgrade-uri de stocare disponibile
+                  </span>
+                  <span className="text-right font-semibold">
+                    {product.availableStorageUpgradeIds
+                      .map((id) => clickwheelStorageLabels[id])
+                      .join(", ")}
+                  </span>
+                </div>
+              )}
 
               <div className="flex justify-between gap-5 border-b border-black/10 pb-4">
                 <span className="text-neutral-500">Baterie</span>

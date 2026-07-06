@@ -1,5 +1,7 @@
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { accessoryBundlePricesEurCents } from "@/data/accessories";
+import { formatStartingPriceFromEurCents } from "@/lib/money";
 
 const categories = [
   {
@@ -33,7 +35,7 @@ const bundles = [
     name: "Clickwheel Essentials",
     description: "Everything needed to charge, connect and protect your classic.",
     includes: ["30-pin USB Cable", "Wall Charger", "Protective Sleeve"],
-    price: "From €39",
+    priceEurCents: accessoryBundlePricesEurCents.essentials,
     tone: "light",
   },
   {
@@ -45,7 +47,7 @@ const bundles = [
       "Protective Sleeve",
       "Wired Earphones",
     ],
-    price: "From €69",
+    priceEurCents: accessoryBundlePricesEurCents.dailyCarry,
     tone: "dark",
   },
   {
@@ -57,7 +59,7 @@ const bundles = [
       "Hard Case",
       "Certificate Sleeve",
     ],
-    price: "From €119",
+    priceEurCents: accessoryBundlePricesEurCents.collector,
     tone: "warm",
   },
 ] as const;
@@ -243,7 +245,10 @@ export default function AccessoriesPage() {
                   </h3>
 
                   <span className="whitespace-nowrap text-sm font-semibold">
-                    {bundle.price}
+                    {formatStartingPriceFromEurCents(
+                      bundle.priceEurCents,
+                      "en",
+                    )}
                   </span>
                 </div>
 

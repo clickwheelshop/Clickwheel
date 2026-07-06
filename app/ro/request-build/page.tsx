@@ -5,19 +5,65 @@ import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  calculateConfiguratorTotalEurCents,
+  findConfiguratorChoice,
+  getConfiguratorOptions,
+  getConfiguratorStorageOptions,
+  parseAccessoryIds,
+} from "@/data/configurator";
+import { formatRonFromEurCents } from "@/lib/money";
+
+const {
+  models: modelOptions,
+  batteries: batteryOptions,
+  finishes: finishOptions,
+  backplates: backplateOptions,
+  software: softwareOptions,
+  accessories: accessoryOptions,
+} = getConfiguratorOptions("ro");
 
 function BuildRequestContent() {
   const searchParams = useSearchParams();
 
-  const model = searchParams.get("model") ?? "iPod Classic";
-  const storage = searchParams.get("storage") ?? "Neselectat";
-  const battery = searchParams.get("battery") ?? "Neselectat";
-  const finish = searchParams.get("finish") ?? "Neselectat";
-  const backplate = searchParams.get("backplate") ?? "Neselectat";
-  const software = searchParams.get("software") ?? "Neselectat";
-  const accessories =
-    searchParams.get("accessories") ?? "Niciun accesoriu selectat";
-  const total = searchParams.get("total") ?? "0";
+  const model = findConfiguratorChoice(modelOptions, searchParams.get("model"));
+  const storageOptions = getConfiguratorStorageOptions("ro", model.id);
+  const storage = findConfiguratorChoice(
+    storageOptions,
+    searchParams.get("storage"),
+  );
+  const battery = findConfiguratorChoice(
+    batteryOptions,
+    searchParams.get("battery"),
+  );
+  const finish = findConfiguratorChoice(
+    finishOptions,
+    searchParams.get("finish"),
+  );
+  const backplate = findConfiguratorChoice(
+    backplateOptions,
+    searchParams.get("backplate"),
+  );
+  const software = findConfiguratorChoice(
+    softwareOptions,
+    searchParams.get("software"),
+  );
+  const accessoryIds = parseAccessoryIds(
+    searchParams.get("accessories"),
+    accessoryOptions,
+  );
+  const accessories = accessoryOptions.filter((accessory) =>
+    accessoryIds.includes(accessory.id),
+  );
+  const totalPriceEurCents = calculateConfiguratorTotalEurCents({
+    model,
+    storage,
+    battery,
+    finish,
+    backplate,
+    software,
+    accessories,
+  });
 
   return (
     <section className="px-6 py-14 md:px-12 lg:px-16">
@@ -93,43 +139,47 @@ function BuildRequestContent() {
           <div className="mt-7 space-y-5 text-sm">
             <div className="flex justify-between gap-5">
               <span className="text-neutral-500">Model</span>
-              <span className="text-right font-semibold">{model}</span>
+              <span className="text-right font-semibold">{model.name}</span>
             </div>
 
             <div className="flex justify-between gap-5">
               <span className="text-neutral-500">Stocare</span>
-              <span className="text-right font-semibold">{storage}</span>
+              <span className="text-right font-semibold">{storage.name}</span>
             </div>
 
             <div className="flex justify-between gap-5">
               <span className="text-neutral-500">Baterie</span>
-              <span className="text-right font-semibold">{battery}</span>
+              <span className="text-right font-semibold">{battery.name}</span>
             </div>
 
             <div className="flex justify-between gap-5">
               <span className="text-neutral-500">Finisaj</span>
-              <span className="text-right font-semibold">{finish}</span>
+              <span className="text-right font-semibold">{finish.name}</span>
             </div>
 
             <div className="flex justify-between gap-5">
               <span className="text-neutral-500">Capac spate</span>
-              <span className="text-right font-semibold">{backplate}</span>
+              <span className="text-right font-semibold">{backplate.name}</span>
             </div>
 
             <div className="flex justify-between gap-5">
               <span className="text-neutral-500">Software</span>
-              <span className="text-right font-semibold">{software}</span>
+              <span className="text-right font-semibold">{software.name}</span>
             </div>
 
             <div className="border-t border-black/10 pt-5">
               <p className="text-neutral-500">Accesorii</p>
-              <p className="mt-2 font-semibold leading-6">{accessories}</p>
+              <p className="mt-2 font-semibold leading-6">
+                {accessories.length > 0
+                  ? accessories.map((accessory) => accessory.name).join(", ")
+                  : "Niciun accesoriu selectat"}
+              </p>
             </div>
 
             <div className="border-t border-black/10 pt-5">
               <p className="text-neutral-500">Total estimat</p>
               <p className="mt-2 text-3xl font-semibold tracking-[-0.04em]">
-                €{total}
+                {formatRonFromEurCents(totalPriceEurCents)}
               </p>
             </div>
           </div>

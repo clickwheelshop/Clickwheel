@@ -1,35 +1,26 @@
 import Link from "next/link";
+import { products } from "@/data/products";
+import { formatStartingPriceFromEurCents } from "@/lib/money";
 
-const builds = [
-  {
-    name: "The Studio",
-    model: "iPod Classic generația 7",
-    specs: ["Stocare Flash 512GB", "Baterie 3000mAh", "Negru mat"],
-    price: "De la €279",
-    tone: "dark",
-  },
-  {
-    name: "The Collector",
-    model: "iPod Classic generația 5.5",
-    specs: ["Stocare Flash 1TB", "Baterie 3000mAh", "Oțel polisat"],
-    price: "De la €329",
-    tone: "steel",
-  },
-  {
-    name: "The Heritage",
-    model: "iPod Classic generația 6",
-    specs: ["Stocare Flash 256GB", "Baterie 2000mAh", "Argintiu"],
-    price: "De la €249",
-    tone: "silver",
-  },
-  {
-    name: "The Signature",
-    model: "iPod Classic generația 7",
-    specs: ["Stocare Flash 1TB", "Baterie 3000mAh", "Gravură personalizată"],
-    price: "De la €399",
-    tone: "warm",
-  },
-] as const;
+const localizedSpecs = {
+  "the-studio": ["Stocare flash 128GB inclusă", "Baterie 3000mAh", "Negru mat"],
+  "the-collector": [
+    "Stocare flash 128GB inclusă",
+    "Baterie 3000mAh",
+    "Oțel polisat",
+  ],
+  "the-heritage": ["Stocare flash 128GB inclusă", "Baterie 2000mAh", "Argintiu"],
+  "the-signature": [
+    "Stocare flash 128GB inclusă",
+    "Baterie 3000mAh",
+    "Gravură personalizată",
+  ],
+} as const;
+
+const builds = products.map((product) => ({
+  ...product,
+  specs: localizedSpecs[product.slug as keyof typeof localizedSpecs],
+}));
 
 const visualStyles = {
   dark: {
@@ -125,7 +116,7 @@ export function FeaturedBuildsRo() {
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {builds.map((build) => (
             <article
-              key={build.name}
+              key={build.slug}
               className="group rounded-[28px] border border-black/10 bg-white p-4 transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(0,0,0,0.09)]"
             >
               <BuildVisual tone={build.tone} />
@@ -133,17 +124,20 @@ export function FeaturedBuildsRo() {
               <div className="px-2 pb-3 pt-6">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">
-                      {build.model}
-                    </p>
-
-                    <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">
+                    <h3 className="text-2xl font-semibold tracking-[-0.04em]">
                       {build.name}
                     </h3>
+
+                    <p className="mt-2 text-xs font-semibold tracking-[0.08em] text-blue-600">
+                      {build.secondaryLine}
+                    </p>
                   </div>
 
                   <p className="whitespace-nowrap text-sm font-semibold">
-                    {build.price}
+                    {formatStartingPriceFromEurCents(
+                      build.priceEurCents,
+                      "ro",
+                    )}
                   </p>
                 </div>
 
