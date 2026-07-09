@@ -71,14 +71,10 @@ const SELECT_BUILD_REQUEST_BY_IDEMPOTENCY_HASH_SQL = `
   LIMIT 1
 `;
 
-const RECORD_CUSTOMER_NOTIFICATION_OUTCOME_SQL = `
+const RECORD_CUSTOMER_NOTIFICATION_SENT_SQL = `
   UPDATE public.build_requests
   SET
-    customer_notification_status = $2,
-    notification_last_error = CASE
-      WHEN $2 = 'failed' THEN $3
-      ELSE notification_last_error
-    END
+    customer_notification_status = 'sent'
   WHERE id = $1::uuid
   RETURNING
     id,
@@ -90,14 +86,42 @@ const RECORD_CUSTOMER_NOTIFICATION_OUTCOME_SQL = `
     internal_notification_status
 `;
 
-const RECORD_INTERNAL_NOTIFICATION_OUTCOME_SQL = `
+const RECORD_CUSTOMER_NOTIFICATION_FAILED_SQL = `
   UPDATE public.build_requests
   SET
-    internal_notification_status = $2,
-    notification_last_error = CASE
-      WHEN $2 = 'failed' THEN $3
-      ELSE notification_last_error
-    END
+    customer_notification_status = 'failed',
+    notification_last_error = $2
+  WHERE id = $1::uuid
+  RETURNING
+    id,
+    public_reference,
+    request_locale,
+    updated_at,
+    request_status,
+    customer_notification_status,
+    internal_notification_status
+`;
+
+const RECORD_INTERNAL_NOTIFICATION_SENT_SQL = `
+  UPDATE public.build_requests
+  SET
+    internal_notification_status = 'sent'
+  WHERE id = $1::uuid
+  RETURNING
+    id,
+    public_reference,
+    request_locale,
+    updated_at,
+    request_status,
+    customer_notification_status,
+    internal_notification_status
+`;
+
+const RECORD_INTERNAL_NOTIFICATION_FAILED_SQL = `
+  UPDATE public.build_requests
+  SET
+    internal_notification_status = 'failed',
+    notification_last_error = $2
   WHERE id = $1::uuid
   RETURNING
     id,
@@ -136,6 +160,11 @@ type BuildRequestRow = {
 type BuildRequestNotificationOutcomeRow = Omit<BuildRequestRow, "created_at"> & {
   updated_at: Date;
 };
+
+type NotificationOutcomeUpdateQuery = Readonly<{
+  sql: string;
+  values: readonly [string] | readonly [string, string];
+}>;
 
 type ValidatedSelectedItemSnapshot = Readonly<{
   id: string;
@@ -596,6 +625,41 @@ function toNotificationOutcomeResult(
   };
 }
 
+function getNotificationOutcomeUpdateQuery(
+  input: RecordBuildRequestNotificationOutcomeInput,
+  errorCode: string | null,
+): NotificationOutcomeUpdateQuery {
+  if (input.channel === "customer") {
+    if (input.status === "sent") {
+      return {
+        sql: RECORD_CUSTOMER_NOTIFICATION_SENT_SQL,
+        values: [input.id],
+      };
+    }
+
+    assertValidInput(errorCode !== null);
+
+    return {
+      sql: RECORD_CUSTOMER_NOTIFICATION_FAILED_SQL,
+      values: [input.id, errorCode],
+    };
+  }
+
+  if (input.status === "sent") {
+    return {
+      sql: RECORD_INTERNAL_NOTIFICATION_SENT_SQL,
+      values: [input.id],
+    };
+  }
+
+  assertValidInput(errorCode !== null);
+
+  return {
+    sql: RECORD_INTERNAL_NOTIFICATION_FAILED_SQL,
+    values: [input.id, errorCode],
+  };
+}
+
 export async function createOrGetBuildRequest(
   input: CreateBuildRequestInput,
 ): Promise<CreateBuildRequestResult> {
@@ -674,18 +738,14 @@ export async function recordBuildRequestNotificationOutcome(
     assertSafeNotificationErrorCode(errorCode);
   }
 
+  const query = getNotificationOutcomeUpdateQuery(input, errorCode);
   const pool = getPostgresPool();
-  const sql =
-    input.channel === "customer"
-      ? RECORD_CUSTOMER_NOTIFICATION_OUTCOME_SQL
-      : RECORD_INTERNAL_NOTIFICATION_OUTCOME_SQL;
 
   try {
-    const result = await pool.query<BuildRequestNotificationOutcomeRow>(sql, [
-      input.id,
-      input.status,
-      errorCode,
-    ]);
+    const result = await pool.query<BuildRequestNotificationOutcomeRow>(
+      query.sql,
+      [...query.values],
+    );
     const row = result.rows[0];
 
     if (!row) {
