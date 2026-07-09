@@ -11,7 +11,7 @@ const englishShopLinks = [
 
 const englishWorkshopLinks = [
   { label: "Services", href: "/services" },
-  { label: "Upgrade your iPod", href: "/services" },
+  { label: "Upgrade your iPod", href: "/services/upgrade" },
   { label: "Build Request", href: "/request-build" },
 ];
 
@@ -39,7 +39,7 @@ const romanianShopLinks = [
 
 const romanianWorkshopLinks = [
   { label: "Servicii", href: "/services" },
-  { label: "Upgrade pentru iPod", href: "/services" },
+  { label: "Upgrade pentru iPod", href: "/services/upgrade" },
   { label: "Solicitare configurație", href: "/request-build" },
 ];
 

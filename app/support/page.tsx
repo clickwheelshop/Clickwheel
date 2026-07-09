@@ -24,8 +24,8 @@ const supportTopics = [
     title: "Services and upgrades",
     description:
       "Storage upgrades, replacement batteries, housing restoration and diagnostic work.",
-    href: "/services",
-    action: "Explore services →",
+    href: "/services/upgrade",
+    action: "Request service →",
   },
 ];
 

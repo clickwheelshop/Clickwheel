@@ -24,8 +24,8 @@ const supportTopics = [
     title: "Servicii și upgrade-uri",
     description:
       "Upgrade-uri de stocare, baterii de schimb, restaurare carcasă și diagnostic.",
-    href: "/ro/services",
-    action: "Vezi serviciile →",
+    href: "/ro/services/upgrade",
+    action: "Cere service →",
   },
 ];
 

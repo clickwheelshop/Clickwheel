@@ -147,7 +147,7 @@ export default function ServicesPage() {
                 </div>
 
                 <Link
-                  href="/request-build"
+                  href="/services/upgrade"
                   className="mt-8 inline-flex text-sm font-semibold text-blue-600 transition hover:text-blue-800"
                 >
                   Ask about this service →
@@ -189,10 +189,10 @@ export default function ServicesPage() {
             </ul>
 
             <Link
-              href="/request-build"
+              href="/services/upgrade"
               className="mt-8 inline-flex rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-black transition hover:bg-neutral-200"
             >
-              Start a request →
+              Request service →
             </Link>
           </div>
         </div>
