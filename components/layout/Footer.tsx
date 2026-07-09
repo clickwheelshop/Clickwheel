@@ -24,6 +24,8 @@ const englishHelpLinks = [
 
 const englishLegalLinks = [
   { label: "Shipping & Delivery", href: "/shipping" },
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms & Conditions", href: "/terms" },
 ];
 
 const romanianShopLinks = [
@@ -47,6 +49,8 @@ const romanianHelpLinks = [
 
 const romanianLegalLinks = [
   { label: "Livrare", href: "/shipping" },
+  { label: "Confidentialitate", href: "/privacy" },
+  { label: "Termeni si conditii", href: "/terms" },
 ];
 
 function FooterColumn({

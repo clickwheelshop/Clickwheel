@@ -218,7 +218,9 @@ function BuildRequestContent() {
           </button>
 
           <p className="mt-4 text-center text-xs leading-5 text-neutral-500">
-            Aceasta nu este finalizare de comanda. Nu se efectueaza nicio plata.
+            Prin trimiterea acestei cereri, esti de acord ca Clickwheel sa
+            foloseasca datele tale pentru analizarea cererii si pentru raspuns
+            prin email. Aceasta nu este o confirmare de comanda sau de plata.
           </p>
         </form>
 

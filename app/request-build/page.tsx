@@ -218,7 +218,9 @@ function BuildRequestContent() {
           </button>
 
           <p className="mt-4 text-center text-xs leading-5 text-neutral-500">
-            This is not checkout. No payment is taken when you submit.
+            By sending this request, you agree that Clickwheel may use your
+            details to review your build request and reply by email. This is not
+            an order or payment confirmation.
           </p>
         </form>
 
