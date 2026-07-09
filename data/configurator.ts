@@ -302,6 +302,17 @@ const accessoryDefinitions = [
   },
 ] as const satisfies readonly ConfiguratorChoiceDefinition[];
 
+export type ConfiguratorModelId = (typeof modelDefinitions)[number]["id"];
+export type ConfiguratorStorageId = (typeof storageDefinitions)[number]["id"];
+export type ConfiguratorBatteryId = (typeof batteryDefinitions)[number]["id"];
+export type ConfiguratorFinishId = (typeof finishDefinitions)[number]["id"];
+export type ConfiguratorBackplateId =
+  (typeof backplateDefinitions)[number]["id"];
+export type ConfiguratorSoftwareId =
+  (typeof softwareDefinitions)[number]["id"];
+export type ConfiguratorAccessoryId =
+  (typeof accessoryDefinitions)[number]["id"];
+
 function localizeChoices(
   definitions: readonly ConfiguratorChoiceDefinition[],
   locale: ConfiguratorLocale,

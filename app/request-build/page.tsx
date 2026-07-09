@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Suspense } from "react";
+import { Suspense, useActionState, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
@@ -13,6 +13,10 @@ import {
   parseAccessoryIds,
 } from "@/data/configurator";
 import { formatEurCents } from "@/lib/money";
+import {
+  submitBuildRequestAction,
+  type BuildRequestSubmissionActionState,
+} from "@/app/request-build/actions";
 
 const {
   models: modelOptions,
@@ -23,8 +27,48 @@ const {
   accessories: accessoryOptions,
 } = getConfiguratorOptions("en");
 
+const initialActionState: BuildRequestSubmissionActionState = {
+  status: "idle",
+};
+
+function getBuildRequestErrorMessage(
+  state: BuildRequestSubmissionActionState,
+) {
+  if (state.status !== "error") {
+    return null;
+  }
+
+  if (state.errorCode === "invalid_customer_details") {
+    return "Please check your contact details and try again.";
+  }
+
+  if (state.errorCode === "request_save_failed") {
+    return "We could not save the request right now. Please try again later.";
+  }
+
+  return "We could not submit this request. Refresh the page and try again.";
+}
+
 function BuildRequestContent() {
   const searchParams = useSearchParams();
+  const [state, formAction, isPending] = useActionState(
+    submitBuildRequestAction,
+    initialActionState,
+  );
+  const [browserReady, setBrowserReady] = useState(false);
+  const [idempotencyKey, setIdempotencyKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    const timerId = window.setTimeout(() => {
+      setBrowserReady(true);
+
+      if (typeof window.crypto?.randomUUID === "function") {
+        setIdempotencyKey(window.crypto.randomUUID());
+      }
+    }, 0);
+
+    return () => window.clearTimeout(timerId);
+  }, []);
 
   const model = findConfiguratorChoice(modelOptions, searchParams.get("model"));
   const storageOptions = getConfiguratorStorageOptions("en", model.id);
@@ -55,6 +99,7 @@ function BuildRequestContent() {
   const accessories = accessoryOptions.filter((accessory) =>
     accessoryIds.includes(accessory.id),
   );
+  const accessoriesValue = accessories.map((accessory) => accessory.id).join(",");
   const totalPriceEurCents = calculateConfiguratorTotalEurCents({
     model,
     storage,
@@ -64,11 +109,19 @@ function BuildRequestContent() {
     software,
     accessories,
   });
+  const idempotencyUnavailable = browserReady && !idempotencyKey;
+  const errorMessage = idempotencyUnavailable
+    ? "Secure request submission is unavailable in this browser. Please try another up-to-date browser."
+    : getBuildRequestErrorMessage(state);
+  const submitDisabled = isPending || idempotencyUnavailable || !idempotencyKey;
 
   return (
     <section className="px-6 py-14 md:px-12 lg:px-16">
       <div className="mx-auto grid max-w-[1200px] gap-10 lg:grid-cols-[1fr_380px]">
-        <form className="rounded-[28px] border border-black/10 bg-white p-7 md:p-10">
+        <form
+          action={formAction}
+          className="rounded-[28px] border border-black/10 bg-white p-7 md:p-10"
+        >
           <h2 className="text-3xl font-semibold tracking-[-0.04em]">
             Your details
           </h2>
@@ -77,12 +130,30 @@ function BuildRequestContent() {
             This request does not create an order or charge you.
           </p>
 
+          <input type="hidden" name="locale" value="en" />
+          <input type="hidden" name="model" value={model.id} />
+          <input type="hidden" name="storage" value={storage.id} />
+          <input type="hidden" name="battery" value={battery.id} />
+          <input type="hidden" name="finish" value={finish.id} />
+          <input type="hidden" name="backplate" value={backplate.id} />
+          <input type="hidden" name="software" value={software.id} />
+          <input type="hidden" name="accessories" value={accessoriesValue} />
+          <input
+            type="hidden"
+            name="idempotencyKey"
+            value={idempotencyKey ?? ""}
+          />
+
           <div className="mt-8 grid gap-5">
             <label className="grid gap-2 text-sm font-semibold">
               Full name
               <input
+                name="name"
                 type="text"
+                autoComplete="name"
+                maxLength={200}
                 placeholder="Your name"
+                required
                 className="rounded-xl border border-black/15 px-4 py-3 text-base font-normal outline-none transition focus:border-black"
               />
             </label>
@@ -90,40 +161,64 @@ function BuildRequestContent() {
             <label className="grid gap-2 text-sm font-semibold">
               Email address
               <input
+                name="email"
                 type="email"
+                autoComplete="email"
+                maxLength={320}
                 placeholder="you@example.com"
+                required
                 className="rounded-xl border border-black/15 px-4 py-3 text-base font-normal outline-none transition focus:border-black"
               />
             </label>
 
             <label className="grid gap-2 text-sm font-semibold">
-              Country
+              Country code
               <input
+                name="country"
                 type="text"
-                placeholder="Romania"
+                autoComplete="country"
+                maxLength={2}
+                pattern="[A-Za-z]{2}"
+                placeholder="RO"
+                required
                 className="rounded-xl border border-black/15 px-4 py-3 text-base font-normal outline-none transition focus:border-black"
               />
+              <span className="text-xs font-normal text-neutral-500">
+                Use the two-letter country code, for example RO or US.
+              </span>
             </label>
 
             <label className="grid gap-2 text-sm font-semibold">
               Notes for your build
               <textarea
+                name="notes"
                 rows={5}
+                maxLength={5000}
                 placeholder="For example: preferred colour, engraving text, questions about delivery..."
                 className="resize-none rounded-xl border border-black/15 px-4 py-3 text-base font-normal outline-none transition focus:border-black"
               />
             </label>
           </div>
 
+          {errorMessage ? (
+            <p
+              aria-live="polite"
+              className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm leading-6 text-red-700"
+            >
+              {errorMessage}
+            </p>
+          ) : null}
+
           <button
-            type="button"
-            className="mt-8 w-full rounded-full bg-black px-5 py-4 text-sm font-semibold text-white transition hover:bg-neutral-800"
+            type="submit"
+            disabled={submitDisabled}
+            className="mt-8 w-full rounded-full bg-black px-5 py-4 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-400"
           >
-            Build requests opening soon
+            {isPending ? "Sending request..." : "Submit build request"}
           </button>
 
           <p className="mt-4 text-center text-xs leading-5 text-neutral-500">
-            We are preparing the official Clickwheel contact system.
+            This is not checkout. No payment is taken when you submit.
           </p>
         </form>
 
