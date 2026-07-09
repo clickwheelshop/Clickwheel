@@ -78,24 +78,42 @@ function readLocale(formData: FormData): BuildRequestLocale | null {
 
 async function recordNotificationOutcomeSafely({
   id,
+  publicReference,
   channel,
   outcome,
   errorCode,
 }: Readonly<{
   id: string;
+  publicReference: string;
   channel: "customer" | "internal";
   outcome: "sent" | "failed";
   errorCode?: string;
 }>) {
   try {
+    if (outcome === "sent") {
+      await recordBuildRequestNotificationOutcome({
+        id,
+        channel,
+        status: "sent",
+      });
+
+      return;
+    }
+
     await recordBuildRequestNotificationOutcome({
       id,
       channel,
-      status: outcome,
-      errorCode: outcome === "failed" ? errorCode : null,
+      status: "failed",
+      errorCode,
     });
   } catch {
-    // Notification outcome recording must not fail the saved request.
+    console.warn("Build request notification outcome recording failed.", {
+      publicReference,
+      requestId: id,
+      channel,
+      attemptedStatus: outcome,
+      failureCode: "notification_outcome_record_failed",
+    });
   }
 }
 
@@ -185,6 +203,7 @@ export async function submitBuildRequestAction(
 
       await recordNotificationOutcomeSafely({
         id: buildRequest.id,
+        publicReference: buildRequest.publicReference,
         channel: "customer",
         outcome: customerNotification.outcome,
         errorCode:
@@ -195,6 +214,7 @@ export async function submitBuildRequestAction(
     } catch {
       await recordNotificationOutcomeSafely({
         id: buildRequest.id,
+        publicReference: buildRequest.publicReference,
         channel: "customer",
         outcome: "failed",
         errorCode: "notification_send_failed",
@@ -207,6 +227,7 @@ export async function submitBuildRequestAction(
 
       await recordNotificationOutcomeSafely({
         id: buildRequest.id,
+        publicReference: buildRequest.publicReference,
         channel: "internal",
         outcome: internalNotification.outcome,
         errorCode:
@@ -217,6 +238,7 @@ export async function submitBuildRequestAction(
     } catch {
       await recordNotificationOutcomeSafely({
         id: buildRequest.id,
+        publicReference: buildRequest.publicReference,
         channel: "internal",
         outcome: "failed",
         errorCode: "notification_send_failed",
