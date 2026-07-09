@@ -137,6 +137,27 @@ type BuildRequestNotificationOutcomeRow = Omit<BuildRequestRow, "created_at"> & 
   updated_at: Date;
 };
 
+type ValidatedSelectedItemSnapshot = Readonly<{
+  id: string;
+  label: string;
+  priceEurCents: number;
+}>;
+
+type ValidatedSelectedModelSnapshot = ValidatedSelectedItemSnapshot &
+  Readonly<{
+    technicalSecondaryLine: string;
+  }>;
+
+type ValidatedNormalizedIds = Readonly<{
+  model: string;
+  storage: string;
+  battery: string;
+  finish: string;
+  backplate: string;
+  software: string;
+  accessories: readonly string[];
+}>;
+
 export type CreateBuildRequestInput = Readonly<{
   id: string;
   publicReference: string;
@@ -264,27 +285,48 @@ function assertNotificationOutcomeInputKeys(
   }
 }
 
-function validateSelectedItemSnapshot(value: unknown) {
+function validateSelectedItemSnapshot(
+  value: unknown,
+): ValidatedSelectedItemSnapshot {
   assertPlainObjectWithKeys(value, ["id", "label", "priceEurCents"]);
-  assertNonEmptyString(value.id);
-  assertNonEmptyString(value.label);
-  assertSafeNonNegativeInteger(value.priceEurCents);
+  const { id, label, priceEurCents } = value;
+
+  assertNonEmptyString(id);
+  assertNonEmptyString(label);
+  assertSafeNonNegativeInteger(priceEurCents);
+
+  return {
+    id,
+    label,
+    priceEurCents,
+  };
 }
 
-function validateSelectedModelSnapshot(value: unknown) {
+function validateSelectedModelSnapshot(
+  value: unknown,
+): ValidatedSelectedModelSnapshot {
   assertPlainObjectWithKeys(value, [
     "id",
     "label",
     "priceEurCents",
     "technicalSecondaryLine",
   ]);
-  assertNonEmptyString(value.id);
-  assertNonEmptyString(value.label);
-  assertSafeNonNegativeInteger(value.priceEurCents);
-  assertNonEmptyString(value.technicalSecondaryLine);
+  const { id, label, priceEurCents, technicalSecondaryLine } = value;
+
+  assertNonEmptyString(id);
+  assertNonEmptyString(label);
+  assertSafeNonNegativeInteger(priceEurCents);
+  assertNonEmptyString(technicalSecondaryLine);
+
+  return {
+    id,
+    label,
+    priceEurCents,
+    technicalSecondaryLine,
+  };
 }
 
-function validateNormalizedIds(value: unknown) {
+function validateNormalizedIds(value: unknown): ValidatedNormalizedIds {
   assertPlainObjectWithKeys(value, [
     "model",
     "storage",
@@ -294,22 +336,45 @@ function validateNormalizedIds(value: unknown) {
     "software",
     "accessories",
   ]);
-  assertNonEmptyString(value.model);
-  assertNonEmptyString(value.storage);
-  assertNonEmptyString(value.battery);
-  assertNonEmptyString(value.finish);
-  assertNonEmptyString(value.backplate);
-  assertNonEmptyString(value.software);
-  assertValidInput(Array.isArray(value.accessories));
+  const {
+    model,
+    storage,
+    battery,
+    finish,
+    backplate,
+    software,
+    accessories,
+  } = value;
 
-  for (const accessoryId of value.accessories) {
+  assertNonEmptyString(model);
+  assertNonEmptyString(storage);
+  assertNonEmptyString(battery);
+  assertNonEmptyString(finish);
+  assertNonEmptyString(backplate);
+  assertNonEmptyString(software);
+  assertValidInput(Array.isArray(accessories));
+
+  const validatedAccessories: string[] = [];
+
+  for (const accessoryId of accessories) {
     assertNonEmptyString(accessoryId);
+    validatedAccessories.push(accessoryId);
   }
+
+  return {
+    model,
+    storage,
+    battery,
+    finish,
+    backplate,
+    software,
+    accessories: validatedAccessories,
+  };
 }
 
 function validateSelectedConfigurationItems(
   value: unknown,
-  normalizedIds: Record<string, unknown>,
+  normalizedIds: ValidatedNormalizedIds,
 ) {
   assertPlainObjectWithKeys(value, [
     "model",
@@ -320,25 +385,29 @@ function validateSelectedConfigurationItems(
     "software",
     "accessories",
   ]);
-  validateSelectedModelSnapshot(value.model);
-  validateSelectedItemSnapshot(value.storage);
-  validateSelectedItemSnapshot(value.battery);
-  validateSelectedItemSnapshot(value.finish);
-  validateSelectedItemSnapshot(value.backplate);
-  validateSelectedItemSnapshot(value.software);
-  assertValidInput(Array.isArray(value.accessories));
-  assertValidInput(Array.isArray(normalizedIds.accessories));
+  const model = validateSelectedModelSnapshot(value.model);
+  const storage = validateSelectedItemSnapshot(value.storage);
+  const battery = validateSelectedItemSnapshot(value.battery);
+  const finish = validateSelectedItemSnapshot(value.finish);
+  const backplate = validateSelectedItemSnapshot(value.backplate);
+  const software = validateSelectedItemSnapshot(value.software);
+  const { accessories } = value;
 
-  assertValidInput(value.model.id === normalizedIds.model);
-  assertValidInput(value.storage.id === normalizedIds.storage);
-  assertValidInput(value.battery.id === normalizedIds.battery);
-  assertValidInput(value.finish.id === normalizedIds.finish);
-  assertValidInput(value.backplate.id === normalizedIds.backplate);
-  assertValidInput(value.software.id === normalizedIds.software);
-  assertValidInput(value.accessories.length === normalizedIds.accessories.length);
+  assertValidInput(Array.isArray(accessories));
 
-  for (const [index, accessory] of value.accessories.entries()) {
-    validateSelectedItemSnapshot(accessory);
+  const validatedAccessories = accessories.map((accessory) =>
+    validateSelectedItemSnapshot(accessory),
+  );
+
+  assertValidInput(model.id === normalizedIds.model);
+  assertValidInput(storage.id === normalizedIds.storage);
+  assertValidInput(battery.id === normalizedIds.battery);
+  assertValidInput(finish.id === normalizedIds.finish);
+  assertValidInput(backplate.id === normalizedIds.backplate);
+  assertValidInput(software.id === normalizedIds.software);
+  assertValidInput(validatedAccessories.length === normalizedIds.accessories.length);
+
+  for (const [index, accessory] of validatedAccessories.entries()) {
     assertValidInput(accessory.id === normalizedIds.accessories[index]);
   }
 }
@@ -356,9 +425,8 @@ function validateConfigurationSnapshot(
   assertValidInput(value.schemaVersion === 1);
   assertValidInput(value.locale === locale);
   assertValidInput(value.locale === "en" || value.locale === "ro");
-  validateNormalizedIds(value.normalizedIds);
-  assertValidInput(isPlainJsonObject(value.normalizedIds));
-  validateSelectedConfigurationItems(value.selected, value.normalizedIds);
+  const normalizedIds = validateNormalizedIds(value.normalizedIds);
+  validateSelectedConfigurationItems(value.selected, normalizedIds);
 }
 
 function validatePricingSnapshot(
