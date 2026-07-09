@@ -6,7 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 export const metadata: Metadata = {
   title: "Shipping & Delivery",
   description:
-    "Delivery information for Clickwheel restored and upgraded iPod Classic devices.",
+    "How Clickwheel confirms shipping details for restored and upgraded iPod Classic devices.",
   alternates: {
     canonical: "/shipping",
     languages: {
@@ -33,8 +33,8 @@ export default function ShippingPage() {
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-7 text-black/65 sm:text-lg">
-              Delivery information for ready-to-ship and built-to-order
-              Clickwheel devices.
+              Shipping details are confirmed after request review or final
+              quote, before a paid order is prepared for dispatch.
             </p>
 
             <p className="mt-5 text-sm text-black/45">
@@ -49,166 +49,125 @@ export default function ShippingPage() {
               <p className="text-sm font-semibold">On this page</p>
 
               <nav className="mt-5 space-y-3 text-sm text-black/60">
-                <a className="block hover:text-black" href="#where-we-deliver">
-                  Where we deliver
+                <a className="block hover:text-black" href="#confirmation">
+                  How shipping is confirmed
                 </a>
-                <a className="block hover:text-black" href="#delivery-costs">
-                  Delivery costs
+                <a className="block hover:text-black" href="#costs">
+                  Costs and destinations
                 </a>
-                <a className="block hover:text-black" href="#dispatch-times">
-                  Dispatch times
+                <a className="block hover:text-black" href="#dispatch">
+                  Preparation before dispatch
                 </a>
-                <a className="block hover:text-black" href="#delivery-methods">
-                  Delivery methods
-                </a>
-                <a className="block hover:text-black" href="#tracking">
-                  Tracking and delivery estimates
+                <a className="block hover:text-black" href="#delivery">
+                  Delivery estimates
                 </a>
                 <a className="block hover:text-black" href="#undeliverable">
                   Undeliverable parcels
+                </a>
+                <a className="block hover:text-black" href="#contact">
+                  Contact
                 </a>
               </nav>
             </aside>
 
             <div className="space-y-14">
-              <section id="where-we-deliver">
+              <section id="confirmation">
                 <h2 className="text-2xl font-semibold tracking-[-0.035em]">
-                  Where we deliver
-                </h2>
-
-                <div className="mt-5 space-y-4 text-base leading-7 text-black/65">
-                  <p>Clickwheel orders are dispatched from Romania.</p>
-
-                  <p>
-                    We currently deliver within Romania and to selected European
-                    destinations. Availability for a specific address is
-                    confirmed during checkout or before payment is completed.
-                  </p>
-
-                  <p>We do not currently offer delivery outside Europe.</p>
-                </div>
-              </section>
-
-              <section id="delivery-costs">
-                <h2 className="text-2xl font-semibold tracking-[-0.035em]">
-                  Delivery costs
+                  How shipping is confirmed
                 </h2>
 
                 <div className="mt-5 space-y-4 text-base leading-7 text-black/65">
                   <p>
-                    <strong className="font-semibold text-black">
-                      Romania:
-                    </strong>{" "}
-                    delivery is free for eligible Clickwheel orders.
+                    Clickwheel confirms shipping details by email after a build
+                    request has been reviewed or a final quote has been prepared.
                   </p>
 
                   <p>
-                    <strong className="font-semibold text-black">
-                      European destinations:
-                    </strong>{" "}
-                    delivery cost is calculated after the delivery address is
-                    entered at checkout. The available shipping options and
-                    their prices are shown before payment.
-                  </p>
-
-                  <p>
-                    International delivery pricing may vary based on destination,
-                    parcel dimensions, selected carrier service, tracking,
-                    signature requirements and available insurance options.
+                    The current Build Request form is not an order or payment
+                    confirmation. No payment is taken and no shipment is created
+                    through that form alone.
                   </p>
                 </div>
               </section>
 
-              <section id="dispatch-times">
+              <section id="costs">
                 <h2 className="text-2xl font-semibold tracking-[-0.035em]">
-                  Dispatch times
+                  Costs and destinations
+                </h2>
+
+                <div className="mt-5 space-y-4 text-base leading-7 text-black/65">
+                  <p>
+                    Available destinations, delivery options and delivery costs
+                    are confirmed before a paid order is finalized.
+                  </p>
+
+                  <p>
+                    Shipping details may depend on the destination, parcel size,
+                    value, available services and any tracking or signature
+                    options.
+                  </p>
+                </div>
+              </section>
+
+              <section id="dispatch">
+                <h2 className="text-2xl font-semibold tracking-[-0.035em]">
+                  Preparation before dispatch
                 </h2>
 
                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
                   <article className="rounded-[24px] border border-black/10 bg-white p-6">
                     <p className="text-sm font-semibold uppercase tracking-[0.16em] text-black/45">
-                      Ready to ship
+                      Ready-to-ship items
                     </p>
 
                     <h3 className="mt-3 text-xl font-semibold tracking-[-0.03em]">
-                      1–3 business days
+                      Confirmed by email
                     </h3>
 
                     <p className="mt-3 text-sm leading-6 text-black/60">
-                      Applies to devices marked as ready to ship after payment
-                      confirmation.
+                      Dispatch guidance is confirmed after the item, address and
+                      final order details are checked.
                     </p>
                   </article>
 
                   <article className="rounded-[24px] border border-black/10 bg-white p-6">
                     <p className="text-sm font-semibold uppercase tracking-[0.16em] text-black/45">
-                      Built to order
+                      Custom builds
                     </p>
 
                     <h3 className="mt-3 text-xl font-semibold tracking-[-0.03em]">
-                      Up to 7 business days
+                      After review and testing
                     </h3>
 
                     <p className="mt-3 text-sm leading-6 text-black/60">
-                      Applies to approved custom configurations after payment
-                      confirmation.
+                      Preparation timing depends on build complexity, parts
+                      availability, testing and final confirmation.
                     </p>
                   </article>
                 </div>
 
                 <p className="mt-5 text-base leading-7 text-black/65">
-                  Dispatch times describe the preparation period before a parcel
-                  is handed to the carrier. They do not include the carrier’s
-                  transit time.
+                  Clickwheel will confirm expected dispatch guidance by email.
+                  Dispatch timing is separate from the carrier transit time.
                 </p>
               </section>
 
-              <section id="delivery-methods">
+              <section id="delivery">
                 <h2 className="text-2xl font-semibold tracking-[-0.035em]">
-                  Delivery methods
+                  Delivery estimates
                 </h2>
 
                 <div className="mt-5 space-y-4 text-base leading-7 text-black/65">
                   <p>
-                    In Romania, orders may be delivered by courier to a delivery
-                    address or, where available, to an eligible parcel locker or
-                    collection point.
+                    Where tracking is available, Clickwheel will provide
+                    tracking details after dispatch.
                   </p>
 
                   <p>
-                    International orders are delivered through the carrier and
-                    service available for the selected destination.
-                  </p>
-
-                  <p>
-                    All available delivery methods are shown before payment when
-                    online checkout is active.
-                  </p>
-                </div>
-              </section>
-
-              <section id="tracking">
-                <h2 className="text-2xl font-semibold tracking-[-0.035em]">
-                  Tracking and delivery estimates
-                </h2>
-
-                <div className="mt-5 space-y-4 text-base leading-7 text-black/65">
-                  <p>
-                    Where tracking is available, we will provide tracking details
-                    after dispatch.
-                  </p>
-
-                  <p>
-                    Delivery dates and transit times are estimates provided by
-                    the carrier. They may vary depending on destination, local
-                    delivery conditions, public holidays, weather, customs or
-                    carrier operational factors.
-                  </p>
-
-                  <p>
-                    For higher-value orders, available shipping services may
-                    include signature on delivery or additional shipment
-                    protection.
+                    Delivery dates and transit times are estimates. They may
+                    vary depending on destination, local delivery conditions,
+                    public holidays, weather, customs or carrier operational
+                    factors.
                   </p>
                 </div>
               </section>
@@ -220,25 +179,23 @@ export default function ShippingPage() {
 
                 <div className="mt-5 space-y-4 text-base leading-7 text-black/65">
                   <p>
-                    Please ensure that the delivery address, contact details and
-                    collection instructions are accurate before placing an
-                    order.
+                    Please make sure delivery details and contact information are
+                    accurate before a paid order is finalized.
                   </p>
 
                   <p>
                     If a parcel cannot be delivered or is not collected and is
-                    returned to us, we will contact the customer to discuss
-                    re-delivery or the applicable return process.
-                  </p>
-
-                  <p>
-                    Any additional delivery costs may apply where a new shipment
-                    is requested.
+                    returned to Clickwheel, we will contact the customer to
+                    discuss the available next steps. Additional delivery costs
+                    may apply if a new shipment is requested.
                   </p>
                 </div>
               </section>
 
-              <section className="rounded-[28px] bg-[#171717] p-8 text-white sm:p-10">
+              <section
+                id="contact"
+                className="rounded-[28px] bg-[#171717] p-8 text-white sm:p-10"
+              >
                 <p className="text-sm font-semibold uppercase tracking-[0.16em] text-white/45">
                   Need help?
                 </p>
@@ -248,15 +205,15 @@ export default function ShippingPage() {
                 </h2>
 
                 <p className="mt-4 max-w-xl text-base leading-7 text-white/65">
-                  Visit our support section for setup, service and delivery
-                  guidance.
+                  Email contact@clickwheel.shop for shipping and delivery
+                  questions.
                 </p>
 
                 <Link
-                  href="/support"
+                  href="mailto:contact@clickwheel.shop"
                   className="mt-7 inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/85"
                 >
-                  Visit support
+                  Email Clickwheel
                 </Link>
               </section>
             </div>

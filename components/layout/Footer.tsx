@@ -24,6 +24,9 @@ const englishHelpLinks = [
 
 const englishLegalLinks = [
   { label: "Shipping & Delivery", href: "/shipping" },
+  { label: "Returns", href: "/returns" },
+  { label: "Warranty", href: "/warranty" },
+  { label: "Cancellation", href: "/cancellation" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms & Conditions", href: "/terms" },
 ];
@@ -49,6 +52,9 @@ const romanianHelpLinks = [
 
 const romanianLegalLinks = [
   { label: "Livrare", href: "/shipping" },
+  { label: "Retururi", href: "/returns" },
+  { label: "Garantie", href: "/warranty" },
+  { label: "Anulare", href: "/cancellation" },
   { label: "Confidentialitate", href: "/privacy" },
   { label: "Termeni si conditii", href: "/terms" },
 ];
