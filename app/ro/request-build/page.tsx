@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Suspense } from "react";
+import { Suspense, useActionState, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
@@ -13,6 +13,10 @@ import {
   parseAccessoryIds,
 } from "@/data/configurator";
 import { formatRonFromEurCents } from "@/lib/money";
+import {
+  submitBuildRequestAction,
+  type BuildRequestSubmissionActionState,
+} from "@/app/request-build/actions";
 
 const {
   models: modelOptions,
@@ -23,8 +27,48 @@ const {
   accessories: accessoryOptions,
 } = getConfiguratorOptions("ro");
 
+const initialActionState: BuildRequestSubmissionActionState = {
+  status: "idle",
+};
+
+function getBuildRequestErrorMessage(
+  state: BuildRequestSubmissionActionState,
+) {
+  if (state.status !== "error") {
+    return null;
+  }
+
+  if (state.errorCode === "invalid_customer_details") {
+    return "Verifica datele de contact si incearca din nou.";
+  }
+
+  if (state.errorCode === "request_save_failed") {
+    return "Nu am putut salva solicitarea acum. Incearca din nou mai tarziu.";
+  }
+
+  return "Nu am putut trimite solicitarea. Reincarca pagina si incearca din nou.";
+}
+
 function BuildRequestContent() {
   const searchParams = useSearchParams();
+  const [state, formAction, isPending] = useActionState(
+    submitBuildRequestAction,
+    initialActionState,
+  );
+  const [browserReady, setBrowserReady] = useState(false);
+  const [idempotencyKey, setIdempotencyKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    const timerId = window.setTimeout(() => {
+      setBrowserReady(true);
+
+      if (typeof window.crypto?.randomUUID === "function") {
+        setIdempotencyKey(window.crypto.randomUUID());
+      }
+    }, 0);
+
+    return () => window.clearTimeout(timerId);
+  }, []);
 
   const model = findConfiguratorChoice(modelOptions, searchParams.get("model"));
   const storageOptions = getConfiguratorStorageOptions("ro", model.id);
@@ -55,6 +99,7 @@ function BuildRequestContent() {
   const accessories = accessoryOptions.filter((accessory) =>
     accessoryIds.includes(accessory.id),
   );
+  const accessoriesValue = accessories.map((accessory) => accessory.id).join(",");
   const totalPriceEurCents = calculateConfiguratorTotalEurCents({
     model,
     storage,
@@ -64,72 +109,122 @@ function BuildRequestContent() {
     software,
     accessories,
   });
+  const idempotencyUnavailable = browserReady && !idempotencyKey;
+  const errorMessage = idempotencyUnavailable
+    ? "Trimiterea securizata nu este disponibila in acest browser. Incearca un browser actualizat."
+    : getBuildRequestErrorMessage(state);
+  const submitDisabled = isPending || idempotencyUnavailable || !idempotencyKey;
 
   return (
     <section className="px-6 py-14 md:px-12 lg:px-16">
       <div className="mx-auto grid max-w-[1200px] gap-10 lg:grid-cols-[1fr_380px]">
-        <form className="rounded-[28px] border border-black/10 bg-white p-7 md:p-10">
+        <form
+          action={formAction}
+          className="rounded-[28px] border border-black/10 bg-white p-7 md:p-10"
+        >
           <h2 className="text-3xl font-semibold tracking-[-0.04em]">
             Datele tale
           </h2>
 
           <p className="mt-3 text-sm leading-6 text-neutral-600">
-            Această solicitare nu creează o comandă și nu implică nicio plată.
+            Aceasta solicitare nu creeaza o comanda si nu implica nicio plata.
           </p>
+
+          <input type="hidden" name="locale" value="ro" />
+          <input type="hidden" name="model" value={model.id} />
+          <input type="hidden" name="storage" value={storage.id} />
+          <input type="hidden" name="battery" value={battery.id} />
+          <input type="hidden" name="finish" value={finish.id} />
+          <input type="hidden" name="backplate" value={backplate.id} />
+          <input type="hidden" name="software" value={software.id} />
+          <input type="hidden" name="accessories" value={accessoriesValue} />
+          <input
+            type="hidden"
+            name="idempotencyKey"
+            value={idempotencyKey ?? ""}
+          />
 
           <div className="mt-8 grid gap-5">
             <label className="grid gap-2 text-sm font-semibold">
               Nume complet
               <input
+                name="name"
                 type="text"
-                placeholder="Numele tău"
+                autoComplete="name"
+                maxLength={200}
+                placeholder="Numele tau"
+                required
                 className="rounded-xl border border-black/15 px-4 py-3 text-base font-normal outline-none transition focus:border-black"
               />
             </label>
 
             <label className="grid gap-2 text-sm font-semibold">
-              Adresă de email
+              Adresa de email
               <input
+                name="email"
                 type="email"
+                autoComplete="email"
+                maxLength={320}
                 placeholder="tu@exemplu.com"
+                required
                 className="rounded-xl border border-black/15 px-4 py-3 text-base font-normal outline-none transition focus:border-black"
               />
             </label>
 
             <label className="grid gap-2 text-sm font-semibold">
-              Țară
+              Cod tara
               <input
+                name="country"
                 type="text"
-                placeholder="România"
+                autoComplete="country"
+                maxLength={2}
+                pattern="[A-Za-z]{2}"
+                placeholder="RO"
+                required
                 className="rounded-xl border border-black/15 px-4 py-3 text-base font-normal outline-none transition focus:border-black"
               />
+              <span className="text-xs font-normal text-neutral-500">
+                Foloseste codul de doua litere, de exemplu RO sau US.
+              </span>
             </label>
 
             <label className="grid gap-2 text-sm font-semibold">
-              Detalii despre configurația ta
+              Detalii despre configuratia ta
               <textarea
+                name="notes"
                 rows={5}
-                placeholder="De exemplu: culoare preferată, text pentru gravură, întrebări despre livrare..."
+                maxLength={5000}
+                placeholder="De exemplu: culoare preferata, text pentru gravura, intrebari despre livrare..."
                 className="resize-none rounded-xl border border-black/15 px-4 py-3 text-base font-normal outline-none transition focus:border-black"
               />
             </label>
           </div>
 
+          {errorMessage ? (
+            <p
+              aria-live="polite"
+              className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm leading-6 text-red-700"
+            >
+              {errorMessage}
+            </p>
+          ) : null}
+
           <button
-            type="button"
-            className="mt-8 w-full rounded-full bg-black px-5 py-4 text-sm font-semibold text-white transition hover:bg-neutral-800"
+            type="submit"
+            disabled={submitDisabled}
+            className="mt-8 w-full rounded-full bg-black px-5 py-4 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-400"
           >
-            Solicitările de configurare vor fi disponibile în curând
+            {isPending ? "Se trimite solicitarea..." : "Trimite solicitarea"}
           </button>
 
           <p className="mt-4 text-center text-xs leading-5 text-neutral-500">
-            Pregătim sistemul oficial de contact Clickwheel.
+            Aceasta nu este finalizare de comanda. Nu se efectueaza nicio plata.
           </p>
         </form>
 
         <aside className="h-fit rounded-[28px] border border-black/10 bg-white p-7 shadow-[0_20px_55px_rgba(0,0,0,0.08)] lg:sticky lg:top-28">
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-blue-600">
-            Configurația selectată
+            Configuratia selectata
           </p>
 
           <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em]">
@@ -188,7 +283,7 @@ function BuildRequestContent() {
             href="/ro/build"
             className="mt-8 block text-center text-sm font-semibold text-blue-600 hover:text-blue-800"
           >
-            ← Modifică configurația
+            ← Modifica configuratia
           </Link>
         </aside>
       </div>
@@ -204,18 +299,18 @@ export default function RomanianRequestBuildPage() {
       <section className="border-b border-black/10 px-6 py-16 md:px-12 lg:px-16">
         <div className="mx-auto max-w-[1200px]">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
-            Solicitare configurație
+            Solicitare configuratie
           </p>
 
           <h1 className="mt-5 max-w-3xl text-5xl font-semibold tracking-[-0.06em] md:text-6xl">
-            Clasicul tău,
+            Clasicul tau,
             <br />
-            pregătit pentru analiză.
+            pregatit pentru analiza.
           </h1>
 
           <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-600 md:text-lg">
-            Trimite-ne configurația preferată. Vom verifica disponibilitatea,
-            vom confirma prețul final și te vom contacta înainte de orice plată.
+            Trimite-ne configuratia preferata. Vom verifica disponibilitatea,
+            vom confirma pretul final si te vom contacta inainte de orice plata.
           </p>
         </div>
       </section>
@@ -223,7 +318,7 @@ export default function RomanianRequestBuildPage() {
       <Suspense
         fallback={
           <div className="px-6 py-20 text-center text-sm text-neutral-500">
-            Se încarcă configurația ta…
+            Se incarca configuratia ta…
           </div>
         }
       >
