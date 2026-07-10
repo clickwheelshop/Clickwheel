@@ -156,21 +156,12 @@ export default function CancellationRoPage() {
                   Scrie la requests@clickwheel.shop sau contact@clickwheel.shop.
                 </p>
 
-                <div className="mt-7 flex flex-wrap gap-3">
-                  <Link
-                    href="mailto:requests@clickwheel.shop"
-                    className="inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/85"
-                  >
-                    Trimite la requests
-                  </Link>
-
-                  <Link
-                    href="mailto:contact@clickwheel.shop"
-                    className="inline-flex rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
-                  >
-                    Trimite la contact
-                  </Link>
-                </div>
+                <Link
+                  href="/ro/support/cancellation-request"
+                  className="mt-7 inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/85"
+                >
+                  Deschide cerere anulare
+                </Link>
               </section>
             </div>
           </div>

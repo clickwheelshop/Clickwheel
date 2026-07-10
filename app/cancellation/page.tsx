@@ -153,21 +153,12 @@ export default function CancellationPage() {
                   Email requests@clickwheel.shop or contact@clickwheel.shop.
                 </p>
 
-                <div className="mt-7 flex flex-wrap gap-3">
-                  <Link
-                    href="mailto:requests@clickwheel.shop"
-                    className="inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/85"
-                  >
-                    Email requests
-                  </Link>
-
-                  <Link
-                    href="mailto:contact@clickwheel.shop"
-                    className="inline-flex rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
-                  >
-                    Email contact
-                  </Link>
-                </div>
+                <Link
+                  href="/support/cancellation-request"
+                  className="mt-7 inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/85"
+                >
+                  Start cancellation request
+                </Link>
               </section>
             </div>
           </div>

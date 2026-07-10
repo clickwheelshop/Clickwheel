@@ -35,6 +35,14 @@ const supportTopics = [
     href: "/ro/support/warranty-claim",
     action: "Cere garantie →",
   },
+  {
+    number: "05",
+    title: "Anuleaza o comanda",
+    description:
+      "Pentru comenzi Clickwheel existente care poate mai pot fi anulate inainte de expediere.",
+    href: "/ro/support/cancellation-request",
+    action: "Cere anulare →",
+  },
 ];
 
 const faqs = [
@@ -107,7 +115,7 @@ export default function RomanianSupportPage() {
             </p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-5">
             {supportTopics.map((topic) => (
               <article
                 key={topic.title}

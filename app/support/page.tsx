@@ -35,6 +35,14 @@ const supportTopics = [
     href: "/support/warranty-claim",
     action: "Start warranty claim →",
   },
+  {
+    number: "05",
+    title: "Cancel an order",
+    description:
+      "For existing Clickwheel orders that may still be cancelled before dispatch.",
+    href: "/support/cancellation-request",
+    action: "Request cancellation →",
+  },
 ];
 
 const faqs = [
@@ -107,7 +115,7 @@ export default function SupportPage() {
             </p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-5">
             {supportTopics.map((topic) => (
               <article
                 key={topic.title}
