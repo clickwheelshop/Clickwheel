@@ -181,10 +181,10 @@ export default function WarrantyRoPage() {
                 </p>
 
                 <Link
-                  href="mailto:warranty@clickwheel.shop"
+                  href="/ro/support/warranty-claim"
                   className="mt-7 inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/85"
                 >
-                  Trimite email
+                  Deschide cerere garantie
                 </Link>
               </section>
             </div>

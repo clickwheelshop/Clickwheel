@@ -179,10 +179,10 @@ export default function WarrantyPage() {
                 </p>
 
                 <Link
-                  href="mailto:warranty@clickwheel.shop"
+                  href="/support/warranty-claim"
                   className="mt-7 inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/85"
                 >
-                  Email warranty
+                  Start warranty claim
                 </Link>
               </section>
             </div>

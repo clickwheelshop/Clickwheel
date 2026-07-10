@@ -27,6 +27,14 @@ const supportTopics = [
     href: "/services/upgrade",
     action: "Request service →",
   },
+  {
+    number: "04",
+    title: "Warranty claim",
+    description:
+      "For Clickwheel customers with an existing order and a possible faulty-device issue.",
+    href: "/support/warranty-claim",
+    action: "Start warranty claim →",
+  },
 ];
 
 const faqs = [
@@ -99,7 +107,7 @@ export default function SupportPage() {
             </p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-3">
+          <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
             {supportTopics.map((topic) => (
               <article
                 key={topic.title}

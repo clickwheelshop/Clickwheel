@@ -19,6 +19,7 @@ const englishHelpLinks = [
   { label: "Guides", href: "/guides" },
   { label: "Troubleshooting", href: "/guides/troubleshooting" },
   { label: "Support", href: "/support" },
+  { label: "Warranty Claim", href: "/support/warranty-claim" },
   { label: "Build Yours", href: "/build" },
 ];
 
@@ -47,6 +48,7 @@ const romanianHelpLinks = [
   { label: "Ghiduri", href: "/guides" },
   { label: "Depanare", href: "/guides/troubleshooting" },
   { label: "Suport", href: "/support" },
+  { label: "Cerere garantie", href: "/support/warranty-claim" },
   { label: "Configurează-l", href: "/build" },
 ];
 

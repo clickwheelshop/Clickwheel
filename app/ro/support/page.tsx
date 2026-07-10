@@ -27,6 +27,14 @@ const supportTopics = [
     href: "/ro/services/upgrade",
     action: "Cere service →",
   },
+  {
+    number: "04",
+    title: "Cerere garantie",
+    description:
+      "Pentru clienti Clickwheel cu o comanda existenta si o posibila problema de defect.",
+    href: "/ro/support/warranty-claim",
+    action: "Cere garantie →",
+  },
 ];
 
 const faqs = [
@@ -99,7 +107,7 @@ export default function RomanianSupportPage() {
             </p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-3">
+          <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
             {supportTopics.map((topic) => (
               <article
                 key={topic.title}
