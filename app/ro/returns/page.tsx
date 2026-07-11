@@ -186,15 +186,14 @@ export default function ReturnsRoPage() {
                 </h2>
 
                 <p className="mt-4 max-w-xl text-base leading-7 text-white/65">
-                  Scrie la returns@clickwheel.shop inainte sa trimiti ceva
-                  inapoi.
+                  Deschide o cerere de retur inainte sa trimiti ceva inapoi.
                 </p>
 
                 <Link
-                  href="mailto:returns@clickwheel.shop"
+                  href="/ro/support/return-request"
                   className="mt-7 inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/85"
                 >
-                  Trimite email
+                  Deschide cerere retur
                 </Link>
               </section>
             </div>

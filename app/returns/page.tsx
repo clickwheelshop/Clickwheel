@@ -183,14 +183,14 @@ export default function ReturnsPage() {
                 </h2>
 
                 <p className="mt-4 max-w-xl text-base leading-7 text-white/65">
-                  Email returns@clickwheel.shop before sending anything back.
+                  Start a return request before sending anything back.
                 </p>
 
                 <Link
-                  href="mailto:returns@clickwheel.shop"
+                  href="/support/return-request"
                   className="mt-7 inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/85"
                 >
-                  Email returns
+                  Start return request
                 </Link>
               </section>
             </div>

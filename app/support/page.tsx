@@ -43,6 +43,14 @@ const supportTopics = [
     href: "/support/cancellation-request",
     action: "Request cancellation →",
   },
+  {
+    number: "06",
+    title: "Return an order",
+    description:
+      "For dispatched or delivered Clickwheel orders that need return or withdrawal review.",
+    href: "/support/return-request",
+    action: "Request return →",
+  },
 ];
 
 const faqs = [
@@ -115,7 +123,7 @@ export default function SupportPage() {
             </p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-5">
+          <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
             {supportTopics.map((topic) => (
               <article
                 key={topic.title}

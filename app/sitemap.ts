@@ -32,6 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/support",
     "/support/warranty-claim",
     "/support/cancellation-request",
+    "/support/return-request",
     "/ro",
     "/ro/shop",
     "/ro/shop/the-studio",
@@ -60,6 +61,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/ro/support",
     "/ro/support/warranty-claim",
     "/ro/support/cancellation-request",
+    "/ro/support/return-request",
   ];
 
   return routes.map((route) => ({

@@ -43,6 +43,14 @@ const supportTopics = [
     href: "/ro/support/cancellation-request",
     action: "Cere anulare →",
   },
+  {
+    number: "06",
+    title: "Returneaza o comanda",
+    description:
+      "Pentru comenzi Clickwheel expediate sau livrate care au nevoie de analiza pentru retur sau retragere.",
+    href: "/ro/support/return-request",
+    action: "Cere retur →",
+  },
 ];
 
 const faqs = [
@@ -115,7 +123,7 @@ export default function RomanianSupportPage() {
             </p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-5">
+          <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
             {supportTopics.map((topic) => (
               <article
                 key={topic.title}

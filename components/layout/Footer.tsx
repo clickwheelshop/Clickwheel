@@ -21,6 +21,7 @@ const englishHelpLinks = [
   { label: "Support", href: "/support" },
   { label: "Warranty Claim", href: "/support/warranty-claim" },
   { label: "Cancellation Request", href: "/support/cancellation-request" },
+  { label: "Return Request", href: "/support/return-request" },
   { label: "Build Yours", href: "/build" },
 ];
 
@@ -51,6 +52,7 @@ const romanianHelpLinks = [
   { label: "Suport", href: "/support" },
   { label: "Cerere garantie", href: "/support/warranty-claim" },
   { label: "Cerere anulare", href: "/support/cancellation-request" },
+  { label: "Cerere retur", href: "/support/return-request" },
   { label: "Configurează-l", href: "/build" },
 ];
 
