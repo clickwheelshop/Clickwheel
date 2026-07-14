@@ -9,6 +9,7 @@ const services = [
     description:
       "Înlocuiește hard diskul original cu stocare flash fiabilă pentru performanță mai bună, utilizare mai silențioasă și mai mult spațiu pentru muzică.",
     options: ["128GB", "256GB", "512GB", "1TB"],
+    note: "Modelele iPod Classic generatia a 6-a din 2007-2008 sunt limitate la 128GB.",
   },
   {
     number: "02",
@@ -107,9 +108,16 @@ export default function RomanianServicesPage() {
             </h2>
 
             <p className="mt-5 text-base leading-7 text-neutral-600">
-              Trimite propriul iPod Classic sau alege o configurație Clickwheel
-              restaurată. Analizăm fiecare dispozitiv și confirmăm lucrarea
-              înainte de plată.
+              Serviciile sunt pentru un iPod Classic pe care il detii deja. Daca
+              vrei un iPod Clickwheel restaurat si configurat nou, foloseste
+              fluxul{" "}
+              <Link
+                href="/ro/request-build"
+                className="font-semibold text-blue-600 transition hover:text-blue-800"
+              >
+                Build Request
+              </Link>
+              .
             </p>
           </div>
 
@@ -147,6 +155,12 @@ export default function RomanianServicesPage() {
                     </span>
                   ))}
                 </div>
+
+                {"note" in service && service.note ? (
+                  <p className="mt-5 text-xs leading-6 text-neutral-500">
+                    {service.note}
+                  </p>
+                ) : null}
 
                 <Link
                   href="/ro/services/upgrade"

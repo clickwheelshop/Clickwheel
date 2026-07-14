@@ -221,21 +221,31 @@ export default function SupportPage() {
           <div className="mt-5 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <h2 className="max-w-3xl text-3xl font-semibold tracking-[-0.05em] md:text-4xl">
-                Planning a new build or an upgrade?
+                Planning a newly configured Clickwheel iPod?
               </h2>
 
               <p className="mt-5 max-w-2xl text-base leading-7 text-neutral-700">
-                Choose your model, storage, battery, finish and software
-                preference in the Clickwheel configurator.
+                Use Build Request for a newly configured restored Clickwheel
+                iPod. For paid work on an iPod you already own, use the Service
+                / Upgrade Request flow.
               </p>
             </div>
 
-            <Link
-              href="/build"
-              className="inline-flex rounded-full bg-black px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-neutral-800"
-            >
-              Build Yours →
-            </Link>
+            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+              <Link
+                href="/request-build"
+                className="inline-flex justify-center rounded-full bg-black px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-neutral-800"
+              >
+                Start Build Request →
+              </Link>
+
+              <Link
+                href="/services/upgrade"
+                className="inline-flex justify-center rounded-full border border-black/15 px-6 py-3.5 text-sm font-semibold text-black transition hover:border-black"
+              >
+                Request service →
+              </Link>
+            </div>
           </div>
         </div>
       </section>

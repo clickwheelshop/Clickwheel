@@ -221,21 +221,31 @@ export default function RomanianSupportPage() {
           <div className="mt-5 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <h2 className="max-w-3xl text-3xl font-semibold tracking-[-0.05em] md:text-4xl">
-                Plănuiești o configurație nouă sau un upgrade?
+                Planuiesti un iPod Clickwheel configurat nou?
               </h2>
 
               <p className="mt-5 max-w-2xl text-base leading-7 text-neutral-700">
-                Alege modelul, stocarea, bateria, finisajul și preferința de
-                software în configuratorul Clickwheel.
+                Foloseste Build Request pentru un iPod Clickwheel restaurat si
+                configurat nou. Pentru lucrari platite pe un iPod pe care il ai
+                deja, foloseste fluxul Service / Upgrade.
               </p>
             </div>
 
-            <Link
-              href="/ro/build"
-              className="inline-flex rounded-full bg-black px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-neutral-800"
-            >
-              Configurează-l →
-            </Link>
+            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+              <Link
+                href="/ro/request-build"
+                className="inline-flex justify-center rounded-full bg-black px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-neutral-800"
+              >
+                Deschide Build Request →
+              </Link>
+
+              <Link
+                href="/ro/services/upgrade"
+                className="inline-flex justify-center rounded-full border border-black/15 px-6 py-3.5 text-sm font-semibold text-black transition hover:border-black"
+              >
+                Cere service →
+              </Link>
+            </div>
           </div>
         </div>
       </section>

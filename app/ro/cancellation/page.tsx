@@ -128,14 +128,16 @@ export default function CancellationRoPage() {
 
                 <div className="mt-5 space-y-4 text-base leading-7 text-black/65">
                   <p>
-                    Scrie cat mai repede la requests@clickwheel.shop sau
-                    contact@clickwheel.shop. Include referinta publica sau
-                    referinta comenzii, daca este disponibila.
+                    Foloseste pagina de cerere anulare cat mai repede. Aceasta
+                    pregateste un email catre requests@clickwheel.shop cu
+                    detaliile necesare pentru analiza comenzii.
                   </p>
 
                   <p>
-                    Nu exista inca formular de anulare pe site. Clickwheel va
-                    verifica statusul si va raspunde prin email.
+                    Clickwheel va verifica statusul comenzii si va raspunde prin
+                    email. Trimiterea cererii nu confirma anularea; oprirea unei
+                    comenzi este posibila doar inainte de expediere, cand este
+                    operational posibil.
                   </p>
                 </div>
               </section>
@@ -153,7 +155,8 @@ export default function CancellationRoPage() {
                 </h2>
 
                 <p className="mt-4 max-w-xl text-base leading-7 text-white/65">
-                  Scrie la requests@clickwheel.shop sau contact@clickwheel.shop.
+                  Deschide pagina de cerere anulare pentru a pregati un email
+                  catre requests@clickwheel.shop.
                 </p>
 
                 <Link

@@ -9,6 +9,7 @@ const services = [
     description:
       "Replace the original hard drive with reliable flash storage for faster performance, quieter use and more space for music.",
     options: ["128GB", "256GB", "512GB", "1TB"],
+    note: "iPod Classic 6th Generation models from 2007-2008 are limited to 128GB.",
   },
   {
     number: "02",
@@ -106,8 +107,15 @@ export default function ServicesPage() {
             </h2>
 
             <p className="mt-5 text-base leading-7 text-neutral-600">
-              Send us your own iPod Classic or choose a restored Clickwheel
-              build. We review each device and confirm the work before payment.
+              Services are for an iPod Classic you already own. If you want a
+              newly configured restored Clickwheel iPod, use the{" "}
+              <Link
+                href="/request-build"
+                className="font-semibold text-blue-600 transition hover:text-blue-800"
+              >
+                Build Request
+              </Link>{" "}
+              flow instead.
             </p>
           </div>
 
@@ -145,6 +153,12 @@ export default function ServicesPage() {
                     </span>
                   ))}
                 </div>
+
+                {"note" in service && service.note ? (
+                  <p className="mt-5 text-xs leading-6 text-neutral-500">
+                    {service.note}
+                  </p>
+                ) : null}
 
                 <Link
                   href="/services/upgrade"

@@ -140,7 +140,15 @@ export default function RomanianCancellationRequestPage() {
             <p className="mt-5 text-base leading-7 text-neutral-600">
               Clickwheel va analiza cererea si va confirma daca anularea mai
               este posibila. Daca aceasta comanda a fost deja expediata, poate
-              fi nevoie sa folosesti procesul de retur sau retragere.
+              fi nevoie sa folosesti pagina{" "}
+              <Link
+                href="/ro/support/return-request"
+                className="font-semibold text-blue-600 transition hover:text-blue-800"
+              >
+                Cerere retur / retragere
+              </Link>{" "}
+              in schimb. Eligibilitatea pentru retur este analizata separat
+              conform politicii de retur.
             </p>
           </div>
 

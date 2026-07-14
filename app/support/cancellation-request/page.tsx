@@ -139,8 +139,15 @@ export default function CancellationRequestPage() {
             <p className="mt-5 text-base leading-7 text-neutral-600">
               Clickwheel will review the request and confirm whether
               cancellation is still possible. If the order has already been
-              dispatched, you may need to use the returns or withdrawal process
-              instead.
+              dispatched, use the{" "}
+              <Link
+                href="/support/return-request"
+                className="font-semibold text-blue-600 transition hover:text-blue-800"
+              >
+                Return / Withdrawal Request
+              </Link>{" "}
+              page instead. Return eligibility is reviewed separately under the
+              returns policy.
             </p>
           </div>
 

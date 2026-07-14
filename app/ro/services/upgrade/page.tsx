@@ -59,12 +59,12 @@ const importantNotes = [
   "Nu trimite dispozitivul pana cand Clickwheel confirma cererea prin email.",
   "Oferta finala depinde de starea dispozitivului si de disponibilitatea pieselor.",
   "Stocarea maxima suportata este 1TB.",
-  "Unele unitati iPod Classic 6th Gen au limitari de stocare.",
+  "Modelele iPod Classic generatia a 6-a din 2007-2008 sunt limitate la 128GB.",
   "Fotografiile pot fi trimise ca raspuns in firul de email.",
 ];
 
 const serviceRequestMailto = `mailto:requests@clickwheel.shop?subject=${encodeURIComponent(
-  "Service / Upgrade Request",
+  "Cerere service / upgrade",
 )}&body=${encodeURIComponent(`Salut Clickwheel,
 
 As vrea sa cer service sau upgrade pentru propriul meu iPod.

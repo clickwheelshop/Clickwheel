@@ -59,7 +59,7 @@ const importantNotes = [
   "Do not ship your device until Clickwheel confirms the request by email.",
   "Final service availability and quote depend on device condition and parts availability.",
   "Maximum supported storage is 1TB.",
-  "Some iPod Classic 6th Gen units have storage limitations.",
+  "iPod Classic 6th Generation models from 2007-2008 are limited to 128GB.",
   "Photos can be sent by replying to the email thread after the first message.",
 ];
 

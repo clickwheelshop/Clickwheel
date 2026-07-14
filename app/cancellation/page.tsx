@@ -125,14 +125,16 @@ export default function CancellationPage() {
 
                 <div className="mt-5 space-y-4 text-base leading-7 text-black/65">
                   <p>
-                    Email requests@clickwheel.shop or contact@clickwheel.shop as
-                    soon as possible. Include your public reference or order
-                    reference if available.
+                    Use the Cancellation Request page as soon as possible. It
+                    prepares an email to requests@clickwheel.shop with the order
+                    details needed for review.
                   </p>
 
                   <p>
-                    There is no cancellation form on the website yet. Clickwheel
-                    will review the status and reply by email.
+                    Clickwheel will review the order status and reply by email.
+                    Sending the request does not confirm cancellation; stopping
+                    an order is only possible before dispatch when operationally
+                    possible.
                   </p>
                 </div>
               </section>
@@ -150,7 +152,8 @@ export default function CancellationPage() {
                 </h2>
 
                 <p className="mt-4 max-w-xl text-base leading-7 text-white/65">
-                  Email requests@clickwheel.shop or contact@clickwheel.shop.
+                  Open the cancellation request page to prepare an email to
+                  requests@clickwheel.shop.
                 </p>
 
                 <Link
