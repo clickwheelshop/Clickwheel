@@ -1,7 +1,7 @@
 const benefits = [
   {
     title: "Baterie extinsă",
-    text: "Până la 3000mAh pentru zile întregi de muzică.",
+    text: "Pana la 3000mAh pentru ascultare extinsa intre incarcari.",
     icon: "▯",
   },
   {

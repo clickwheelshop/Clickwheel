@@ -1,7 +1,7 @@
 const benefits = [
   {
     title: "Extended Battery",
-    text: "Up to 3000mAh for days of uninterrupted music.",
+    text: "Up to 3000mAh for extended listening between charges.",
     icon: "▯",
   },
   {

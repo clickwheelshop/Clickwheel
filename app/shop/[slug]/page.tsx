@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { ReactNode } from "react";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import {
   clickwheelStorageLabels,
   products,
+  type ClickwheelProduct,
   type ProductTone,
 } from "@/data/products";
 import { formatStartingPriceFromEurCents } from "@/lib/money";
@@ -43,6 +45,110 @@ const productStyles: Record<
     screen: "bg-white",
   },
 };
+
+type SpecificationSection = {
+  title: string;
+  rows?: {
+    label: string;
+    value: ReactNode;
+  }[];
+  items?: readonly string[];
+};
+
+function buildSpecificationSections(
+  product: ClickwheelProduct,
+): SpecificationSection[] {
+  const availableStorageUpgrades =
+    product.availableStorageUpgradeIds.length > 0
+      ? product.availableStorageUpgradeIds
+          .map((id) => clickwheelStorageLabels[id])
+          .join(", ")
+      : "Not supported for this model";
+
+  return [
+    {
+      title: "Core specifications",
+      rows: [
+        { label: "Model", value: product.name },
+        { label: "Technical line", value: product.secondaryLine },
+        {
+          label: "Included base storage",
+          value: `${clickwheelStorageLabels["128gb"]} flash storage`,
+        },
+        { label: "Battery configuration", value: product.battery },
+        { label: "Finish", value: product.finish },
+      ],
+    },
+    {
+      title: "Configurable options",
+      rows: [
+        {
+          label: "Available storage upgrades",
+          value: availableStorageUpgrades,
+        },
+        {
+          label: "Software configuration",
+          value:
+            "Standard iPod OS or Rockbox setup can be selected during configuration.",
+        },
+        ...(product.rearConfiguration
+          ? [
+              {
+                label: "Backplate or engraving",
+                value: product.rearConfiguration,
+              },
+            ]
+          : []),
+      ],
+    },
+    {
+      title: "What is included",
+      items: product.includes,
+    },
+    {
+      title: "Refurbishment and testing",
+      rows: [
+        {
+          label: "Preparation",
+          value:
+            "Restored and tested before delivery. Final parts and availability are confirmed before payment.",
+        },
+      ],
+    },
+    {
+      title: "Model-specific notes",
+      rows: [
+        {
+          label: "Storage note",
+          value:
+            product.modelSpecificNote ??
+            "Storage upgrades are available where compatible and confirmed before payment.",
+        },
+      ],
+    },
+    {
+      title: "Warranty and returns",
+      rows: [
+        {
+          label: "Policy",
+          value: (
+            <>
+              See the published{" "}
+              <Link className="underline" href="/warranty">
+                warranty policy
+              </Link>{" "}
+              and{" "}
+              <Link className="underline" href="/returns">
+                returns policy
+              </Link>
+              .
+            </>
+          ),
+        },
+      ],
+    },
+  ];
+}
 
 function ProductVisual({ tone }: { tone: ProductTone }) {
   const style = productStyles[tone];
@@ -101,6 +207,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
   if (!product) {
     notFound();
   }
+
+  const specificationSections = buildSpecificationSections(product);
 
   return (
     <main className="min-h-screen bg-[#f8f6f2] text-black">
@@ -203,7 +311,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </span>
               </div>
 
-              {product.availableStorageUpgradeIds.length > 0 && (
+              {product.availableStorageUpgradeIds.length > 0 ? (
                 <div className="flex justify-between gap-5 border-b border-black/10 pb-4">
                   <span className="text-neutral-500">
                     Available storage upgrades
@@ -212,6 +320,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     {product.availableStorageUpgradeIds
                       .map((id) => clickwheelStorageLabels[id])
                       .join(", ")}
+                  </span>
+                </div>
+              ) : (
+                <div className="flex justify-between gap-5 border-b border-black/10 pb-4">
+                  <span className="text-neutral-500">Storage upgrades</span>
+                  <span className="max-w-xs text-right font-semibold">
+                    {product.modelSpecificNote ??
+                      "This configuration does not support selectable storage upgrades."}
                   </span>
                 </div>
               )}
@@ -230,6 +346,55 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </span>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 py-20 md:px-12 lg:px-16">
+        <div className="mx-auto max-w-[1600px]">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
+            Specifications
+          </p>
+
+          <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-[-0.05em] md:text-5xl">
+            Details for this reference configuration.
+          </h2>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {specificationSections.map((section) => (
+              <article
+                key={section.title}
+                className="rounded-[24px] border border-black/10 bg-white p-6"
+              >
+                <h3 className="text-lg font-semibold tracking-[-0.02em]">
+                  {section.title}
+                </h3>
+
+                {section.rows && (
+                  <dl className="mt-5 space-y-4 text-sm">
+                    {section.rows.map((row) => (
+                      <div
+                        key={`${section.title}-${row.label}`}
+                        className="border-t border-black/10 pt-4"
+                      >
+                        <dt className="text-neutral-500">{row.label}</dt>
+                        <dd className="mt-1 font-semibold leading-6 text-black">
+                          {row.value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+
+                {section.items && (
+                  <ul className="mt-5 space-y-3 border-t border-black/10 pt-4 text-sm leading-6 text-neutral-700">
+                    {section.items.map((item) => (
+                      <li key={item}>✓ {item}</li>
+                    ))}
+                  </ul>
+                )}
+              </article>
+            ))}
           </div>
         </div>
       </section>

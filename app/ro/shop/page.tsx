@@ -42,31 +42,31 @@ const productStyles: Record<
 const romanianCopy = {
   "the-studio": {
     description:
-      "O configurație echilibrată, cu stocare flash rapidă, baterie extinsă și un finisaj negru mat.",
-    storage: "Stocare flash 128GB inclusă",
+      "Un iPod Video restaurat pentru ascultare zilnica, cu stocare flash 128GB inclusa si configuratii cu capacitate mai mare disponibile.",
+    storage: "Stocare flash 128GB inclusa",
     battery: "Baterie 3000mAh",
     finish: "Negru mat",
   },
   "the-collector": {
     description:
-      "O configurație pentru colecționari, cu stocare flash, baterie extinsă și spate din oțel polisat.",
-    storage: "Stocare flash 128GB inclusă",
+      "Un iPod Video late-2006 restaurat, cu stocare flash 128GB inclusa si finisaj din otel polisat.",
+    storage: "Stocare flash 128GB inclusa",
     battery: "Baterie 3000mAh",
-    finish: "Oțel polisat",
+    finish: "Otel polisat",
   },
   "the-heritage": {
     description:
-      "O variantă clasică și echilibrată, construită pentru ascultare zilnică și un aspect curat, argintiu.",
-    storage: "Stocare flash 128GB inclusă",
+      "Un iPod Classic 6th Generation restaurat, cu stocare flash 128GB si limita maxima de 128GB.",
+    storage: "Stocare flash 128GB inclusa",
     battery: "Baterie 2000mAh",
     finish: "Argintiu",
   },
   "the-signature": {
     description:
-      "O configurație premium pentru colecționari, cadouri și personalizare.",
-    storage: "Stocare flash 128GB inclusă",
+      "Un iPod Classic 7th Generation restaurat, cu stocare flash 128GB inclusa si optiuni de personalizare.",
+    storage: "Stocare flash 128GB inclusa",
     battery: "Baterie 3000mAh",
-    finish: "Gravură personalizată",
+    finish: "Gravura personalizata",
   },
 } as const;
 
@@ -199,17 +199,17 @@ export default function RomanianShopPage() {
 
                     <div className="mt-7 flex flex-wrap gap-3">
                       <Link
-                        href="/ro/build"
+                        href={`/ro/shop/${product.slug}`}
                         className="rounded-full bg-black px-5 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
                       >
-                        Configurează unul similar →
+                        Vezi configuratia →
                       </Link>
 
                       <Link
                         href="/ro/build"
                         className="rounded-full border border-black/10 px-5 py-3 text-sm font-semibold transition hover:border-black"
                       >
-                        Începe configurarea
+                        Configureaza unul similar
                       </Link>
                     </div>
                   </div>

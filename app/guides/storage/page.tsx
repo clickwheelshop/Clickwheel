@@ -81,7 +81,8 @@ export default function StorageGuidePage() {
 
             <p className="mt-6 text-base leading-8 text-neutral-700">
               Every Clickwheel model starts with 128GB included. Storage
-              upgrades are available in 256GB, 512GB and 1TB.
+              upgrades are available in 256GB, 512GB and 1TB. The iPod Classic
+              6th Generation, 2007–2008, is limited to 128GB.
             </p>
           </div>
 

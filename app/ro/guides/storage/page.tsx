@@ -81,8 +81,9 @@ export default function RomanianStorageGuidePage() {
             </p>
 
             <p className="mt-6 text-base leading-8 text-neutral-700">
-              Fiecare model Clickwheel începe cu 128GB incluși. Upgrade-urile de
-              stocare sunt disponibile în variante de 256GB, 512GB și 1TB.
+              Fiecare model Clickwheel incepe cu 128GB inclusi. Upgrade-urile
+              de stocare sunt disponibile in variante de 256GB, 512GB si 1TB.
+              iPod Classic 6th Generation, 2007–2008, este limitat la 128GB.
             </p>
           </div>
 

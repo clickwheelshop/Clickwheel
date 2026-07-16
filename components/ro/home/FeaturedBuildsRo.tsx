@@ -3,17 +3,17 @@ import { products } from "@/data/products";
 import { formatStartingPriceFromEurCents } from "@/lib/money";
 
 const localizedSpecs = {
-  "the-studio": ["Stocare flash 128GB inclusă", "Baterie 3000mAh", "Negru mat"],
+  "the-studio": ["Stocare flash 128GB inclusa", "Baterie 3000mAh", "Negru mat"],
   "the-collector": [
-    "Stocare flash 128GB inclusă",
+    "Stocare flash 128GB inclusa",
     "Baterie 3000mAh",
-    "Oțel polisat",
+    "Otel polisat",
   ],
-  "the-heritage": ["Stocare flash 128GB inclusă", "Baterie 2000mAh", "Argintiu"],
+  "the-heritage": ["Stocare flash 128GB inclusa", "Baterie 2000mAh", "Argintiu"],
   "the-signature": [
-    "Stocare flash 128GB inclusă",
+    "Stocare flash 128GB inclusa",
     "Baterie 3000mAh",
-    "Gravură personalizată",
+    "Gravura personalizata",
   ],
 } as const;
 

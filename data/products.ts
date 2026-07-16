@@ -38,6 +38,8 @@ export type ClickwheelProduct = {
   idealFor: string;
   highlights: string[];
   includes: string[];
+  rearConfiguration?: string;
+  modelSpecificNote?: string;
 };
 
 export const products: ClickwheelProduct[] = [
@@ -53,16 +55,16 @@ export const products: ClickwheelProduct[] = [
     priceEurCents: 27900,
     tone: "dark",
     shortDescription:
-      "A clean, focused everyday iPod with flash storage and extended battery life.",
+      "A restored iPod Video built for everyday listening, with 128GB flash storage included and higher-capacity configurations available.",
     overview:
-      "The iPod Video is designed as a modern daily listener. It combines a matte black finish with flash storage and a high-capacity battery for a quiet, reliable music library.",
+      "The iPod Video keeps the familiar classic format and adds flash storage, a 3000mAh battery configuration and a matte black finish.",
     idealFor:
-      "Listeners who want a minimal, durable iPod for daily music, commuting and long listening sessions.",
+      "daily listening, commuting and personal music libraries.",
     highlights: [
       "128GB flash storage included",
-      "3000mAh extended battery",
-      "Matte black housing",
-      "Professionally restored internals",
+      "Storage upgrades up to 1TB",
+      "3000mAh battery configuration",
+      "Matte black finish",
     ],
     includes: [
       "Restored iPod Video",
@@ -83,16 +85,16 @@ export const products: ClickwheelProduct[] = [
     priceEurCents: 32900,
     tone: "steel",
     shortDescription:
-      "A restored configuration for large music collections, with extended battery life and a polished steel finish.",
+      "A restored late-2006 iPod Video with 128GB flash storage included, higher-capacity configurations and a polished steel finish.",
     overview:
-      "The iPod Video Enhanced combines flash storage, extended battery life and a polished steel rear finish.",
+      "The iPod Video Enhanced combines the late-2006 Wolfson DAC model with flash storage, a 3000mAh battery configuration and a polished steel rear plate.",
     idealFor:
-      "Collectors and lossless-music listeners who want a large library in a classic iPod form.",
+      "collectors and listeners who want a larger library in a classic iPod form.",
     highlights: [
       "128GB flash storage included",
-      "3000mAh extended battery",
+      "Storage upgrades up to 1TB",
+      "3000mAh battery configuration",
       "Polished steel rear plate",
-      "Professionally restored internals",
     ],
     includes: [
       "Restored iPod Video Enhanced",
@@ -100,6 +102,7 @@ export const products: ClickwheelProduct[] = [
       "Build configuration record",
       "Clickwheel warranty information",
     ],
+    rearConfiguration: "Polished steel rear plate",
   },
   {
     slug: "the-heritage",
@@ -113,16 +116,16 @@ export const products: ClickwheelProduct[] = [
     priceEurCents: 24900,
     tone: "silver",
     shortDescription:
-      "A timeless silver classic with a balanced storage and battery configuration.",
+      "A restored 6th-generation iPod Classic with 128GB flash storage and a silver finish.",
     overview:
-      "The 6th-generation iPod Classic keeps the familiar look while replacing ageing internal storage and battery components with a practical modern setup.",
+      "The 6th-generation iPod Classic keeps the familiar 2007–2008 silver design with 128GB flash storage and a 2000mAh battery configuration.",
     idealFor:
-      "Anyone who wants a straightforward restored iPod Classic with room for a substantial everyday library.",
+      "listeners who want a straightforward restored iPod Classic with a fixed 128GB storage configuration.",
     highlights: [
       "128GB flash storage included",
-      "2000mAh upgraded battery",
+      "Limited to 128GB maximum",
+      "2000mAh battery configuration",
       "Silver housing finish",
-      "Balanced everyday configuration",
     ],
     includes: [
       "Restored iPod Classic",
@@ -130,6 +133,8 @@ export const products: ClickwheelProduct[] = [
       "Build configuration record",
       "Clickwheel warranty information",
     ],
+    modelSpecificNote:
+      "This model is limited to 128GB and does not support storage upgrades.",
   },
   {
     slug: "the-signature",
@@ -143,16 +148,16 @@ export const products: ClickwheelProduct[] = [
     priceEurCents: 39900,
     tone: "warm",
     shortDescription:
-      "A premium build intended for collectors, gifts and personal customisation.",
+      "A restored 7th-generation iPod Classic with 128GB flash storage included, higher-capacity configurations and personalization options.",
     overview:
-      "The 7th-generation iPod Classic is a premium Clickwheel reference build with extended battery life and a personalised rear plate configuration.",
+      "The 7th-generation iPod Classic pairs the late-2009 model with flash storage, a 3000mAh battery configuration and a custom engraving option.",
     idealFor:
-      "Collectors and music enthusiasts who want a personal iPod Classic built around their library.",
+      "collectors, gifts and listeners who want a personalized iPod Classic built around their library.",
     highlights: [
       "128GB flash storage included",
-      "3000mAh extended battery",
+      "Storage upgrades up to 1TB",
+      "3000mAh battery configuration",
       "Custom engraving option",
-      "Premium restoration configuration",
     ],
     includes: [
       "Restored iPod Classic",
@@ -160,5 +165,6 @@ export const products: ClickwheelProduct[] = [
       "Build configuration record",
       "Clickwheel warranty information",
     ],
+    rearConfiguration: "Custom engraving option",
   },
 ];
