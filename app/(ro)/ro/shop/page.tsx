@@ -1,8 +1,42 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { products, type ProductTone } from "@/data/products";
 import { formatStartingPriceFromEurCents } from "@/lib/money";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const shopTitle = "Colectia de iPod-uri restaurate";
+const shopDescription =
+  "Descopera modele iPod Video si iPod Classic restaurate, cu 128GB inclus si optiuni de stocare specifice modelului pana la 1TB.";
+
+export const metadata: Metadata = {
+  title: shopTitle,
+  description: shopDescription,
+  alternates: {
+    canonical: canonicalUrl("/ro/shop"),
+    languages: languageAlternates("/shop", "/ro/shop"),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/ro/shop"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: shopTitle,
+    description: shopDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: shopTitle,
+    description: shopDescription,
+  },
+};
 
 const productStyles: Record<
   ProductTone,

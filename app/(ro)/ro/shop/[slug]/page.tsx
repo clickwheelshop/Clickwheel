@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
@@ -10,6 +11,12 @@ import {
   type ProductTone,
 } from "@/data/products";
 import { formatStartingPriceFromEurCents } from "@/lib/money";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
 
 const productStyles: Record<
   ProductTone,
@@ -306,6 +313,51 @@ type ProductPageProps = {
     slug: string;
   }>;
 };
+
+export async function generateMetadata({
+  params,
+}: ProductPageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  const product = products.find((item) => item.slug === slug);
+  const copy = romanianProductCopy[slug];
+
+  if (!product || !copy) {
+    notFound();
+  }
+
+  const englishProductPath = `/shop/${slug}`;
+  const romanianProductPath = `/ro/shop/${slug}`;
+  const title = `${product.name} — ${product.secondaryLine}`;
+  const description = copy.description;
+  const url = canonicalUrl(romanianProductPath);
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+      languages: languageAlternates(
+        englishProductPath,
+        romanianProductPath,
+      ),
+    },
+    openGraph: {
+      type: "website",
+      url,
+      siteName: SITE_NAME,
+      locale: SITE_LOCALES.ro.openGraph,
+      alternateLocale: SITE_LOCALES.en.openGraph,
+      title,
+      description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
 
 export default async function RomanianProductPage({
   params,

@@ -1,8 +1,42 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { products, type ProductTone } from "@/data/products";
 import { formatStartingPriceFromEurCents } from "@/lib/money";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const shopTitle = "Refurbished iPod Collection";
+const shopDescription =
+  "Explore restored iPod Video and iPod Classic models, with 128GB included and model-specific storage options up to 1TB.";
+
+export const metadata: Metadata = {
+  title: shopTitle,
+  description: shopDescription,
+  alternates: {
+    canonical: canonicalUrl("/shop"),
+    languages: languageAlternates("/shop", "/ro/shop"),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/shop"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: shopTitle,
+    description: shopDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: shopTitle,
+    description: shopDescription,
+  },
+};
 
 const productStyles: Record<
   ProductTone,
