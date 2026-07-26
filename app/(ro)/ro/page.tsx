@@ -7,6 +7,11 @@ import { HeroRo } from "@/components/ro/home/HeroRo";
 import { WorkshopRo } from "@/components/ro/home/WorkshopRo";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+} from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "iPod Classic restaurat și upgrade-at",
@@ -14,19 +19,16 @@ export const metadata: Metadata = {
     "Descoperă iPod Classic restaurate profesional, cu stocare flash, baterii extinse și finisaje atent alese.",
 
   alternates: {
-    canonical: "/ro",
-    languages: {
-      en: "/",
-      ro: "/ro",
-    },
+    canonical: canonicalUrl("/ro"),
+    languages: languageAlternates("/", "/ro"),
   },
 
   openGraph: {
     title: "Clickwheel | iPod Classic restaurat și upgrade-at",
     description:
       "Clasic la exterior. Modern la interior. Descoperă iPod Classic restaurate cu stocare flash și baterii extinse.",
-    url: "/ro",
-    locale: "ro_RO",
+    url: canonicalUrl("/ro"),
+    locale: SITE_LOCALES.ro.openGraph,
   },
 };
 

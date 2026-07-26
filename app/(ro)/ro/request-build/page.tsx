@@ -12,11 +12,11 @@ import {
   getConfiguratorStorageOptions,
   parseAccessoryIds,
 } from "@/data/configurator";
-import { formatEurCents } from "@/lib/money";
+import { formatRonFromEurCents } from "@/lib/money";
 import {
   submitBuildRequestAction,
   type BuildRequestSubmissionActionState,
-} from "@/app/request-build/actions";
+} from "@/app/(en)/request-build/actions";
 
 const {
   models: modelOptions,
@@ -25,7 +25,7 @@ const {
   backplates: backplateOptions,
   software: softwareOptions,
   accessories: accessoryOptions,
-} = getConfiguratorOptions("en");
+} = getConfiguratorOptions("ro");
 
 const initialActionState: BuildRequestSubmissionActionState = {
   status: "idle",
@@ -39,14 +39,14 @@ function getBuildRequestErrorMessage(
   }
 
   if (state.errorCode === "invalid_customer_details") {
-    return "Please check your contact details and try again.";
+    return "Verifica datele de contact si incearca din nou.";
   }
 
   if (state.errorCode === "request_save_failed") {
-    return "We could not save the request right now. Please try again later.";
+    return "Nu am putut salva solicitarea acum. Incearca din nou mai tarziu.";
   }
 
-  return "We could not submit this request. Refresh the page and try again.";
+  return "Nu am putut trimite solicitarea. Reincarca pagina si incearca din nou.";
 }
 
 function BuildRequestContent() {
@@ -71,7 +71,7 @@ function BuildRequestContent() {
   }, []);
 
   const model = findConfiguratorChoice(modelOptions, searchParams.get("model"));
-  const storageOptions = getConfiguratorStorageOptions("en", model.id);
+  const storageOptions = getConfiguratorStorageOptions("ro", model.id);
   const storage = findConfiguratorChoice(
     storageOptions,
     searchParams.get("storage"),
@@ -111,7 +111,7 @@ function BuildRequestContent() {
   });
   const idempotencyUnavailable = browserReady && !idempotencyKey;
   const errorMessage = idempotencyUnavailable
-    ? "Secure request submission is unavailable in this browser. Please try another up-to-date browser."
+    ? "Trimiterea securizata nu este disponibila in acest browser. Incearca un browser actualizat."
     : getBuildRequestErrorMessage(state);
   const submitDisabled = isPending || idempotencyUnavailable || !idempotencyKey;
 
@@ -123,14 +123,14 @@ function BuildRequestContent() {
           className="rounded-[28px] border border-black/10 bg-white p-7 md:p-10"
         >
           <h2 className="text-3xl font-semibold tracking-[-0.04em]">
-            Your details
+            Datele tale
           </h2>
 
           <p className="mt-3 text-sm leading-6 text-neutral-600">
-            This request does not create an order or charge you.
+            Aceasta solicitare nu creeaza o comanda si nu implica nicio plata.
           </p>
 
-          <input type="hidden" name="locale" value="en" />
+          <input type="hidden" name="locale" value="ro" />
           <input type="hidden" name="model" value={model.id} />
           <input type="hidden" name="storage" value={storage.id} />
           <input type="hidden" name="battery" value={battery.id} />
@@ -146,33 +146,33 @@ function BuildRequestContent() {
 
           <div className="mt-8 grid gap-5">
             <label className="grid gap-2 text-sm font-semibold">
-              Full name
+              Nume complet
               <input
                 name="name"
                 type="text"
                 autoComplete="name"
                 maxLength={200}
-                placeholder="Your name"
+                placeholder="Numele tau"
                 required
                 className="rounded-xl border border-black/15 px-4 py-3 text-base font-normal outline-none transition focus:border-black"
               />
             </label>
 
             <label className="grid gap-2 text-sm font-semibold">
-              Email address
+              Adresa de email
               <input
                 name="email"
                 type="email"
                 autoComplete="email"
                 maxLength={320}
-                placeholder="you@example.com"
+                placeholder="tu@exemplu.com"
                 required
                 className="rounded-xl border border-black/15 px-4 py-3 text-base font-normal outline-none transition focus:border-black"
               />
             </label>
 
             <label className="grid gap-2 text-sm font-semibold">
-              Country code
+              Cod tara
               <input
                 name="country"
                 type="text"
@@ -184,17 +184,17 @@ function BuildRequestContent() {
                 className="rounded-xl border border-black/15 px-4 py-3 text-base font-normal outline-none transition focus:border-black"
               />
               <span className="text-xs font-normal text-neutral-500">
-                Use the two-letter country code, for example RO or US.
+                Foloseste codul de doua litere, de exemplu RO sau US.
               </span>
             </label>
 
             <label className="grid gap-2 text-sm font-semibold">
-              Notes for your build
+              Detalii despre configuratia ta
               <textarea
                 name="notes"
                 rows={5}
                 maxLength={5000}
-                placeholder="For example: preferred colour, engraving text, questions about delivery..."
+                placeholder="De exemplu: culoare preferata, text pentru gravura, intrebari despre livrare..."
                 className="resize-none rounded-xl border border-black/15 px-4 py-3 text-base font-normal outline-none transition focus:border-black"
               />
             </label>
@@ -214,19 +214,19 @@ function BuildRequestContent() {
             disabled={submitDisabled}
             className="mt-8 w-full rounded-full bg-black px-5 py-4 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-400"
           >
-            {isPending ? "Sending request..." : "Submit build request"}
+            {isPending ? "Se trimite solicitarea..." : "Trimite solicitarea"}
           </button>
 
           <p className="mt-4 text-center text-xs leading-5 text-neutral-500">
-            By sending this request, you agree that Clickwheel may use your
-            details to review your build request and reply by email. This is not
-            an order or payment confirmation.
+            Prin trimiterea acestei cereri, esti de acord ca Clickwheel sa
+            foloseasca datele tale pentru analizarea cererii si pentru raspuns
+            prin email. Aceasta nu este o confirmare de comanda sau de plata.
           </p>
         </form>
 
         <aside className="h-fit rounded-[28px] border border-black/10 bg-white p-7 shadow-[0_20px_55px_rgba(0,0,0,0.08)] lg:sticky lg:top-28">
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-blue-600">
-            Your selected build
+            Configuratia selectata
           </p>
 
           <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em]">
@@ -240,22 +240,22 @@ function BuildRequestContent() {
             </div>
 
             <div className="flex justify-between gap-5">
-              <span className="text-neutral-500">Storage</span>
+              <span className="text-neutral-500">Stocare</span>
               <span className="text-right font-semibold">{storage.name}</span>
             </div>
 
             <div className="flex justify-between gap-5">
-              <span className="text-neutral-500">Battery</span>
+              <span className="text-neutral-500">Baterie</span>
               <span className="text-right font-semibold">{battery.name}</span>
             </div>
 
             <div className="flex justify-between gap-5">
-              <span className="text-neutral-500">Finish</span>
+              <span className="text-neutral-500">Finisaj</span>
               <span className="text-right font-semibold">{finish.name}</span>
             </div>
 
             <div className="flex justify-between gap-5">
-              <span className="text-neutral-500">Rear plate</span>
+              <span className="text-neutral-500">Capac spate</span>
               <span className="text-right font-semibold">{backplate.name}</span>
             </div>
 
@@ -265,27 +265,27 @@ function BuildRequestContent() {
             </div>
 
             <div className="border-t border-black/10 pt-5">
-              <p className="text-neutral-500">Accessories</p>
+              <p className="text-neutral-500">Accesorii</p>
               <p className="mt-2 font-semibold leading-6">
                 {accessories.length > 0
                   ? accessories.map((accessory) => accessory.name).join(", ")
-                  : "None selected"}
+                  : "Niciun accesoriu selectat"}
               </p>
             </div>
 
             <div className="border-t border-black/10 pt-5">
-              <p className="text-neutral-500">Estimated total</p>
+              <p className="text-neutral-500">Total estimat</p>
               <p className="mt-2 text-3xl font-semibold tracking-[-0.04em]">
-                {formatEurCents(totalPriceEurCents)}
+                {formatRonFromEurCents(totalPriceEurCents)}
               </p>
             </div>
           </div>
 
           <Link
-            href="/build"
+            href="/ro/build"
             className="mt-8 block text-center text-sm font-semibold text-blue-600 hover:text-blue-800"
           >
-            ← Edit your build
+            ← Modifica configuratia
           </Link>
         </aside>
       </div>
@@ -293,7 +293,7 @@ function BuildRequestContent() {
   );
 }
 
-export default function RequestBuildPage() {
+export default function RomanianRequestBuildPage() {
   return (
     <main className="min-h-screen bg-[#f8f6f2] text-black">
       <Navbar />
@@ -301,18 +301,18 @@ export default function RequestBuildPage() {
       <section className="border-b border-black/10 px-6 py-16 md:px-12 lg:px-16">
         <div className="mx-auto max-w-[1200px]">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600">
-            Build Request
+            Solicitare configuratie
           </p>
 
           <h1 className="mt-5 max-w-3xl text-5xl font-semibold tracking-[-0.06em] md:text-6xl">
-            Your classic,
+            Clasicul tau,
             <br />
-            prepared for review.
+            pregatit pentru analiza.
           </h1>
 
           <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-600 md:text-lg">
-            Send us your preferred configuration. We will review availability,
-            confirm the final price and contact you before any payment is taken.
+            Trimite-ne configuratia preferata. Vom verifica disponibilitatea,
+            vom confirma pretul final si te vom contacta inainte de orice plata.
           </p>
         </div>
       </section>
@@ -320,7 +320,7 @@ export default function RequestBuildPage() {
       <Suspense
         fallback={
           <div className="px-6 py-20 text-center text-sm text-neutral-500">
-            Loading your build…
+            Se incarca configuratia ta…
           </div>
         }
       >
