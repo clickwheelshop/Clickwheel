@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
 
 const issueCategories = [
   "Dispozitivul nu porneste",
@@ -75,16 +81,33 @@ Inteleg ca trebuie sa astept confirmarea Clickwheel inainte sa trimit dispozitiv
 Pozele sau video pot fi atasate cand trimit acest email.
 `)}`;
 
+const warrantyClaimTitle = "Cerere de Garantie pentru iPodul Tau Clickwheel";
+const warrantyClaimDescription =
+  "Trimite prin email o cerere de garantie sau dispozitiv defect pentru un iPod refurbished cumparat de la Clickwheel.";
+
 export const metadata: Metadata = {
-  title: "Cerere de Garantie pentru iPodul Tau Clickwheel",
-  description:
-    "Trimite prin email o cerere de garantie sau dispozitiv defect pentru un iPod refurbished cumparat de la Clickwheel.",
+  title: warrantyClaimTitle,
+  description: warrantyClaimDescription,
   alternates: {
-    canonical: "/ro/support/warranty-claim",
-    languages: {
-      en: "/support/warranty-claim",
-      ro: "/ro/support/warranty-claim",
-    },
+    canonical: canonicalUrl("/ro/support/warranty-claim"),
+    languages: languageAlternates(
+      "/support/warranty-claim",
+      "/ro/support/warranty-claim",
+    ),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/ro/support/warranty-claim"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: warrantyClaimTitle,
+    description: warrantyClaimDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: warrantyClaimTitle,
+    description: warrantyClaimDescription,
   },
 };
 

@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
 
 const requestReasons = [
   "Cancel a full order before dispatch",
@@ -63,16 +69,33 @@ Any extra notes:
 I understand Clickwheel will review the order status and confirm whether cancellation is still possible. If the order has already been dispatched, I understand I may need to use the returns / withdrawal process instead.
 `)}`;
 
+const cancellationRequestTitle = "Cancel an Order Before Dispatch";
+const cancellationRequestDescription =
+  "Request cancellation of an existing Clickwheel order before dispatch by email.";
+
 export const metadata: Metadata = {
-  title: "Cancel an Order Before Dispatch",
-  description:
-    "Request cancellation of an existing Clickwheel order before dispatch by email.",
+  title: cancellationRequestTitle,
+  description: cancellationRequestDescription,
   alternates: {
-    canonical: "/support/cancellation-request",
-    languages: {
-      en: "/support/cancellation-request",
-      ro: "/ro/support/cancellation-request",
-    },
+    canonical: canonicalUrl("/support/cancellation-request"),
+    languages: languageAlternates(
+      "/support/cancellation-request",
+      "/ro/support/cancellation-request",
+    ),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/support/cancellation-request"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: cancellationRequestTitle,
+    description: cancellationRequestDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: cancellationRequestTitle,
+    description: cancellationRequestDescription,
   },
 };
 

@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
 
 const requestReasons = [
   "Return a full order",
@@ -74,16 +80,33 @@ Any extra notes:
 I understand Clickwheel will review the order details, timing, condition and returns policy before confirming eligibility or next steps. I will not ship anything back until Clickwheel confirms return instructions.
 `)}`;
 
+const returnRequestTitle = "Start a Return or Withdrawal Request";
+const returnRequestDescription =
+  "Request return or withdrawal review for an existing Clickwheel order after dispatch or delivery.";
+
 export const metadata: Metadata = {
-  title: "Start a Return or Withdrawal Request",
-  description:
-    "Request return or withdrawal review for an existing Clickwheel order after dispatch or delivery.",
+  title: returnRequestTitle,
+  description: returnRequestDescription,
   alternates: {
-    canonical: "/support/return-request",
-    languages: {
-      en: "/support/return-request",
-      ro: "/ro/support/return-request",
-    },
+    canonical: canonicalUrl("/support/return-request"),
+    languages: languageAlternates(
+      "/support/return-request",
+      "/ro/support/return-request",
+    ),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/support/return-request"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: returnRequestTitle,
+    description: returnRequestDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: returnRequestTitle,
+    description: returnRequestDescription,
   },
 };
 

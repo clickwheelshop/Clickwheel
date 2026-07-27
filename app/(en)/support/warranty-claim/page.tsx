@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
 
 const issueCategories = [
   "Device not powering on",
@@ -75,16 +81,33 @@ I understand I should wait for Clickwheel to confirm next steps before shipping 
 Photos or video can be attached when sending this email.
 `)}`;
 
+const warrantyClaimTitle = "Warranty Claim for Your Clickwheel iPod";
+const warrantyClaimDescription =
+  "Submit a warranty or faulty-device claim for a Clickwheel refurbished iPod by email.";
+
 export const metadata: Metadata = {
-  title: "Warranty Claim for Your Clickwheel iPod",
-  description:
-    "Submit a warranty or faulty-device claim for a Clickwheel refurbished iPod by email.",
+  title: warrantyClaimTitle,
+  description: warrantyClaimDescription,
   alternates: {
-    canonical: "/support/warranty-claim",
-    languages: {
-      en: "/support/warranty-claim",
-      ro: "/ro/support/warranty-claim",
-    },
+    canonical: canonicalUrl("/support/warranty-claim"),
+    languages: languageAlternates(
+      "/support/warranty-claim",
+      "/ro/support/warranty-claim",
+    ),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/support/warranty-claim"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: warrantyClaimTitle,
+    description: warrantyClaimDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: warrantyClaimTitle,
+    description: warrantyClaimDescription,
   },
 };
 

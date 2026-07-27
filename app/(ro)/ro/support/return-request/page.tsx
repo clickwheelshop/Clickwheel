@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
 
 const requestReasons = [
   "Returneaza o comanda intreaga",
@@ -74,16 +80,33 @@ Alte detalii:
 Inteleg ca Clickwheel va verifica detaliile comenzii, momentul cererii, starea produsului si politica de retur inainte sa confirme eligibilitatea sau pasii urmatori. Nu voi trimite nimic inapoi pana cand Clickwheel confirma instructiunile de retur.
 `)}`;
 
+const returnRequestTitle = "Cere Retur sau Retragere";
+const returnRequestDescription =
+  "Cere analiza pentru retur sau retragere pentru o comanda Clickwheel existenta dupa expediere sau livrare.";
+
 export const metadata: Metadata = {
-  title: "Cere Retur sau Retragere",
-  description:
-    "Cere analiza pentru retur sau retragere pentru o comanda Clickwheel existenta dupa expediere sau livrare.",
+  title: returnRequestTitle,
+  description: returnRequestDescription,
   alternates: {
-    canonical: "/ro/support/return-request",
-    languages: {
-      en: "/support/return-request",
-      ro: "/ro/support/return-request",
-    },
+    canonical: canonicalUrl("/ro/support/return-request"),
+    languages: languageAlternates(
+      "/support/return-request",
+      "/ro/support/return-request",
+    ),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/ro/support/return-request"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: returnRequestTitle,
+    description: returnRequestDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: returnRequestTitle,
+    description: returnRequestDescription,
   },
 };
 

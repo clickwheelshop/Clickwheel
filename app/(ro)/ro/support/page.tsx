@@ -1,6 +1,40 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const supportTitle = "Suport pentru iPod Classic";
+const supportDescription =
+  "Gaseste ajutor Clickwheel pentru configurare, depanare, cereri de service, garantie, retururi si anulari pentru iPod Classic.";
+
+export const metadata: Metadata = {
+  title: supportTitle,
+  description: supportDescription,
+  alternates: {
+    canonical: canonicalUrl("/ro/support"),
+    languages: languageAlternates("/support", "/ro/support"),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/ro/support"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: supportTitle,
+    description: supportDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: supportTitle,
+    description: supportDescription,
+  },
+};
 
 const supportTopics = [
   {

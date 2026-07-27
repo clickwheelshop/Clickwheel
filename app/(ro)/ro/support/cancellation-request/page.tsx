@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
 
 const requestReasons = [
   "Anuleaza o comanda intreaga inainte de expediere",
@@ -63,16 +69,33 @@ Alte detalii:
 Inteleg ca Clickwheel va verifica statusul comenzii si va confirma daca anularea mai este posibila. Daca aceasta comanda a fost deja expediata, inteleg ca poate fi nevoie sa folosesc procesul de retur / retragere.
 `)}`;
 
+const cancellationRequestTitle = "Anuleaza o Comanda Inainte de Expediere";
+const cancellationRequestDescription =
+  "Cere prin email anularea unei comenzi Clickwheel existente inainte de expediere.";
+
 export const metadata: Metadata = {
-  title: "Anuleaza o Comanda Inainte de Expediere",
-  description:
-    "Cere prin email anularea unei comenzi Clickwheel existente inainte de expediere.",
+  title: cancellationRequestTitle,
+  description: cancellationRequestDescription,
   alternates: {
-    canonical: "/ro/support/cancellation-request",
-    languages: {
-      en: "/support/cancellation-request",
-      ro: "/ro/support/cancellation-request",
-    },
+    canonical: canonicalUrl("/ro/support/cancellation-request"),
+    languages: languageAlternates(
+      "/support/cancellation-request",
+      "/ro/support/cancellation-request",
+    ),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/ro/support/cancellation-request"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: cancellationRequestTitle,
+    description: cancellationRequestDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: cancellationRequestTitle,
+    description: cancellationRequestDescription,
   },
 };
 
