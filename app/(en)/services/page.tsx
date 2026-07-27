@@ -1,6 +1,40 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const servicesTitle = "iPod Classic Services";
+const servicesDescription =
+  "Explore Clickwheel workshop services for iPod Classic upgrades, refurbishment support and configuration guidance.";
+
+export const metadata: Metadata = {
+  title: servicesTitle,
+  description: servicesDescription,
+  alternates: {
+    canonical: canonicalUrl("/services"),
+    languages: languageAlternates("/services", "/ro/services"),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/services"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: servicesTitle,
+    description: servicesDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: servicesTitle,
+    description: servicesDescription,
+  },
+};
 
 const services = [
   {

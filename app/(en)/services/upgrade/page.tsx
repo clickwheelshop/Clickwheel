@@ -2,6 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const serviceUpgradeTitle = "Service & Upgrades for Your iPod";
+const serviceUpgradeDescription =
+  "Request iPod Classic repair, diagnosis, storage upgrade, battery replacement, housing replacement or related service work from Clickwheel.";
 
 const requestChecklist = [
   "Name",
@@ -85,15 +95,28 @@ Photos can be sent by replying to this email thread.
 `)}`;
 
 export const metadata: Metadata = {
-  title: "Service & Upgrades for Your iPod",
-  description:
-    "Request iPod Classic repair, diagnosis, storage upgrade, battery replacement, housing replacement or related service work from Clickwheel.",
+  title: serviceUpgradeTitle,
+  description: serviceUpgradeDescription,
   alternates: {
-    canonical: "/services/upgrade",
-    languages: {
-      en: "/services/upgrade",
-      ro: "/ro/services/upgrade",
-    },
+    canonical: canonicalUrl("/services/upgrade"),
+    languages: languageAlternates(
+      "/services/upgrade",
+      "/ro/services/upgrade",
+    ),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/services/upgrade"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: serviceUpgradeTitle,
+    description: serviceUpgradeDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: serviceUpgradeTitle,
+    description: serviceUpgradeDescription,
   },
 };
 

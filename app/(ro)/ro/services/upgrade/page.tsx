@@ -2,6 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const serviceUpgradeTitle = "Service si Upgrade pentru iPodul Tau";
+const serviceUpgradeDescription =
+  "Cere service, diagnostic, upgrade de stocare, inlocuire baterie, inlocuire carcasa sau lucrari similare pentru iPodul tau.";
 
 const requestChecklist = [
   "Nume",
@@ -85,15 +95,28 @@ Fotografiile pot fi trimise ca raspuns la acest email.
 `)}`;
 
 export const metadata: Metadata = {
-  title: "Service si Upgrade pentru iPodul Tau",
-  description:
-    "Cere service, diagnostic, upgrade de stocare, inlocuire baterie, inlocuire carcasa sau lucrari similare pentru iPodul tau.",
+  title: serviceUpgradeTitle,
+  description: serviceUpgradeDescription,
   alternates: {
-    canonical: "/ro/services/upgrade",
-    languages: {
-      en: "/services/upgrade",
-      ro: "/ro/services/upgrade",
-    },
+    canonical: canonicalUrl("/ro/services/upgrade"),
+    languages: languageAlternates(
+      "/services/upgrade",
+      "/ro/services/upgrade",
+    ),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/ro/services/upgrade"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: serviceUpgradeTitle,
+    description: serviceUpgradeDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: serviceUpgradeTitle,
+    description: serviceUpgradeDescription,
   },
 };
 
