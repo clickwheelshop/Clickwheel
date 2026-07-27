@@ -1,6 +1,40 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const guidesTitle = "Ghiduri pentru iPod Classic";
+const guidesDescription =
+  "Ghiduri practice pentru configurarea muzicii, Rockbox, stocare, baterii, carcase, depanare si ingrijirea unui iPod Classic.";
+
+export const metadata: Metadata = {
+  title: guidesTitle,
+  description: guidesDescription,
+  alternates: {
+    canonical: canonicalUrl("/ro/guides"),
+    languages: languageAlternates("/guides", "/ro/guides"),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/ro/guides"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: guidesTitle,
+    description: guidesDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: guidesTitle,
+    description: guidesDescription,
+  },
+};
 
 const guides = [
   {

@@ -1,6 +1,40 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const musicGuideTitle = "How to Add Music to an iPod Classic";
+const musicGuideDescription =
+  "Learn how to sync an iPod Classic with Finder or iTunes, transfer music with Rockbox, choose formatting and verify a data-capable 30-pin cable.";
+
+export const metadata: Metadata = {
+  title: musicGuideTitle,
+  description: musicGuideDescription,
+  alternates: {
+    canonical: canonicalUrl("/guides/music"),
+    languages: languageAlternates("/guides/music", "/ro/guides/music"),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/guides/music"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: musicGuideTitle,
+    description: musicGuideDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: musicGuideTitle,
+    description: musicGuideDescription,
+  },
+};
 
 const standardSteps = [
   {

@@ -1,6 +1,43 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const thinVsThickGuideTitle = "Thin vs Thick iPod Classic Housings";
+const thinVsThickGuideDescription =
+  "Compare thin and thick iPod Classic rear housings, internal space, battery fit and component compatibility before choosing a build.";
+
+export const metadata: Metadata = {
+  title: thinVsThickGuideTitle,
+  description: thinVsThickGuideDescription,
+  alternates: {
+    canonical: canonicalUrl("/guides/thin-vs-thick"),
+    languages: languageAlternates(
+      "/guides/thin-vs-thick",
+      "/ro/guides/thin-vs-thick",
+    ),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/guides/thin-vs-thick"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: thinVsThickGuideTitle,
+    description: thinVsThickGuideDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: thinVsThickGuideTitle,
+    description: thinVsThickGuideDescription,
+  },
+};
 
 const differences = [
   {

@@ -1,6 +1,40 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const careGuideTitle = "How to Clean and Protect a Restored iPod";
+const careGuideDescription =
+  "Learn safe cleaning, carrying and storage habits for protecting an iPod screen, click wheel, front plate and polished rear housing.";
+
+export const metadata: Metadata = {
+  title: careGuideTitle,
+  description: careGuideDescription,
+  alternates: {
+    canonical: canonicalUrl("/guides/care"),
+    languages: languageAlternates("/guides/care", "/ro/guides/care"),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/guides/care"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: careGuideTitle,
+    description: careGuideDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: careGuideTitle,
+    description: careGuideDescription,
+  },
+};
 
 const careSteps = [
   {

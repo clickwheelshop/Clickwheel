@@ -1,6 +1,43 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const troubleshootingGuideTitle = "iPod Classic Troubleshooting Guide";
+const troubleshootingGuideDescription =
+  "Check data cables, USB connections, Finder, iTunes, Mac and Windows formatting, sync problems and Rockbox libraries before restoring an iPod.";
+
+export const metadata: Metadata = {
+  title: troubleshootingGuideTitle,
+  description: troubleshootingGuideDescription,
+  alternates: {
+    canonical: canonicalUrl("/guides/troubleshooting"),
+    languages: languageAlternates(
+      "/guides/troubleshooting",
+      "/ro/guides/troubleshooting",
+    ),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/guides/troubleshooting"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: troubleshootingGuideTitle,
+    description: troubleshootingGuideDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: troubleshootingGuideTitle,
+    description: troubleshootingGuideDescription,
+  },
+};
 
 const issues = [
   {

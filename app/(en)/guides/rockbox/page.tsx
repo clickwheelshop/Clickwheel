@@ -1,6 +1,43 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const rockboxGuideTitle = "Rockbox on iPod Classic";
+const rockboxGuideDescription =
+  "Understand Rockbox file transfers, audio-format support, playback controls and generation-specific compatibility before choosing it for an iPod Classic.";
+
+export const metadata: Metadata = {
+  title: rockboxGuideTitle,
+  description: rockboxGuideDescription,
+  alternates: {
+    canonical: canonicalUrl("/guides/rockbox"),
+    languages: languageAlternates(
+      "/guides/rockbox",
+      "/ro/guides/rockbox",
+    ),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/guides/rockbox"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: rockboxGuideTitle,
+    description: rockboxGuideDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: rockboxGuideTitle,
+    description: rockboxGuideDescription,
+  },
+};
 
 const benefits = [
   {

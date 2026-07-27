@@ -1,6 +1,43 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const troubleshootingGuideTitle = "Ghid de depanare pentru iPod Classic";
+const troubleshootingGuideDescription =
+  "Verifica cablurile de date, conexiunile USB, Finder, iTunes, formatarea Mac sau Windows, sincronizarea si bibliotecile Rockbox inainte de restaurare.";
+
+export const metadata: Metadata = {
+  title: troubleshootingGuideTitle,
+  description: troubleshootingGuideDescription,
+  alternates: {
+    canonical: canonicalUrl("/ro/guides/troubleshooting"),
+    languages: languageAlternates(
+      "/guides/troubleshooting",
+      "/ro/guides/troubleshooting",
+    ),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/ro/guides/troubleshooting"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: troubleshootingGuideTitle,
+    description: troubleshootingGuideDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: troubleshootingGuideTitle,
+    description: troubleshootingGuideDescription,
+  },
+};
 
 const issues = [
   {

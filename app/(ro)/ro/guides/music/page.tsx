@@ -1,6 +1,40 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const musicGuideTitle = "Cum adaugi muzica pe un iPod Classic";
+const musicGuideDescription =
+  "Afla cum sincronizezi un iPod Classic prin Finder sau iTunes, transferi muzica prin Rockbox, alegi formatarea si verifici cablul 30-pin.";
+
+export const metadata: Metadata = {
+  title: musicGuideTitle,
+  description: musicGuideDescription,
+  alternates: {
+    canonical: canonicalUrl("/ro/guides/music"),
+    languages: languageAlternates("/guides/music", "/ro/guides/music"),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/ro/guides/music"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: musicGuideTitle,
+    description: musicGuideDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: musicGuideTitle,
+    description: musicGuideDescription,
+  },
+};
 
 const standardSteps = [
   {

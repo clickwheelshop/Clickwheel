@@ -1,6 +1,43 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const batteryGuideTitle = "Ghid pentru bateria iPod Classic";
+const batteryGuideDescription =
+  "Afla cum bateriile de 2000mAh si 3000mAh, stocarea flash, ecranul si obiceiurile de ascultare influenteaza autonomia reala.";
+
+export const metadata: Metadata = {
+  title: batteryGuideTitle,
+  description: batteryGuideDescription,
+  alternates: {
+    canonical: canonicalUrl("/ro/guides/battery"),
+    languages: languageAlternates(
+      "/guides/battery",
+      "/ro/guides/battery",
+    ),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/ro/guides/battery"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: batteryGuideTitle,
+    description: batteryGuideDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: batteryGuideTitle,
+    description: batteryGuideDescription,
+  },
+};
 
 const factors = [
   {

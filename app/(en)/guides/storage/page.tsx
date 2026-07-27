@@ -1,6 +1,44 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const storageGuideTitle =
+  "Choosing iPod Classic Storage: 256GB, 512GB or 1TB";
+const storageGuideDescription =
+  "Compare 256GB, 512GB and 1TB storage for different music libraries, with 128GB included and the 6th Generation limited to 128GB.";
+
+export const metadata: Metadata = {
+  title: storageGuideTitle,
+  description: storageGuideDescription,
+  alternates: {
+    canonical: canonicalUrl("/guides/storage"),
+    languages: languageAlternates(
+      "/guides/storage",
+      "/ro/guides/storage",
+    ),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/guides/storage"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: storageGuideTitle,
+    description: storageGuideDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: storageGuideTitle,
+    description: storageGuideDescription,
+  },
+};
 
 const storageOptions = [
   {

@@ -1,6 +1,44 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const thinVsThickGuideTitle =
+  "Carcasa subtire sau groasa pentru iPod Classic";
+const thinVsThickGuideDescription =
+  "Compara carcasele spate subtiri si groase, spatiul intern, compatibilitatea bateriei si piesele potrivite pentru configuratia unui iPod Classic.";
+
+export const metadata: Metadata = {
+  title: thinVsThickGuideTitle,
+  description: thinVsThickGuideDescription,
+  alternates: {
+    canonical: canonicalUrl("/ro/guides/thin-vs-thick"),
+    languages: languageAlternates(
+      "/guides/thin-vs-thick",
+      "/ro/guides/thin-vs-thick",
+    ),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/ro/guides/thin-vs-thick"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: thinVsThickGuideTitle,
+    description: thinVsThickGuideDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: thinVsThickGuideTitle,
+    description: thinVsThickGuideDescription,
+  },
+};
 
 const differences = [
   {
