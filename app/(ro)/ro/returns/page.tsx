@@ -2,17 +2,37 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const returnsTitle = "Retururi si politica de retur in 30 de zile";
+const returnsDescription =
+  "Cum gestioneaza Clickwheel drepturile legale de retragere si retururile eligibile in 30 de zile.";
 
 export const metadata: Metadata = {
-  title: "Retururi si politica de retur in 30 de zile",
-  description:
-    "Cum gestioneaza Clickwheel drepturile legale de retragere si retururile eligibile in 30 de zile.",
+  title: returnsTitle,
+  description: returnsDescription,
   alternates: {
-    canonical: "/ro/returns",
-    languages: {
-      en: "/returns",
-      ro: "/ro/returns",
-    },
+    canonical: canonicalUrl("/ro/returns"),
+    languages: languageAlternates("/returns", "/ro/returns"),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/ro/returns"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: returnsTitle,
+    description: returnsDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: returnsTitle,
+    description: returnsDescription,
   },
 };
 

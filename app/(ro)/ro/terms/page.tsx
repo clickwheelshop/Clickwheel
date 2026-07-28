@@ -2,17 +2,37 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const termsTitle = "Termeni si conditii";
+const termsDescription =
+  "Termeni de baza pentru folosirea site-ului Clickwheel si a formularului de solicitare configuratie.";
 
 export const metadata: Metadata = {
-  title: "Termeni si conditii",
-  description:
-    "Termeni de baza pentru folosirea site-ului Clickwheel si a formularului de solicitare configuratie.",
+  title: termsTitle,
+  description: termsDescription,
   alternates: {
-    canonical: "/ro/terms",
-    languages: {
-      en: "/terms",
-      ro: "/ro/terms",
-    },
+    canonical: canonicalUrl("/ro/terms"),
+    languages: languageAlternates("/terms", "/ro/terms"),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/ro/terms"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: termsTitle,
+    description: termsDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: termsTitle,
+    description: termsDescription,
   },
 };
 

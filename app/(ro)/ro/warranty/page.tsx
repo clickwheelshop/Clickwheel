@@ -2,17 +2,37 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const warrantyTitle = "Politica de garantie";
+const warrantyDescription =
+  "Cum gestioneaza Clickwheel cererile de garantie si suport pentru defecte.";
 
 export const metadata: Metadata = {
-  title: "Politica de garantie",
-  description:
-    "Cum gestioneaza Clickwheel cererile de garantie si suport pentru defecte.",
+  title: warrantyTitle,
+  description: warrantyDescription,
   alternates: {
-    canonical: "/ro/warranty",
-    languages: {
-      en: "/warranty",
-      ro: "/ro/warranty",
-    },
+    canonical: canonicalUrl("/ro/warranty"),
+    languages: languageAlternates("/warranty", "/ro/warranty"),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/ro/warranty"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: warrantyTitle,
+    description: warrantyDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: warrantyTitle,
+    description: warrantyDescription,
   },
 };
 

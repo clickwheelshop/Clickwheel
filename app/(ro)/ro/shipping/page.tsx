@@ -2,17 +2,37 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const shippingTitle = "Livrare";
+const shippingDescription =
+  "Cum confirma Clickwheel detaliile de livrare pentru dispozitive iPod Classic restaurate si upgrade-ate.";
 
 export const metadata: Metadata = {
-  title: "Livrare",
-  description:
-    "Cum confirma Clickwheel detaliile de livrare pentru dispozitive iPod Classic restaurate si upgrade-ate.",
+  title: shippingTitle,
+  description: shippingDescription,
   alternates: {
-    canonical: "/ro/shipping",
-    languages: {
-      en: "/shipping",
-      ro: "/ro/shipping",
-    },
+    canonical: canonicalUrl("/ro/shipping"),
+    languages: languageAlternates("/shipping", "/ro/shipping"),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/ro/shipping"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: shippingTitle,
+    description: shippingDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: shippingTitle,
+    description: shippingDescription,
   },
 };
 

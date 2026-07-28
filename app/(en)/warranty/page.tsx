@@ -2,17 +2,37 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const warrantyTitle = "Warranty Policy";
+const warrantyDescription =
+  "How Clickwheel handles faulty-device warranty and support requests.";
 
 export const metadata: Metadata = {
-  title: "Warranty Policy",
-  description:
-    "How Clickwheel handles faulty-device warranty and support requests.",
+  title: warrantyTitle,
+  description: warrantyDescription,
   alternates: {
-    canonical: "/warranty",
-    languages: {
-      en: "/warranty",
-      ro: "/ro/warranty",
-    },
+    canonical: canonicalUrl("/warranty"),
+    languages: languageAlternates("/warranty", "/ro/warranty"),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/warranty"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: warrantyTitle,
+    description: warrantyDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: warrantyTitle,
+    description: warrantyDescription,
   },
 };
 

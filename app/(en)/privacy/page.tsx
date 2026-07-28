@@ -2,17 +2,37 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const privacyTitle = "Privacy Policy";
+const privacyDescription =
+  "How Clickwheel collects and uses details submitted through build request forms.";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description:
-    "How Clickwheel collects and uses details submitted through build request forms.",
+  title: privacyTitle,
+  description: privacyDescription,
   alternates: {
-    canonical: "/privacy",
-    languages: {
-      en: "/privacy",
-      ro: "/ro/privacy",
-    },
+    canonical: canonicalUrl("/privacy"),
+    languages: languageAlternates("/privacy", "/ro/privacy"),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/privacy"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: privacyTitle,
+    description: privacyDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: privacyTitle,
+    description: privacyDescription,
   },
 };
 

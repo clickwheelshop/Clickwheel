@@ -2,17 +2,37 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const cancellationTitle = "Anulare inainte de expediere";
+const cancellationDescription =
+  "Cum poti intreba Clickwheel despre anularea unei comenzi confirmate inainte de expediere.";
 
 export const metadata: Metadata = {
-  title: "Anulare inainte de expediere",
-  description:
-    "Cum poti intreba Clickwheel despre anularea unei comenzi confirmate inainte de expediere.",
+  title: cancellationTitle,
+  description: cancellationDescription,
   alternates: {
-    canonical: "/ro/cancellation",
-    languages: {
-      en: "/cancellation",
-      ro: "/ro/cancellation",
-    },
+    canonical: canonicalUrl("/ro/cancellation"),
+    languages: languageAlternates("/cancellation", "/ro/cancellation"),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/ro/cancellation"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.ro.openGraph,
+    alternateLocale: SITE_LOCALES.en.openGraph,
+    title: cancellationTitle,
+    description: cancellationDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: cancellationTitle,
+    description: cancellationDescription,
   },
 };
 

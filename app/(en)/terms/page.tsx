@@ -2,17 +2,37 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const termsTitle = "Terms & Conditions";
+const termsDescription =
+  "Basic terms for using the Clickwheel website and build request process.";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions",
-  description:
-    "Basic terms for using the Clickwheel website and build request process.",
+  title: termsTitle,
+  description: termsDescription,
   alternates: {
-    canonical: "/terms",
-    languages: {
-      en: "/terms",
-      ro: "/ro/terms",
-    },
+    canonical: canonicalUrl("/terms"),
+    languages: languageAlternates("/terms", "/ro/terms"),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/terms"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: termsTitle,
+    description: termsDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: termsTitle,
+    description: termsDescription,
   },
 };
 

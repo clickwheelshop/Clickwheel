@@ -2,17 +2,37 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const returnsTitle = "Returns & 30-Day Return Policy";
+const returnsDescription =
+  "How Clickwheel handles legal withdrawal rights and eligible 30-day returns.";
 
 export const metadata: Metadata = {
-  title: "Returns & 30-Day Return Policy",
-  description:
-    "How Clickwheel handles legal withdrawal rights and eligible 30-day returns.",
+  title: returnsTitle,
+  description: returnsDescription,
   alternates: {
-    canonical: "/returns",
-    languages: {
-      en: "/returns",
-      ro: "/ro/returns",
-    },
+    canonical: canonicalUrl("/returns"),
+    languages: languageAlternates("/returns", "/ro/returns"),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/returns"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: returnsTitle,
+    description: returnsDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: returnsTitle,
+    description: returnsDescription,
   },
 };
 

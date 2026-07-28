@@ -2,17 +2,37 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const cancellationTitle = "Cancellation Before Dispatch";
+const cancellationDescription =
+  "How to ask Clickwheel about cancelling a confirmed order before dispatch.";
 
 export const metadata: Metadata = {
-  title: "Cancellation Before Dispatch",
-  description:
-    "How to ask Clickwheel about cancelling a confirmed order before dispatch.",
+  title: cancellationTitle,
+  description: cancellationDescription,
   alternates: {
-    canonical: "/cancellation",
-    languages: {
-      en: "/cancellation",
-      ro: "/ro/cancellation",
-    },
+    canonical: canonicalUrl("/cancellation"),
+    languages: languageAlternates("/cancellation", "/ro/cancellation"),
+  },
+  openGraph: {
+    type: "article",
+    url: canonicalUrl("/cancellation"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: cancellationTitle,
+    description: cancellationDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: cancellationTitle,
+    description: cancellationDescription,
   },
 };
 
