@@ -11,6 +11,7 @@ import {
   canonicalUrl,
   languageAlternates,
   SITE_LOCALES,
+  SITE_NAME,
 } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -24,11 +25,21 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    type: "website",
     title: "Clickwheel | Restored & Upgraded iPod Classic",
     description:
       "Classic on the outside. Modern on the inside. Explore restored iPod Classic devices with flash storage and extended batteries.",
     url: canonicalUrl("/"),
+    siteName: SITE_NAME,
     locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Clickwheel | Restored & Upgraded iPod Classic",
+    description:
+      "Classic on the outside. Modern on the inside. Explore restored iPod Classic devices with flash storage and extended batteries.",
   },
 };
 
