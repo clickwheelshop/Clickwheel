@@ -15,7 +15,9 @@ import {
 } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Restored & Upgraded iPod Classic",
+  title: {
+    absolute: `Restored & Upgraded iPod Classic | ${SITE_NAME}`,
+  },
   description:
     "Explore professionally restored iPod Classic devices with flash storage, extended batteries and carefully selected finishes.",
 
