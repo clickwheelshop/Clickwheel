@@ -1,7 +1,41 @@
+import type { Metadata } from "next";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { accessoryBundlePricesEurCents } from "@/data/accessories";
 import { formatStartingPriceFromEurCents } from "@/lib/money";
+import {
+  canonicalUrl,
+  languageAlternates,
+  SITE_LOCALES,
+  SITE_NAME,
+} from "@/lib/seo";
+
+const accessoriesTitle = "iPod Classic Accessories";
+const accessoriesDescription =
+  "Explore accessories for refurbished iPod Classic devices from Clickwheel.";
+
+export const metadata: Metadata = {
+  title: accessoriesTitle,
+  description: accessoriesDescription,
+  alternates: {
+    canonical: canonicalUrl("/accessories"),
+    languages: languageAlternates("/accessories", "/ro/accessories"),
+  },
+  openGraph: {
+    type: "website",
+    url: canonicalUrl("/accessories"),
+    siteName: SITE_NAME,
+    locale: SITE_LOCALES.en.openGraph,
+    alternateLocale: SITE_LOCALES.ro.openGraph,
+    title: accessoriesTitle,
+    description: accessoriesDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: accessoriesTitle,
+    description: accessoriesDescription,
+  },
+};
 
 const categories = [
   {
